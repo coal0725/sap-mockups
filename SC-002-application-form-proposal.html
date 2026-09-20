@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신청서 작성 | 삼성표준인증원</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --navy:#1A2A4F; --navy-soft:#E9ECF3; --gold:#C9A227;
+    --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE;
+    --bg:#F7F7F4; --card:#FFFFFF; --req:#C0392B;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,'Malgun Gothic',sans-serif;
+       background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--card);border-bottom:1px solid var(--line);padding:0 24px}
+  .hd{max-width:1080px;margin:0 auto;height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .hd-left{display:flex;align-items:center;gap:14px;min-width:0}
+  .logo{width:40px;height:40px;border-radius:8px;background:var(--navy-soft);border:1px dashed #A8AEA9;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--navy);font-weight:700;flex-shrink:0}
+  .org{font-size:17px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+  .bar{width:1px;height:18px;background:var(--line)}
+  .sub{font-size:15px;color:var(--muted);white-space:nowrap}
+  .home-btn{font-size:14px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:6px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;white-space:nowrap;transition:border-color .18s ease}
+  .home-btn:hover{border-color:var(--navy)}
+
+  main{max-width:1080px;margin:0 auto;padding:40px 24px 48px}
+
+  .steps{display:flex;align-items:center;gap:0;margin-bottom:32px;flex-wrap:wrap}
+  .st{flex:1 1 130px;display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .st.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .st-n{width:26px;height:26px;flex-shrink:0;border-radius:999px;background:var(--navy-soft);color:var(--navy);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .st.on .st-n{background:var(--gold);color:var(--navy)}
+  .st-t{font-size:14px;font-weight:600}
+  .st-sep{width:24px;text-align:center;color:#B4B8B3;flex-shrink:0}
+
+  h1{margin:0 0 8px;font-size:32px;font-weight:800;letter-spacing:-.02em}
+  .lead{margin:0;font-size:15px;color:var(--muted);line-height:1.6}
+  .reqnote{margin:16px 0 28px;font-size:13px;color:var(--muted)}
+  .reqnote em{color:var(--req);font-style:normal;font-weight:700}
+
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin-bottom:20px}
+  h2{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  h2::before{content:"";width:3px;height:16px;background:var(--gold);border-radius:2px}
+  .hint{font-size:13px;color:var(--muted);font-weight:400}
+
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .full{grid-column:1 / -1}
+  .f{display:flex;flex-direction:column;gap:7px}
+  .f > label{font-size:14px;font-weight:600}
+  .f > label em{color:var(--req);font-style:normal;margin-left:2px}
+  input[type=text],input[type=email],input[type=tel],input[type=number],textarea{
+    font-family:inherit;font-size:15px;padding:11px 13px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;width:100%}
+  textarea{min-height:84px;resize:vertical}
+  ::placeholder{color:#A8AEA9}
+  input:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+  .sub-hint{font-size:12px;color:var(--muted);line-height:1.5}
+
+  .opts{display:flex;gap:10px;flex-wrap:wrap;padding:2px 0}
+  .opt{display:flex;align-items:center;gap:8px;font-size:15px;padding:11px 17px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .opt:hover{border-color:var(--navy);background:#FAFBFC}
+  .opt small{color:var(--muted);font-size:13px}
+  .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .chk{display:flex;align-items:flex-start;gap:10px;font-size:15px;padding:13px 15px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .chk:hover{border-color:var(--navy);background:#FAFBFC}
+  .chk small{color:var(--muted);font-size:13px}
+  .chk input{margin-top:3px;flex-shrink:0}
+  .chk-b{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .chk-b b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .chk-b small{font-size:12px;line-height:1.5;color:var(--muted)}
+
+  .upload{display:flex;align-items:center;gap:11px;padding:16px 18px;border:1px dashed #A8AEA9;border-radius:8px;background:#FAFAF8;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .upload:hover{border-color:var(--navy);background:var(--navy-soft)}
+  .upload small{font-weight:400;color:var(--muted);font-size:13px}
+
+  .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+  .inline input{width:84px}
+
+  .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
+
+  .same-chk{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:11px 16px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;margin-bottom:20px;transition:border-color .18s ease,background .18s ease}
+  .same-chk:hover{border-color:var(--navy);background:#FAFBFC}
+
+  .agree{font-size:14px;line-height:1.7;background:var(--navy-soft);border-radius:8px;padding:18px 20px;margin-bottom:18px}
+  .agree-chk{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;margin-bottom:20px;cursor:pointer}
+  .agree-chk em{color:var(--req);font-style:normal}
+
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap}
+  .left,.right{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{font-family:inherit;font-size:15px;font-weight:700;padding:14px 26px;border-radius:9px;border:1px solid #C9CCC6;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+       transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .btn:hover{background:#F2F3F0;border-color:#A8AEA9}
+  .btn.p{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.p:hover{background:#24386B;border-color:#24386B}
+  .btn.danger{color:#A13F3F;border-color:#D9BDBD}
+  .btn.danger:hover{background:#FDECEC;border-color:#C0392B;color:#C0392B}
+  .btn:focus-visible,.home-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  footer{background:#131313;color:#fff;margin-top:8px;padding:36px 24px}
+  .ft{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:48px;flex-wrap:wrap}
+  .ft-l{display:flex;flex-direction:column;gap:12px}
+  .ft-tel{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .ft-num{font-size:24px;font-weight:800;color:#fff}
+  .ft-sub{font-size:13px;color:#A6A6A6}
+  .ft-time{font-size:13px;color:#A6A6A6;line-height:1.8}
+  .kab{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#fff;border:1px solid #3A3A3A;border-radius:8px;padding:9px 13px}
+  .kab-tag{font-size:11px;font-weight:700;color:#fff;background:#2E2E2E;padding:3px 7px;border-radius:4px}
+  .ft-r{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+  .ft-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .ft-links a{font-size:13px;font-weight:700;color:#fff}
+
+  @media (max-width:860px){
+    h1{font-size:26px}
+    .grid,.checks{grid-template-columns:1fr}
+    .st-sep{display:none}
+    .steps{gap:10px}
+    .ft{flex-direction:column;gap:24px}
+    .ft-r{align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hd">
+    <div class="hd-left">
+      <div class="logo">로고</div>
+      <div class="org">삼성표준인증원</div>
+      <div class="bar"></div>
+      <div class="sub">ISO 인증심사 신청</div>
+    </div>
+    <a class="home-btn" href="https://ssr1.co.kr" target="_blank" rel="noopener">
+      삼성표준인증원 홈페이지
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <div class="steps">
+    <div class="st on"><div class="st-n">1</div><div class="st-t">신청서 작성</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">2</div><div class="st-t">설문 작성</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">3</div><div class="st-t">서류 첨부</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">4</div><div class="st-t">계약서 서명</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">5</div><div class="st-t">최종 확인 · 제출</div></div>
+  </div>
+
+  <h1>신청서 작성</h1>
+  <p class="lead">회사 정보, 심사 정보, 인증표준, 인증범위를 입력합니다.</p>
+  <p class="reqnote"><em>*</em> 표시는 필수 입력 항목입니다. 임시저장하시면 이 화면으로 다시 돌아오실 수 있습니다.</p>
+
+  <section>
+    <h2>신청 유형</h2>
+    <div class="f">
+      <label>인증 신청 구분<em>*</em></label>
+      <div class="opts">
+        <label class="opt"><input type="radio" name="kind" checked> 신규 신청</label>
+        <label class="opt"><input type="radio" name="kind"> 전환 신청 <small>타 인증기관에서 전환</small></label>
+      </div>
+      <span class="sub-hint">선택하신 유형에 따라 다음 단계의 설문 항목이 달라집니다.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>회사 정보</h2>
+    <div class="grid">
+      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" type="text" placeholder="000-00-00000"></div>
+      <div class="f"><label for="ceo">대표자<em>*</em></label><input id="ceo" type="text"></div>
+      <div class="f"><label for="cn">회사명 (국문)<em>*</em></label><input id="cn" type="text"><span class="sub-hint">인증서에 표기되는 값이므로 사업자등록증 상 회사명으로 기재해 주십시오</span></div>
+      <div class="f"><label for="ce">회사명 (영문)<em>*</em></label><input id="ce" type="text"><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
+      <div class="f full"><label for="a1">본사 주소<em>*</em></label><input id="a1" type="text"></div>
+      <div class="f full"><label for="a2">본사 주소 (영문)<em>*</em></label><input id="a2" type="text"></div>
+      <div class="f"><label for="a3">추가 사업장 주소</label><input id="a3" type="text"></div>
+      <div class="f"><label for="a4">추가 사업장 주소 (영문)</label><input id="a4" type="text"></div>
+      <div class="f"><label for="c1">회사 전화번호<em>*</em></label><input id="c1" type="tel"></div>
+      <div class="f"><label for="c2">회사 팩스번호</label><input id="c2" type="tel"></div>
+      <div class="f full"><label for="c3">회사 홈페이지</label><input id="c3" type="text" placeholder="https://"></div>
+    </div>
+    <div class="callout">추가 사업장이 여러 개인 경우 대표 사업장 한 곳만 입력하시고, 전체 사업장 현황은 서류 첨부 단계에서 제출해 주십시오.</div>
+  </section>
+
+  <section>
+    <h2>ISO 담당자</h2>
+    <div class="grid">
+      <div class="f"><label for="i1">담당자명<em>*</em></label><input id="i1" type="text"></div>
+      <div class="f"><label for="i2">직급 · 부서</label><input id="i2" type="text" placeholder="예: 품질관리팀 과장"></div>
+      <div class="f"><label for="i3">전화번호</label><input id="i3" type="tel"></div>
+      <div class="f"><label for="i4">E-mail<em>*</em></label><input id="i4" type="email"><span class="sub-hint">심사계획서 등 심사 관련 문서를 이 주소로 발송합니다</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>세금계산서 담당자</h2>
+    <label class="same-chk"><input type="checkbox"> <span>ISO 담당자와 동일</span></label>
+    <div class="grid">
+      <div class="f"><label for="x1">담당자명</label><input id="x1" type="text"></div>
+      <div class="f"><label for="x2">직급 · 부서</label><input id="x2" type="text" placeholder="예: 경영지원팀 대리"></div>
+      <div class="f"><label for="x3">E-mail</label><input id="x3" type="email"><span class="sub-hint">세금계산서를 이 주소로 발송합니다</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>조직 규모</h2>
+    <div class="grid">
+      <div class="f"><label for="e1">종업원 수<em>*</em></label><input id="e1" type="number"></div>
+      <div class="f">
+        <label for="e2">교대 형태</label>
+        <div class="inline">
+          <input id="e2" type="number"> 교대 &nbsp;·&nbsp; 교대인원 <input id="e3" type="number"> 명
+        </div>
+      </div>
+    </div>
+    <div class="callout">종업원 수와 교대 형태는 심사일수 산정의 기준이 됩니다.</div>
+  </section>
+
+  <section>
+    <h2>심사 정보</h2>
+    <div class="grid">
+      <div class="f">
+        <label for="w1">심사희망시기<em>*</em></label>
+        <div class="inline">
+          <input id="w1" type="number" placeholder="2026"> 년 <input id="w2" type="number" placeholder="00"> 월
+        </div>
+      </div>
+      <div class="f">
+        <label>예비심사 희망 여부<em>*</em></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="pre"> 신청</label>
+          <label class="opt"><input type="radio" name="pre" checked> 미신청</label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>인증표준 <span class="hint">복수 선택 가능</span></h2>
+    <div class="f">
+      <label>신청하는 인증표준<em>*</em></label>
+      <div class="checks">
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 9001</b><small>품질경영시스템 · Quality Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 14001</b><small>환경경영시스템 · Environmental Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 45001</b><small>안전보건경영시스템 · Occupational Health and Safety Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO/IEC 27001</b><small>정보보안경영시스템 · Information Security Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 37001</b><small>부패방지경영시스템 · Anti-bribery Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 22000</b><small>식품안전경영시스템 · Food Safety Management System</small></span></label>
+        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 22716</b><small>화장품 우수제조관리기준 · Cosmetics Good Manufacturing Practices</small></span></label>
+      </div>
+      <span class="sub-hint">하나 이상 선택해 주십시오.</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>인증범위</h2>
+    <div class="grid">
+      <div class="f full"><label for="s1">인증범위 (국문)<em>*</em></label><textarea id="s1" placeholder="예: 전자제품 설계 · 개발 · 제조"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
+      <div class="f full"><label for="s2">인증범위 (영문)<em>*</em></label><textarea id="s2"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
+      <div class="f">
+        <label>설계 / 개발 기능<em>*</em></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="dd"> 있음</label>
+          <label class="opt"><input type="radio" name="dd"> 없음</label>
+        </div>
+      </div>
+      <div class="f">
+        <label>외주 프로세스<em>*</em></label>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="out"> 유</label>
+          <label class="opt"><input type="radio" name="out"> 무</label>
+        </div>
+        <span class="sub-hint">「유」를 선택하신 경우 서류 첨부 단계에서 관련 자료를 제출해 주십시오</span>
+      </div>
+      <div class="f full"><label for="k1">핵심 프로세스 (주 생산품)<em>*</em></label><input id="k1" type="text"></div>
+      <div class="f full">
+        <label for="s4">계절상품 · 공정 또는 활동</label>
+        <input id="s4" type="text" placeholder="예: 한 철만 운영하는 공정, 빙과류 등">
+        <span class="sub-hint">인증범위 중에 계절상품, 공정 또는 활동이 있는 경우 기재해 주십시오</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>복수사업장 <span class="hint">해당하는 경우에만 선택</span></h2>
+    <div class="f">
+      <label>해당 사항</label>
+      <div class="checks">
+        <label class="chk"><input type="checkbox"> 동일 법인체에 속해 있음</label>
+        <label class="chk"><input type="checkbox"> 최고경영자가 동일함</label>
+        <label class="chk"><input type="checkbox"> 동일한 경영시스템을 사용하고 있음</label>
+        <label class="chk"><input type="checkbox"> 동일한 작업을 수행하고 있음</label>
+      </div>
+    </div>
+    <div class="callout">해당 정보의 세부 내역은 서류 첨부 단계에서 별도 문서로 제출해 주십시오.</div>
+  </section>
+
+  <section>
+    <h2>신청 동의</h2>
+    <div class="agree">
+      위와 같이 인증을 신청하며, 이와 관련하여 인증원의 인증심사 기준 및 절차를 준수할 것에 동의합니다.
+    </div>
+    <label class="agree-chk"><input type="checkbox"> <span>위 내용에 동의합니다<em>*</em></span></label>
+    <div class="grid">
+      <div class="f"><label for="d1">신청일</label><input id="d1" type="text" value="2026-09-20" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+      <div class="f"><label for="d2">신청인</label><input id="d2" type="text" value="대표자명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"><span class="sub-hint">회사 정보의 대표자명이 자동으로 입력됩니다</span></div>
+      <div class="f full">
+        <label for="d3">회사 직인<em>*</em></label>
+        <div class="upload">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
+          <span>직인 이미지 파일 선택 &nbsp;<small>PNG · JPG</small></span>
+        </div>
+        <span class="sub-hint">업로드하신 직인은 신청서 · 설문서 · 계약서에 자동으로 삽입됩니다</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="actions">
+    <div class="left">
+      <button class="btn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+        나가기
+      </button>
+      <button class="btn danger" type="button">신청 취소</button>
+    </div>
+    <div class="right">
+      <button class="btn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+        임시저장
+      </button>
+      <button class="btn p" type="button">
+        다음
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="ft">
+    <div class="ft-l">
+      <div class="ft-tel">
+        <span class="ft-sub">연락처</span>
+        <span class="ft-num">02-6951-2009</span>
+        <span class="ft-sub">팩스 070-4032-2006</span>
+        <span class="ft-sub">ssr@ssr1.co.kr</span>
+      </div>
+      <div class="ft-time">
+        평일 09:00 &ndash; 18:00 &nbsp;·&nbsp; 점심 12:30 &ndash; 13:30 &nbsp;·&nbsp; 주말 · 공휴일 휴무<br>
+        서울특별시 금천구 벚꽃로 244, 1010호 (가산동, 벽산디지털밸리 5차)<br>
+        Copyright 2026 &copy; SSR. All rights reserved.
+      </div>
+    </div>
+    <div class="ft-r">
+      <a class="kab" href="https://www.kab.or.kr" target="_blank" rel="noopener">
+        <span class="kab-tag">인정기관</span>
+        한국인정평가원
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+      <div class="ft-links">
+        <a href="#terms">이용약관</a>
+        <a href="#privacy">개인정보처리방침</a>
+        <a href="#noemail">이메일무단수집거부</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
