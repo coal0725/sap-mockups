@@ -12,6 +12,7 @@
     --bg:#F7F7F4; --card:#FFFFFF; --req:#C0392B;
   }
   *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
   html,body{margin:0;padding:0}
   body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,'Malgun Gothic',sans-serif;
        background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -43,8 +44,11 @@
   .reqnote em{color:var(--req);font-style:normal;font-weight:700}
 
   section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin-bottom:20px}
-  h2{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-  h2::before{content:"";width:3px;height:16px;background:var(--gold);border-radius:2px}
+  h2{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .no{width:25px;height:25px;border-radius:7px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  h3{margin:0 0 14px;font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
+  h3::before{content:"";width:3px;height:13px;background:var(--gold);border-radius:2px}
+  .sub-sec{margin-top:26px}
   .hint{font-size:13px;color:var(--muted);font-weight:400}
 
   .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
@@ -93,7 +97,14 @@
   .agree-chk{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;margin-bottom:20px;cursor:pointer}
   .agree-chk em{color:var(--req);font-style:normal}
 
-  .actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap}
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap;
+           position:sticky;bottom:0;z-index:5;background:rgba(247,247,244,.94);backdrop-filter:blur(6px);
+           border-top:1px solid var(--line);padding:16px 0}
+  .totop{position:fixed;right:28px;bottom:108px;z-index:10;padding:13px 18px;border-radius:12px;
+         background:#fff;border:1px solid #C9CCC6;color:var(--navy);display:inline-flex;align-items:center;gap:8px;
+         font-size:14px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.10);transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .totop:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+  .totop:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
   .left,.right{display:flex;gap:12px;flex-wrap:wrap}
   .btn{font-family:inherit;font-size:15px;font-weight:700;padding:14px 26px;border-radius:9px;border:1px solid #C9CCC6;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
        transition:background .18s ease,border-color .18s ease,color .18s ease}
@@ -129,7 +140,7 @@
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="hd">
     <div class="hd-left">
       <div class="logo">로고</div>
@@ -159,11 +170,11 @@
   </div>
 
   <h1>신청서 작성</h1>
-  <p class="lead">회사 정보, 심사 정보, 인증표준, 인증범위를 입력합니다.</p>
+  <p class="lead">8개 항목으로 구성되어 있습니다. 해당 없는 항목은 비워 두셔도 됩니다.</p>
   <p class="reqnote"><em>*</em> 표시는 필수 입력 항목입니다. 임시저장하시면 이 화면으로 다시 돌아오실 수 있습니다.</p>
 
   <section>
-    <h2>신청 유형</h2>
+    <h2><span class="no">1</span>신청 유형</h2>
     <div class="f">
       <label>인증 신청 구분<em>*</em></label>
       <div class="opts">
@@ -175,7 +186,7 @@
   </section>
 
   <section>
-    <h2>회사 정보</h2>
+    <h2><span class="no">2</span>회사 정보</h2>
     <div class="grid">
       <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" type="text" placeholder="000-00-00000"><span class="sub-hint">신청현황 조회에 사용되는 번호입니다</span></div>
       <div class="f"><label for="ceo">대표자<em>*</em></label><input id="ceo" type="text"></div>
@@ -217,33 +228,6 @@
       <div class="f"><label for="c1">회사 전화번호<em>*</em></label><input id="c1" type="tel"></div>
       <div class="f"><label for="c2">회사 팩스번호</label><input id="c2" type="tel"></div>
       <div class="f full"><label for="c3">회사 홈페이지</label><input id="c3" type="text" placeholder="https://"></div>
-    </div>
-    <div class="callout">추가 사업장이 여러 개인 경우 대표 사업장 한 곳만 입력하시고, 전체 사업장 현황은 서류 첨부 단계에서 제출해 주십시오.</div>
-  </section>
-
-  <section>
-    <h2>ISO 담당자</h2>
-    <div class="grid">
-      <div class="f"><label for="i1">담당자명<em>*</em></label><input id="i1" type="text"></div>
-      <div class="f"><label for="i2">직급 · 부서</label><input id="i2" type="text" placeholder="예: 품질관리팀 과장"></div>
-      <div class="f"><label for="i3">전화번호</label><input id="i3" type="tel"></div>
-      <div class="f"><label for="i4">E-mail<em>*</em></label><input id="i4" type="email"><span class="sub-hint">심사계획서 등 심사 관련 문서를 이 주소로 발송합니다</span></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>세금계산서 담당자</h2>
-    <label class="same-chk"><input type="checkbox"> <span>ISO 담당자와 동일</span></label>
-    <div class="grid">
-      <div class="f"><label for="x1">담당자명</label><input id="x1" type="text"></div>
-      <div class="f"><label for="x2">직급 · 부서</label><input id="x2" type="text" placeholder="예: 경영지원팀 대리"></div>
-      <div class="f"><label for="x3">E-mail</label><input id="x3" type="email"><span class="sub-hint">세금계산서를 이 주소로 발송합니다</span></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>조직 규모</h2>
-    <div class="grid">
       <div class="f"><label for="e1">종업원 수<em>*</em></label><input id="e1" type="number"></div>
       <div class="f">
         <label for="e2">교대 형태</label>
@@ -252,11 +236,33 @@
         </div>
       </div>
     </div>
-    <div class="callout">종업원 수와 교대 형태는 심사일수 산정의 기준이 됩니다.</div>
+    <div class="callout">추가 사업장이 여러 개인 경우 대표 사업장 한 곳만 입력하시고, 전체 사업장 현황은 서류 첨부 단계에서 제출해 주십시오.<br>종업원 수와 교대 형태는 심사일수 산정의 기준이 됩니다.</div>
   </section>
 
   <section>
-    <h2>심사 정보</h2>
+    <h2><span class="no">3</span>담당자 정보</h2>
+
+    <h3>ISO 담당자</h3>
+    <div class="grid">
+      <div class="f"><label for="i1">담당자명<em>*</em></label><input id="i1" type="text"></div>
+      <div class="f"><label for="i2">직급 · 부서</label><input id="i2" type="text" placeholder="예: 품질관리팀 과장"></div>
+      <div class="f"><label for="i3">전화번호</label><input id="i3" type="tel"></div>
+      <div class="f"><label for="i4">E-mail<em>*</em></label><input id="i4" type="email"><span class="sub-hint">심사계획서 등 심사 관련 문서를 이 주소로 발송합니다</span></div>
+    </div>
+
+    <div class="sub-sec">
+      <h3>세금계산서 담당자</h3>
+      <label class="same-chk"><input type="checkbox"> <span>ISO 담당자와 동일</span></label>
+      <div class="grid">
+        <div class="f"><label for="x1">담당자명</label><input id="x1" type="text"></div>
+        <div class="f"><label for="x2">직급 · 부서</label><input id="x2" type="text" placeholder="예: 경영지원팀 대리"></div>
+        <div class="f"><label for="x3">E-mail</label><input id="x3" type="email"><span class="sub-hint">세금계산서를 이 주소로 발송합니다</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">4</span>심사 정보</h2>
     <div class="grid">
       <div class="f">
         <label for="w1">심사희망시기<em>*</em></label>
@@ -275,7 +281,7 @@
   </section>
 
   <section>
-    <h2>인증표준 <span class="hint">복수 선택 가능</span></h2>
+    <h2><span class="no">5</span>인증표준 <span class="hint">복수 선택 가능</span></h2>
     <div class="f">
       <label>신청하는 인증표준<em>*</em></label>
       <div class="checks">
@@ -292,7 +298,7 @@
   </section>
 
   <section>
-    <h2>인증범위</h2>
+    <h2><span class="no">6</span>인증범위</h2>
     <div class="grid">
       <div class="f full"><label for="s1">인증범위 (국문)<em>*</em></label><textarea id="s1" placeholder="예: 전자제품 설계 · 개발 · 제조"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
       <div class="f full"><label for="s2">인증범위 (영문)<em>*</em></label><textarea id="s2"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
@@ -321,7 +327,7 @@
   </section>
 
   <section>
-    <h2>복수사업장 <span class="hint">해당하는 경우에만 선택</span></h2>
+    <h2><span class="no">7</span>복수사업장 <span class="hint">해당하는 경우에만 선택</span></h2>
     <div class="f">
       <label>해당 사항</label>
       <div class="checks">
@@ -335,7 +341,7 @@
   </section>
 
   <section>
-    <h2>신청 동의</h2>
+    <h2><span class="no">8</span>신청 동의</h2>
     <div class="agree">
       위와 같이 인증을 신청하며, 이와 관련하여 인증원의 인증심사 기준 및 절차를 준수할 것에 동의합니다.
     </div>
@@ -375,6 +381,11 @@
   </div>
 
 </main>
+
+<a class="totop" href="#top">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  맨 위로
+</a>
 
 <footer>
   <div class="ft">
