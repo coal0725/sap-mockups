@@ -114,6 +114,25 @@
   .invalid > label{color:#A13F3F}
   .err-msg{font-size:12px;color:#C0392B;font-weight:600}
 
+  /* 개인정보 수집 · 이용 동의 */
+  .consent{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:20px}
+  .consent-h{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:10px}
+  .consent > p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.6}
+  .consent details{margin-bottom:16px}
+  .consent summary{font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;list-style:none;
+                   display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;
+                   transition:border-color .18s ease,background .18s ease}
+  .consent summary:hover{border-color:var(--navy);background:#FAFBFC}
+  .consent summary::-webkit-details-marker{display:none}
+  .consent summary::after{content:"\25BE";font-size:10px}
+  .consent details[open] summary::after{content:"\25B4"}
+  .consent-body{font-size:13px;line-height:1.75;color:var(--muted);background:#FAFAF8;
+                border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:10px}
+  .consent-body b{display:block;color:var(--ink);font-size:13px;margin-top:12px}
+  .consent-body b:first-child{margin-top:0}
+  .consent-body a{color:var(--navy);font-weight:600;text-decoration:underline}
+  .consent .agree-chk{margin-bottom:0}
+
   .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
 
   .same-chk{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:11px 16px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;margin-bottom:20px;transition:border-color .18s ease,background .18s ease}
@@ -175,8 +194,8 @@
       <div class="sub">ISO 인증심사 신청</div>
     </div>
     <a class="home-btn" href="https://ssr1.co.kr" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3.2l9 7.4"/><path d="M5.4 9.6V19.8a1 1 0 0 0 1 1h11.2a1 1 0 0 0 1-1V9.6"/><path d="M10 20.8v-5.4h4v5.4"/></svg>
       삼성표준인증원 홈페이지
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
     </a>
   </div>
 </header>
@@ -205,6 +224,32 @@
       <span id="errcount">입력하지 않은 필수 항목이 있습니다</span>
     </div>
     <ul id="errlist"></ul>
+  </div>
+
+  <div class="consent">
+    <div class="consent-h">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A2A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      개인정보 수집 · 이용 동의
+    </div>
+    <p>인증심사 신청을 위해 아래와 같이 개인정보를 수집 · 이용합니다.</p>
+    <details>
+      <summary>수집 내용 전문 보기</summary>
+      <div class="consent-body">
+        <b>수집 항목</b>
+        회사명 · 대표자 · 사업자등록번호 · 주소 · 회사 연락처 / 담당자 성명 · 직급 · 부서 · 전화번호 · E-mail
+        <b>수집 · 이용 목적</b>
+        인증심사 신청 접수, 심사 일정 협의, 심사 결과 통보, 인증서 발급 및 인증 유지 관리
+        <b>보유 및 이용 기간</b>
+        인증 유효기간에 1회의 인증 유효기간을 더한 기간(6년) 동안 보관하며, 기간 종료 후 안전하게 파기합니다.
+        <b>인정기관 제공에 관한 안내</b>
+        ISO/IEC 17021-1 요구사항에 따라 인정기관(한국인정평가원)의 인정심사 시 심사 기록이 제공될 수 있습니다. 이는 인증기관의 의무 사항으로 별도 동의 없이 이루어집니다.
+        <b>동의를 거부할 권리</b>
+        동의를 거부하실 수 있으나, 이 경우 인증심사 신청이 불가합니다.
+        <b>처리방침</b>
+        자세한 내용은 <a href="https://ssr1.co.kr/etc/privacy" target="_blank" rel="noopener">개인정보처리방침</a>에서 확인하실 수 있습니다.
+      </div>
+    </details>
+    <label class="agree-chk" data-reqgroup="개인정보 수집 · 이용 동의"><input type="checkbox"> <span>개인정보 수집 · 이용에 동의합니다<em>*</em></span></label>
   </div>
 
   <section>
