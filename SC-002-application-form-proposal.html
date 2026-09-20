@@ -51,6 +51,22 @@
   .sub-sec{margin-top:26px}
   .hint{font-size:13px;color:var(--muted);font-weight:400}
 
+  /* 도움말 툴팁 */
+  .tip{position:relative;display:inline-flex;align-items:center;justify-content:center;
+       width:15px;height:15px;margin-left:5px;flex:none;border-radius:50%;
+       border:1px solid #A8AEA9;background:#fff;color:#6B706C;
+       font-size:10px;font-weight:700;line-height:1;cursor:help;vertical-align:middle;
+       transition:border-color .15s ease,color .15s ease}
+  .tip:hover{border-color:var(--navy);color:var(--navy)}
+  .tip .tiptext{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+       width:250px;padding:10px 13px;border-radius:8px;background:#26303F;color:#fff;
+       font-size:12px;font-weight:400;line-height:1.6;letter-spacing:-.01em;text-align:left;
+       opacity:0;visibility:hidden;pointer-events:none;z-index:40;
+       box-shadow:0 6px 18px rgba(0,0,0,.18);transition:opacity .15s ease}
+  .tip .tiptext::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+       border:5px solid transparent;border-top-color:#26303F}
+  .tip:hover .tiptext,.tip:focus-visible .tiptext{opacity:1;visibility:visible}
+
   .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
   .full{grid-column:1 / -1}
   .f{display:flex;flex-direction:column;gap:7px}
@@ -87,6 +103,15 @@
 
   .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
   .inline input{width:84px}
+
+  .errbox{background:#FDECEC;border:1px solid #F0C9C9;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+  .errbox-t{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;color:#A13F3F;margin-bottom:14px}
+  .errbox ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .errbox li a{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#A13F3F;background:#fff;border:1px solid #F0C9C9;border-radius:8px;padding:9px 13px;transition:background .18s ease,border-color .18s ease}
+  .errbox li a:hover{background:#A13F3F;border-color:#A13F3F;color:#fff}
+  .invalid input,input.invalid,textarea.invalid{border-color:#C0392B;background:#FFFBFB}
+  .invalid > label{color:#A13F3F}
+  .err-msg{font-size:12px;color:#C0392B;font-weight:600}
 
   .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
 
@@ -173,6 +198,14 @@
   <p class="lead">8개 항목으로 구성되어 있습니다. 해당 없는 항목은 비워 두셔도 됩니다.</p>
   <p class="reqnote"><em>*</em> 표시는 필수 입력 항목입니다. 임시저장하시면 이 화면으로 다시 돌아오실 수 있습니다.</p>
 
+  <div class="errbox" id="errbox" hidden>
+    <div class="errbox-t">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      <span id="errcount">입력하지 않은 필수 항목이 있습니다</span>
+    </div>
+    <ul id="errlist"></ul>
+  </div>
+
   <section>
     <h2><span class="no">1</span>신청 유형</h2>
     <div class="f">
@@ -188,10 +221,10 @@
   <section>
     <h2><span class="no">2</span>회사 정보</h2>
     <div class="grid">
-      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" type="text" placeholder="000-00-00000"><span class="sub-hint">신청현황 조회에 사용되는 번호입니다</span></div>
-      <div class="f"><label for="ceo">대표자<em>*</em></label><input id="ceo" type="text"></div>
-      <div class="f"><label for="cn">회사명 (국문)<em>*</em></label><input id="cn" type="text"><span class="sub-hint">인증서에 표기되는 값이므로 사업자등록증 상 회사명으로 기재해 주십시오</span></div>
-      <div class="f"><label for="ce">회사명 (영문)<em>*</em></label><input id="ce" type="text"><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
+      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" data-req="사업자등록번호" type="text" placeholder="000-00-00000"><span class="sub-hint">신청현황 조회에 사용되는 번호입니다</span></div>
+      <div class="f"><label for="ceo">대표자<em>*</em></label><input id="ceo" data-req="대표자" type="text"></div>
+      <div class="f"><label for="cn">회사명 (국문)<em>*</em></label><input id="cn" data-req="회사명 (국문)" type="text"><span class="sub-hint">인증서에 표기되는 값이므로 사업자등록증 상 회사명으로 기재해 주십시오</span></div>
+      <div class="f"><label for="ce">회사명 (영문)<em>*</em></label><input id="ce" data-req="회사명 (영문)" type="text"><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
       <div class="f full">
         <label for="z1">본사 주소<em>*</em></label>
         <div class="addr-row">
@@ -202,7 +235,7 @@
           </button>
         </div>
         <input id="a1" type="text" placeholder="도로명 주소" readonly style="background:#F2F3F0">
-        <input id="a1d" type="text" placeholder="상세주소 (동 · 호수 등)">
+        <input id="a1d" data-req="본사 상세주소" type="text" placeholder="상세주소 (동 · 호수 등)">
       </div>
       <div class="f full">
         <label for="a2">본사 주소 (영문)<em>*</em></label>
@@ -225,12 +258,12 @@
         <label for="a4">추가 사업장 주소 (영문)</label>
         <input id="a4" type="text" placeholder="주소 검색 시 자동 입력됩니다">
       </div>
-      <div class="f"><label for="c1">회사 전화번호<em>*</em></label><input id="c1" type="tel"></div>
+      <div class="f"><label for="c1">회사 전화번호<em>*</em></label><input id="c1" data-req="회사 전화번호" type="tel"></div>
       <div class="f"><label for="c2">회사 팩스번호</label><input id="c2" type="tel"></div>
       <div class="f full"><label for="c3">회사 홈페이지</label><input id="c3" type="text" placeholder="https://"></div>
-      <div class="f"><label for="e1">종업원 수<em>*</em></label><input id="e1" type="number"></div>
+      <div class="f"><label for="e1">종업원 수<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">정규직 · 계약직 · 파트타임 · 상주 협력업체 인원을 모두 포함한, 인증범위 내 전체 인원 수입니다.</span></span></label><input id="e1" data-req="종업원 수" type="number"></div>
       <div class="f">
-        <label for="e2">교대 형태</label>
+        <label for="e2">교대 형태<span class="tip" tabindex="0">!<span class="tiptext">교대 근무가 있는 경우 교대 횟수와 교대 근무 인원을 입력해 주십시오. 유효 종업원 수 산정에 반영됩니다.</span></span></label>
         <div class="inline">
           <input id="e2" type="number"> 교대 &nbsp;·&nbsp; 교대인원 <input id="e3" type="number"> 명
         </div>
@@ -244,10 +277,10 @@
 
     <h3>ISO 담당자</h3>
     <div class="grid">
-      <div class="f"><label for="i1">담당자명<em>*</em></label><input id="i1" type="text"></div>
+      <div class="f"><label for="i1">담당자명<em>*</em></label><input id="i1" data-req="ISO 담당자명" type="text"></div>
       <div class="f"><label for="i2">직급 · 부서</label><input id="i2" type="text" placeholder="예: 품질관리팀 과장"></div>
       <div class="f"><label for="i3">전화번호</label><input id="i3" type="tel"></div>
-      <div class="f"><label for="i4">E-mail<em>*</em></label><input id="i4" type="email"><span class="sub-hint">심사계획서 등 심사 관련 문서를 이 주소로 발송합니다</span></div>
+      <div class="f"><label for="i4">E-mail<em>*</em></label><input id="i4" data-req="ISO 담당자 E-mail" type="email"><span class="sub-hint">심사계획서 등 심사 관련 문서를 이 주소로 발송합니다</span></div>
     </div>
 
     <div class="sub-sec">
@@ -267,11 +300,11 @@
       <div class="f">
         <label for="w1">심사희망시기<em>*</em></label>
         <div class="inline">
-          <input id="w1" type="number" placeholder="2026"> 년 <input id="w2" type="number" placeholder="00"> 월
+          <input id="w1" data-req="심사희망시기" type="number" placeholder="2026"> 년 <input id="w2" type="number" placeholder="00"> 월
         </div>
       </div>
       <div class="f">
-        <label>예비심사 희망 여부<em>*</em></label>
+        <label>예비심사 희망 여부<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">본심사 전에 경영시스템 준비 상태를 미리 점검받는 선택 절차입니다.</span></span></label>
         <div class="opts">
           <label class="opt"><input type="radio" name="pre"> 신청</label>
           <label class="opt"><input type="radio" name="pre" checked> 미신청</label>
@@ -284,7 +317,7 @@
     <h2><span class="no">5</span>인증표준 <span class="hint">복수 선택 가능</span></h2>
     <div class="f">
       <label>신청하는 인증표준<em>*</em></label>
-      <div class="checks">
+      <div class="checks" data-reqgroup="신청하는 인증표준">
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 9001</b><small>품질경영시스템 · Quality Management System</small></span></label>
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 14001</b><small>환경경영시스템 · Environmental Management System</small></span></label>
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 45001</b><small>안전보건경영시스템 · Occupational Health and Safety Management System</small></span></label>
@@ -303,21 +336,21 @@
       <div class="f full"><label for="s1">인증범위 (국문)<em>*</em></label><textarea id="s1" placeholder="예: 전자제품 설계 · 개발 · 제조"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
       <div class="f full"><label for="s2">인증범위 (영문)<em>*</em></label><textarea id="s2"></textarea><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
       <div class="f">
-        <label>설계 / 개발 기능<em>*</em></label>
-        <div class="opts">
+        <label>설계 / 개발 기능<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">제품 또는 서비스를 직접 설계 · 개발하는 기능이 조직 내에 있는지 여부입니다.</span></span></label>
+        <div class="opts" data-reqgroup="설계 / 개발 기능">
           <label class="opt"><input type="radio" name="dd"> 있음</label>
           <label class="opt"><input type="radio" name="dd"> 없음</label>
         </div>
       </div>
       <div class="f">
-        <label>외주 프로세스<em>*</em></label>
-        <div class="opts">
+        <label>외주 프로세스<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">인증범위에 포함된 활동 중 외부 업체에 위탁하여 수행하는 공정이 있는지 여부입니다.</span></span></label>
+        <div class="opts" data-reqgroup="외주 프로세스">
           <label class="opt"><input type="radio" name="out"> 있음</label>
           <label class="opt"><input type="radio" name="out"> 없음</label>
         </div>
         <span class="sub-hint">「있음」을 선택하신 경우 서류 첨부 단계에서 관련 자료를 제출해 주십시오</span>
       </div>
-      <div class="f full"><label for="k1">핵심 프로세스 (주 생산품)<em>*</em></label><input id="k1" type="text"></div>
+      <div class="f full"><label for="k1">핵심 프로세스 (주 생산품)<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">인증범위 중 주로 생산 · 제공하는 품목 또는 서비스입니다. 인증범위와 동일한 경우 그대로 두시면 됩니다.</span></span></label><input id="k1" data-req="핵심 프로세스" type="text"><span class="sub-hint">인증범위 (국문) 를 입력하시면 자동으로 채워집니다. 다른 경우 직접 수정해 주십시오</span></div>
       <div class="f full">
         <label for="s4">계절상품 · 공정 또는 활동</label>
         <input id="s4" type="text" placeholder="예: 한 철만 운영하는 공정, 빙과류 등">
@@ -329,7 +362,7 @@
   <section>
     <h2><span class="no">7</span>복수사업장 <span class="hint">해당하는 경우에만 선택</span></h2>
     <div class="f">
-      <label>해당 사항</label>
+      <label>해당 사항<span class="tip" tabindex="0">!<span class="tiptext">본사 외에 인증범위에 포함되는 사업장이 2개 이상인 경우, 아래 4개 조건 중 해당하는 항목을 선택해 주십시오.</span></span></label>
       <div class="checks">
         <label class="chk"><input type="checkbox"> 동일 법인체에 속해 있음</label>
         <label class="chk"><input type="checkbox"> 최고경영자가 동일함</label>
@@ -345,13 +378,13 @@
     <div class="agree">
       위와 같이 인증을 신청하며, 이와 관련하여 인증원의 인증심사 기준 및 절차를 준수할 것에 동의합니다.
     </div>
-    <label class="agree-chk"><input type="checkbox"> <span>위 내용에 동의합니다<em>*</em></span></label>
+    <label class="agree-chk" data-reqgroup="신청 동의"><input type="checkbox"> <span>위 내용에 동의합니다<em>*</em></span></label>
     <div class="grid">
       <div class="f"><label for="d1">신청일</label><input id="d1" type="text" value="2026-09-20" readonly style="background:#F2F3F0;color:var(--muted)"></div>
       <div class="f"><label for="d2">신청인</label><input id="d2" type="text" value="대표자명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"><span class="sub-hint">회사 정보의 대표자명이 자동으로 입력됩니다</span></div>
       <div class="f full">
         <label for="d3">회사 직인<em>*</em></label>
-        <div class="upload">
+        <div class="upload" data-reqgroup="회사 직인">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
           <span>직인 이미지 파일 선택 &nbsp;<small>PNG · JPG</small></span>
         </div>
@@ -417,5 +450,86 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var nextBtn = document.querySelector('.btn.p');
+  var box = document.getElementById('errbox');
+  var list = document.getElementById('errlist');
+  var count = document.getElementById('errcount');
+
+  function clearMarks(){
+    document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
+    document.querySelectorAll('.err-msg').forEach(function(el){ el.remove(); });
+  }
+
+  function mark(el, label){
+    var wrap = el.closest('.f');
+    if (wrap) {
+      wrap.classList.add('invalid');
+      if (!wrap.querySelector('.err-msg')) {
+        var m = document.createElement('span');
+        m.className = 'err-msg';
+        m.textContent = label + '을(를) 입력해 주십시오.';
+        wrap.appendChild(m);
+      }
+    }
+  }
+
+  nextBtn.addEventListener('click', function(){
+    clearMarks();
+    var missing = [];
+
+    document.querySelectorAll('[data-req]').forEach(function(el){
+      if (!el.value.trim()) {
+        var label = el.getAttribute('data-req');
+        missing.push({ el: el, label: label });
+        mark(el, label);
+      }
+    });
+
+    document.querySelectorAll('[data-reqgroup]').forEach(function(g){
+      var checked = g.querySelector('input:checked');
+      if (!checked) {
+        var label = g.getAttribute('data-reqgroup');
+        missing.push({ el: g, label: label });
+        var wrap = g.closest('.f') || g.closest('section');
+        if (wrap && wrap.classList.contains('f')) wrap.classList.add('invalid');
+      }
+    });
+
+    if (!missing.length) { box.hidden = true; return; }
+
+    list.innerHTML = '';
+    count.textContent = '입력하지 않은 필수 항목이 ' + missing.length + '개 있습니다';
+    missing.forEach(function(m, i){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#';
+      a.textContent = m.label;
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        m.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var f = m.el.tagName === 'INPUT' || m.el.tagName === 'TEXTAREA' ? m.el : m.el.querySelector('input');
+        if (f) setTimeout(function(){ f.focus({ preventScroll: true }); }, 400);
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    box.hidden = false;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+
+<script>
+/* 핵심 프로세스 — 인증범위(국문) 자동 채움 (사용자가 직접 고치면 자동 채움 중단) */
+(function(){
+  var s1=document.getElementById('s1'), k1=document.getElementById('k1');
+  if(!s1||!k1) return;
+  var manual=false;
+  k1.addEventListener('input',function(){ manual=true; });
+  s1.addEventListener('input',function(){ if(!manual) k1.value=s1.value; });
+})();
+</script>
 </body>
 </html>
