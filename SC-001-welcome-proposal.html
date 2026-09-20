@@ -65,15 +65,29 @@
   .cta-s{font-size:16px;opacity:.85;margin-top:8px}
   .cta-arrow{width:60px;height:60px;flex-shrink:0;border-radius:999px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:var(--navy)}
 
-  .cta2{background:var(--card);border:1px solid #C9CCC6;border-radius:12px;padding:20px 28px;display:flex;align-items:center;gap:14px;margin-top:-18px;flex-wrap:wrap}
-  .cta2-t{font-size:18px;font-weight:700}
+  .cta{transition:background .18s ease}
+  .cta:hover{background:#24386B}
+  .cta-arrow{transition:transform .18s ease,background .18s ease}
+  .cta:hover .cta-arrow{transform:scale(1.08) translateX(4px);background:#D9B84A}
+
+  .cta2{background:var(--card);border:1px solid #A8AEA9;border-radius:12px;padding:20px 28px;display:flex;align-items:center;gap:14px;margin-top:-18px;flex-wrap:wrap;
+        transition:border-color .18s ease,background .18s ease,box-shadow .18s ease}
+  .cta2-t{font-size:18px;font-weight:700;transition:color .18s ease}
   .cta2-s{font-size:15px;color:var(--muted);flex:1 1 240px}
+  .cta2:hover{border-color:var(--gold);background:#FFFCF3;box-shadow:0 1px 0 var(--gold) inset,0 -1px 0 var(--gold) inset}
+  .cta2:hover .cta2-t{color:#6B5410}
+
+  .cta:focus-visible,.cta2:focus-visible,.look:focus-visible,.home-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 
   .divider{height:1px;background:var(--line)}
 
   .look-head{font-size:15px;font-weight:700;color:var(--muted);margin-bottom:14px}
   .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-  .look{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 28px;display:flex;align-items:center;gap:18px}
+  .look{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px 28px;display:flex;align-items:center;gap:18px;
+        transition:border-color .18s ease,box-shadow .18s ease}
+  .look svg:last-child{transition:transform .18s ease,stroke .18s ease}
+  .look:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(26,42,79,.08)}
+  .look:hover svg:last-child{stroke:var(--navy);transform:translateX(3px)}
   .look-ico{width:46px;height:46px;flex-shrink:0;border-radius:10px;background:var(--navy-soft);display:flex;align-items:center;justify-content:center;color:var(--navy)}
   .look-t{font-size:19px;font-weight:700}
   .look-s{font-size:14px;color:var(--muted);margin-top:5px}
@@ -180,7 +194,7 @@
 
   <a class="cta" href="#apply">
     <div>
-      <div class="cta-t">인증 신규 · 전환 신청</div>
+      <div class="cta-t">인증 신규 · 전환 신청하기</div>
       <div class="cta-s">처음 인증을 받으시는 기업, 타 인증기관에서 전환하시는 기업</div>
     </div>
     <div class="cta-arrow">
@@ -189,9 +203,8 @@
   </a>
 
   <a class="cta2" href="#change">
-    <span class="cta2-t">인증변경 신청</span>
+    <span class="cta2-t">인증변경 신청하기</span>
     <span class="cta2-s">삼성표준인증원 인증을 보유한 기업의 상호 · 주소 · 인증범위 변경</span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
   </a>
 
   <div class="divider"></div>
