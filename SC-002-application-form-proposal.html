@@ -76,6 +76,11 @@
   .upload:hover{border-color:var(--navy);background:var(--navy-soft)}
   .upload small{font-weight:400;color:var(--muted);font-size:13px}
 
+  .addr-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn-sm{font-family:inherit;font-size:14px;font-weight:700;padding:11px 16px;border-radius:8px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .18s ease,color .18s ease}
+  .btn-sm:hover{background:var(--navy);color:#fff}
+  .btn-sm:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
   .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
   .inline input{width:84px}
 
@@ -172,14 +177,43 @@
   <section>
     <h2>회사 정보</h2>
     <div class="grid">
-      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" type="text" placeholder="000-00-00000"></div>
+      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" type="text" placeholder="000-00-00000"><span class="sub-hint">신청현황 조회에 사용되는 번호입니다</span></div>
       <div class="f"><label for="ceo">대표자<em>*</em></label><input id="ceo" type="text"></div>
       <div class="f"><label for="cn">회사명 (국문)<em>*</em></label><input id="cn" type="text"><span class="sub-hint">인증서에 표기되는 값이므로 사업자등록증 상 회사명으로 기재해 주십시오</span></div>
       <div class="f"><label for="ce">회사명 (영문)<em>*</em></label><input id="ce" type="text"><span class="sub-hint">인증서에 표기되는 값입니다</span></div>
-      <div class="f full"><label for="a1">본사 주소<em>*</em></label><input id="a1" type="text"></div>
-      <div class="f full"><label for="a2">본사 주소 (영문)<em>*</em></label><input id="a2" type="text"></div>
-      <div class="f"><label for="a3">추가 사업장 주소</label><input id="a3" type="text"></div>
-      <div class="f"><label for="a4">추가 사업장 주소 (영문)</label><input id="a4" type="text"></div>
+      <div class="f full">
+        <label for="z1">본사 주소<em>*</em></label>
+        <div class="addr-row">
+          <input id="z1" type="text" placeholder="우편번호" readonly style="max-width:140px;background:#F2F3F0">
+          <button class="btn-sm" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            주소 검색
+          </button>
+        </div>
+        <input id="a1" type="text" placeholder="도로명 주소" readonly style="background:#F2F3F0">
+        <input id="a1d" type="text" placeholder="상세주소 (동 · 호수 등)">
+      </div>
+      <div class="f full">
+        <label for="a2">본사 주소 (영문)<em>*</em></label>
+        <input id="a2" type="text" placeholder="주소 검색 시 자동 입력됩니다">
+        <span class="sub-hint">주소 검색 시 자동 입력됩니다. 인증서에 표기되는 값입니다</span>
+      </div>
+      <div class="f full">
+        <label for="z3">추가 사업장 주소</label>
+        <div class="addr-row">
+          <input id="z3" type="text" placeholder="우편번호" readonly style="max-width:140px;background:#F2F3F0">
+          <button class="btn-sm" type="button">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            주소 검색
+          </button>
+        </div>
+        <input id="a3" type="text" placeholder="도로명 주소" readonly style="background:#F2F3F0">
+        <input id="a3d" type="text" placeholder="상세주소 (동 · 호수 등)">
+      </div>
+      <div class="f full">
+        <label for="a4">추가 사업장 주소 (영문)</label>
+        <input id="a4" type="text" placeholder="주소 검색 시 자동 입력됩니다">
+      </div>
       <div class="f"><label for="c1">회사 전화번호<em>*</em></label><input id="c1" type="tel"></div>
       <div class="f"><label for="c2">회사 팩스번호</label><input id="c2" type="tel"></div>
       <div class="f full"><label for="c3">회사 홈페이지</label><input id="c3" type="text" placeholder="https://"></div>
@@ -272,10 +306,10 @@
       <div class="f">
         <label>외주 프로세스<em>*</em></label>
         <div class="opts">
-          <label class="opt"><input type="radio" name="out"> 유</label>
-          <label class="opt"><input type="radio" name="out"> 무</label>
+          <label class="opt"><input type="radio" name="out"> 있음</label>
+          <label class="opt"><input type="radio" name="out"> 없음</label>
         </div>
-        <span class="sub-hint">「유」를 선택하신 경우 서류 첨부 단계에서 관련 자료를 제출해 주십시오</span>
+        <span class="sub-hint">「있음」을 선택하신 경우 서류 첨부 단계에서 관련 자료를 제출해 주십시오</span>
       </div>
       <div class="f full"><label for="k1">핵심 프로세스 (주 생산품)<em>*</em></label><input id="k1" type="text"></div>
       <div class="f full">
