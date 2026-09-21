@@ -133,6 +133,7 @@
   .consent-body a{color:var(--navy);font-weight:600;text-decoration:underline}
   .consent .agree-chk{margin-bottom:0}
 
+  .callout[hidden]{display:none}
   .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
 
   .same-chk{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:11px 16px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;margin-bottom:20px;transition:border-color .18s ease,background .18s ease}
@@ -369,10 +370,11 @@
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 45001</b><small>안전보건경영시스템 · Occupational Health and Safety Management System</small></span></label>
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO/IEC 27001</b><small>정보보안경영시스템 · Information Security Management System</small></span></label>
         <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 37001</b><small>부패방지경영시스템 · Anti-bribery Management System</small></span></label>
-        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 22000</b><small>식품안전경영시스템 · Food Safety Management System</small></span></label>
-        <label class="chk"><input type="checkbox"><span class="chk-b"><b>ISO 22716</b><small>화장품 우수제조관리기준 · Cosmetics Good Manufacturing Practices</small></span></label>
+        <label class="chk"><input type="checkbox" class="selfchk"><span class="chk-b"><b>ISO 22000</b><small>식품안전경영시스템 · Food Safety Management System</small></span></label>
+        <label class="chk"><input type="checkbox" class="selfchk"><span class="chk-b"><b>ISO 22716</b><small>화장품 우수제조관리기준 · Cosmetics Good Manufacturing Practices</small></span></label>
       </div>
       <span class="sub-hint">하나 이상 선택해 주십시오.</span>
+      <div class="callout" id="selfnote" hidden><b>ISO 22000 · ISO 22716 은 자체 인증스킴입니다.</b><br>다른 인증표준과 통합심사가 성립하지 않으므로, 심사일수와 비용이 별도로 산정됩니다.</div>
     </div>
   </section>
 
@@ -575,6 +577,22 @@
   var manual=false;
   k1.addEventListener('input',function(){ manual=true; });
   s1.addEventListener('input',function(){ if(!manual) k1.value=s1.value; });
+})();
+</script>
+
+<script>
+/* 자체 인증스킴(ISO 22000 · 22716) 선택 시 별도 산정 안내 */
+(function(){
+  var note = document.getElementById('selfnote');
+  var boxes = document.querySelectorAll('.selfchk');
+  if (!note || !boxes.length) return;
+  function sync(){
+    var picked = false;
+    boxes.forEach(function(b){ if (b.checked) picked = true; });
+    note.hidden = !picked;
+  }
+  boxes.forEach(function(b){ b.addEventListener('change', sync); });
+  sync();
 })();
 </script>
 </body>
