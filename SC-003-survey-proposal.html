@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<title>설문 작성 | 삼성표준인증원</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --navy:#1A2A4F; --navy-soft:#E9ECF3; --gold:#C9A227;
+    --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE;
+    --bg:#F7F7F4; --card:#FFFFFF; --req:#C0392B;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,'Malgun Gothic',sans-serif;
+       background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--card);border-bottom:1px solid var(--line);padding:0 24px}
+  .hd{max-width:1080px;margin:0 auto;height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .hd-left{display:flex;align-items:center;gap:14px;min-width:0}
+  .logo{height:32px;width:auto;display:block;flex-shrink:0}
+  .org{font-size:17px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+  .bar{width:1px;height:18px;background:var(--line)}
+  .sub{font-size:15px;color:var(--muted);white-space:nowrap}
+  .home-btn{font-size:14px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:6px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;white-space:nowrap;transition:border-color .18s ease}
+  .home-btn:hover{border-color:var(--navy)}
+
+  main{max-width:1080px;margin:0 auto;padding:40px 24px 48px}
+
+  .steps{display:flex;align-items:center;gap:0;margin-bottom:32px;flex-wrap:wrap}
+  .st{flex:1 1 130px;display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .st.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .st-n{width:26px;height:26px;flex-shrink:0;border-radius:999px;background:var(--navy-soft);color:var(--navy);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .st.on .st-n{background:var(--gold);color:var(--navy)}
+  .st-t{font-size:14px;font-weight:600}
+  .st-sep{width:24px;text-align:center;color:#B4B8B3;flex-shrink:0}
+
+  h1{margin:0 0 8px;font-size:32px;font-weight:800;letter-spacing:-.02em}
+  .lead{margin:0;font-size:15px;color:var(--muted);line-height:1.6}
+  .reqnote{margin:16px 0 28px;font-size:13px;color:var(--muted)}
+  .reqnote em{color:var(--req);font-style:normal;font-weight:700}
+
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin-bottom:20px}
+  h2{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .no{width:25px;height:25px;border-radius:7px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  h3{margin:0 0 14px;font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
+  h3::before{content:"";width:3px;height:13px;background:var(--gold);border-radius:2px}
+  .sub-sec{margin-top:26px}
+  .hint{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* 도움말 툴팁 */
+  .tip{position:relative;display:inline-flex;align-items:center;justify-content:center;
+       width:15px;height:15px;margin-left:5px;flex:none;border-radius:50%;
+       border:1px solid #A8AEA9;background:#fff;color:#6B706C;
+       font-size:10px;font-weight:700;line-height:1;cursor:help;vertical-align:middle;
+       transition:border-color .15s ease,color .15s ease}
+  .tip:hover{border-color:var(--navy);color:var(--navy)}
+  .tip .tiptext{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+       width:250px;padding:10px 13px;border-radius:8px;background:#26303F;color:#fff;
+       font-size:12px;font-weight:400;line-height:1.6;letter-spacing:-.01em;text-align:left;
+       opacity:0;visibility:hidden;pointer-events:none;z-index:40;
+       box-shadow:0 6px 18px rgba(0,0,0,.18);transition:opacity .15s ease}
+  .tip .tiptext::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+       border:5px solid transparent;border-top-color:#26303F}
+  .tip:hover .tiptext,.tip:focus-visible .tiptext{opacity:1;visibility:visible}
+
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .full{grid-column:1 / -1}
+  .f{display:flex;flex-direction:column;gap:7px}
+  .f > label{font-size:14px;font-weight:600}
+  .f > label em{color:var(--req);font-style:normal;margin-left:2px}
+  input[type=text],input[type=email],input[type=tel],input[type=number],textarea{
+    font-family:inherit;font-size:15px;padding:11px 13px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;width:100%}
+  textarea{min-height:84px;resize:vertical}
+  ::placeholder{color:#A8AEA9}
+  input:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+  .sub-hint{font-size:12px;color:var(--muted);line-height:1.5}
+
+  .opts{display:flex;gap:10px;flex-wrap:wrap;padding:2px 0}
+  .opt{display:flex;align-items:center;gap:8px;font-size:15px;padding:11px 17px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .opt:hover{border-color:var(--navy);background:#FAFBFC}
+  .opt small{color:var(--muted);font-size:13px}
+  .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .chk{display:flex;align-items:flex-start;gap:10px;font-size:15px;padding:13px 15px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .chk:hover{border-color:var(--navy);background:#FAFBFC}
+  .chk small{color:var(--muted);font-size:13px}
+  .chk input{margin-top:3px;flex-shrink:0}
+  .chk-b{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .chk-b b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .chk-b small{font-size:12px;line-height:1.5;color:var(--muted)}
+
+  .upload{display:flex;align-items:center;gap:11px;padding:16px 18px;border:1px dashed #A8AEA9;border-radius:8px;background:#FAFAF8;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .upload:hover{border-color:var(--navy);background:var(--navy-soft)}
+  .upload small{font-weight:400;color:var(--muted);font-size:13px}
+
+  .addr-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn-sm{font-family:inherit;font-size:14px;font-weight:700;padding:11px 16px;border-radius:8px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .18s ease,color .18s ease}
+  .btn-sm:hover{background:var(--navy);color:#fff}
+  .btn-sm:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+  .inline input{width:84px}
+
+  .errbox{background:#FDECEC;border:1px solid #F0C9C9;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+  .errbox-t{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;color:#A13F3F;margin-bottom:14px}
+  .errbox ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .errbox li a{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#A13F3F;background:#fff;border:1px solid #F0C9C9;border-radius:8px;padding:9px 13px;transition:background .18s ease,border-color .18s ease}
+  .errbox li a:hover{background:#A13F3F;border-color:#A13F3F;color:#fff}
+  .invalid input,input.invalid,textarea.invalid{border-color:#C0392B;background:#FFFBFB}
+  .invalid > label{color:#A13F3F}
+  .err-msg{font-size:12px;color:#C0392B;font-weight:600}
+
+  /* 개인정보 수집 · 이용 동의 */
+  .consent{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:20px}
+  .consent-h{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:10px}
+  .consent > p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.6}
+  .consent details{margin-bottom:16px}
+  .consent summary{font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;list-style:none;
+                   display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;
+                   transition:border-color .18s ease,background .18s ease}
+  .consent summary:hover{border-color:var(--navy);background:#FAFBFC}
+  .consent summary::-webkit-details-marker{display:none}
+  .consent summary::after{content:"\25BE";font-size:10px}
+  .consent details[open] summary::after{content:"\25B4"}
+  .consent-body{font-size:13px;line-height:1.75;color:var(--muted);background:#FAFAF8;
+                border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:10px}
+  .consent-body b{display:block;color:var(--ink);font-size:13px;margin-top:12px}
+  .consent-body b:first-child{margin-top:0}
+  .consent-body a{color:var(--navy);font-weight:600;text-decoration:underline}
+  .consent .agree-chk{margin-bottom:0}
+
+  .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
+
+  .same-chk{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:11px 16px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;margin-bottom:20px;transition:border-color .18s ease,background .18s ease}
+  .same-chk:hover{border-color:var(--navy);background:#FAFBFC}
+
+  .agree{font-size:14px;line-height:1.7;background:var(--navy-soft);border-radius:8px;padding:18px 20px;margin-bottom:18px}
+  .agree-chk{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;margin-bottom:20px;cursor:pointer}
+  .agree-chk em{color:var(--req);font-style:normal}
+
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap;
+           position:sticky;bottom:0;z-index:5;background:rgba(247,247,244,.94);backdrop-filter:blur(6px);
+           border-top:1px solid var(--line);padding:16px 0}
+  .totop{position:fixed;right:28px;bottom:108px;z-index:10;padding:13px 18px;border-radius:12px;
+         background:#fff;border:1px solid #C9CCC6;color:var(--navy);display:inline-flex;align-items:center;gap:8px;
+         font-size:14px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.10);transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .totop:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+  .totop:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .left,.right{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{font-family:inherit;font-size:15px;font-weight:700;padding:14px 26px;border-radius:9px;border:1px solid #C9CCC6;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+       transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .btn:hover{background:#F2F3F0;border-color:#A8AEA9}
+  .btn.p{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.p:hover{background:#24386B;border-color:#24386B}
+  .btn.danger{color:#A13F3F;border-color:#D9BDBD}
+  .btn.danger:hover{background:#FDECEC;border-color:#C0392B;color:#C0392B}
+  .btn:focus-visible,.home-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  footer{background:#131313;color:#fff;margin-top:8px;padding:36px 24px}
+  .ft{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:48px;flex-wrap:wrap}
+  .ft-l{display:flex;flex-direction:column;gap:12px}
+  .ft-tel{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .ft-num{font-size:24px;font-weight:800;color:#fff}
+  .ft-sub{font-size:13px;color:#A6A6A6}
+  .ft-time{font-size:13px;color:#A6A6A6;line-height:1.8}
+  .kab{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#fff;border:1px solid #3A3A3A;border-radius:8px;padding:9px 13px}
+  .kab-tag{font-size:11px;font-weight:700;color:#fff;background:#2E2E2E;padding:3px 7px;border-radius:4px}
+  .ft-r{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+  .ft-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .ft-links a{font-size:13px;font-weight:700;color:#fff}
+
+  @media (max-width:860px){
+    h1{font-size:26px}
+    .grid,.checks{grid-template-columns:1fr}
+    .st-sep{display:none}
+    .steps{gap:10px}
+    .ft{flex-direction:column;gap:24px}
+    .ft-r{align-items:flex-start}
+  }
+
+
+
+  .checks.c4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .checks.c4 .chk{align-items:center;padding:12px 14px;font-weight:600}
+  @media (max-width:980px){ .checks.c4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+
+  /* 전환 대상별 인증 정보 */
+  .trlist{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .trlist:empty{display:none}
+  .trrow{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:#FAFAF8}
+  .trrow-t{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:12px}
+  .trrow .fill{margin-top:0}
+  .trrow .fill + .fill{margin-top:10px}
+  .trrow .lbl{font-size:13px;color:var(--muted);font-weight:600;flex:0 0 86px}
+  .trempty{font-size:13px;color:var(--muted);padding:16px 18px;border:1px dashed #C9CCC6;border-radius:10px;margin-top:12px;background:#FAFAF8}
+  .trempty[hidden]{display:none}
+  .wide-tbl{grid-template-columns:minmax(0,1.05fr) minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr);gap:0;
+            border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .wide-tbl > *{padding:11px 14px;display:flex;align-items:center;min-width:0}
+  .wide-tbl > .h{padding:11px 14px;background:var(--navy-soft);color:var(--navy);font-weight:700;
+                 justify-content:center;border-bottom:1px solid #D6DBE6}
+  .wide-tbl > .h:first-child{justify-content:flex-start}
+  .wide-tbl > *:nth-child(4n+2),
+  .wide-tbl > *:nth-child(4n+3),
+  .wide-tbl > *:nth-child(4n){border-left:1px solid var(--line)}
+  .wide-tbl > *:nth-child(4n+1):not(.h){background:#FAFAF8;font-weight:700}
+  .wide-tbl > *:nth-child(n+5):nth-child(-n+8){border-top:none}
+  .wide-tbl > *:nth-child(4n+5),.wide-tbl > *:nth-child(4n+6),
+  .wide-tbl > *:nth-child(4n+7),.wide-tbl > *:nth-child(4n+8){border-top:1px solid #F0F0EC}
+  .wide-tbl select{border:none;background:transparent;padding:6px 4px;text-align:center;text-align-last:center}
+  .wide-tbl select:focus{outline:2px solid var(--navy);outline-offset:0;border-radius:6px}
+  .wide-tbl .ym{width:100%;justify-content:center}
+  @media (max-width:860px){
+    .wide-tbl{grid-template-columns:1fr}
+    .wide-tbl > .h{display:none}
+    .wide-tbl > *{border-left:none !important}
+    .wide-tbl > *:nth-child(4n+1):not(.h){background:var(--navy-soft);color:var(--navy)}
+  }
+
+  /* 2열 문항 배치 */
+  .q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 28px;align-items:start}
+  @media (max-width:980px){ .q2{grid-template-columns:1fr} }
+  .qbox{border:1px solid var(--line);border-radius:10px;padding:16px 18px;background:#FDFDFC}
+  .qbox > .q-t{margin-bottom:12px}
+  .tbl{display:grid;gap:8px 10px;align-items:center}
+  .tbl .h{font-size:12px;font-weight:700;color:var(--muted)}
+  .tbl label.r{font-size:13px;font-weight:600}
+  select{font-family:inherit;font-size:14px;padding:9px 10px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;width:100%}
+  select:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+  .ym{display:flex;align-items:center;gap:6px;font-size:13px;white-space:nowrap}
+  .ym input{width:100%;min-width:0;font-size:14px;padding:9px 8px;text-align:center}
+
+  .errbox{background:#FDECEC;border:1px solid #F0C9C9;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+  .errbox[hidden]{display:none}
+  .errbox-t{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;color:#A13F3F;margin-bottom:14px}
+  .errbox ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .errbox li a{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#A13F3F;
+               background:#fff;border:1px solid #F0C9C9;border-radius:8px;padding:9px 13px;transition:background .18s ease,border-color .18s ease}
+  .errbox li a:hover{background:#A13F3F;border-color:#A13F3F;color:#fff}
+  .q.invalid > .q-t{color:#A13F3F}
+  .q.invalid input,.q.invalid textarea,.q.invalid select{border-color:#C0392B;background:#FFFBFB}
+  .q.invalid .opt,.q.invalid .chk{border-color:#D9BDBD}
+  .err-msg{font-size:12px;color:#C0392B;font-weight:600;width:100%;margin-top:6px}
+
+  /* 설문 레이아웃 */
+  .q{padding:16px 0;border-bottom:1px solid #F0F0EC}
+  .q:last-child{border-bottom:none;padding-bottom:0}
+  .q:first-of-type{padding-top:0}
+  .q.row{display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .q.row > .q-t{margin-bottom:0;flex:1 1 380px;min-width:0}
+  .q.row > .opts{flex:0 0 auto}
+  .when[hidden]{display:none}
+  .when{margin-top:10px}
+  .when .fill{margin-top:0}
+  .when .fill + .fill{margin-top:8px}
+  .when input[type=text],.when input[type=number]{font-size:14px;padding:9px 12px}
+  .when textarea{font-size:14px;padding:10px 12px;min-height:70px}
+  .when .note-s{margin-top:7px}
+  /* 좌우 배치 문항에서는 선택지 아래 오른쪽에 붙임 */
+  .q.row > .when{margin-left:auto;width:min(100%,420px)}
+  .q.row > .when .fill{justify-content:flex-start}
+  .q.row > .when .note-s{text-align:left}
+  .q.row > .when.nt .note-s{text-align:right}
+  .rblk{margin-left:auto;display:flex;flex-direction:column;align-items:stretch;gap:8px}
+  .rblk .fill{margin:0;width:100%;justify-content:flex-end}
+  .rblk .note-s{margin:0;text-align:right}
+  .opts > .when{margin:0}
+  .opts > .when:not([hidden]){display:flex;align-items:center}
+  .opts > .when .fill{margin:0}
+  .q.row > .when.blk{margin-left:0;width:100%;flex:1 1 100%;padding-top:4px}
+  /* SC-003 전용 */
+  .cond{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;
+        padding:4px 10px;border-radius:999px;background:#FAF2D8;color:#6B5410;white-space:nowrap}
+  .cond.common{background:var(--navy-soft);color:var(--navy)}
+  .q{padding:18px 0;border-bottom:1px solid #F0F0EC}
+  .q:last-child{border-bottom:none;padding-bottom:0}
+  .q:first-of-type{padding-top:0}
+  .q-t{font-size:14px;font-weight:600;line-height:1.55;margin-bottom:11px;display:block}
+  .q-t em{color:var(--req);font-style:normal;margin-left:2px}
+  .q-n{display:inline-block;min-width:19px;color:var(--navy);font-weight:700}
+  .sub-q{margin:12px 0 0 0;padding-left:14px;border-left:2px solid var(--line)}
+  .sub-q .q-t{font-size:13.5px;font-weight:600;color:var(--ink)}
+  .opts.w{gap:8px}
+  .opt.sm{font-size:14px;padding:9px 14px}
+  .opt.long{align-items:flex-start;text-align:left;line-height:1.55;flex:1 1 100%}
+  .opt.long input{margin-top:3px;flex-shrink:0}
+  .fill{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;margin-top:10px}
+  .fill input[type=text],.fill input[type=number]{width:auto;min-width:90px;flex:0 1 200px}
+  .fill input.wide{flex:1 1 280px}
+  .mini{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.4fr) 92px;gap:9px 12px;align-items:center;margin-top:10px}
+  .mini .h{font-size:12px;font-weight:700;color:var(--muted)}
+  .mini label{font-size:14px;font-weight:600}
+  .note-s{font-size:12px;color:var(--muted);line-height:1.6;margin-top:9px}
+  .docs{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .docs span{font-size:13px;font-weight:600;background:var(--navy-soft);color:var(--navy);padding:7px 13px;border-radius:999px}
+  .stamp{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+  .stamp-box{width:84px;height:84px;border:1px dashed #A8AEA9;border-radius:10px;background:#FAFAF8;
+             display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);text-align:center;line-height:1.5;flex-shrink:0}
+
+  /* 데이터 표 */
+  table.dt{width:100%;border-collapse:collapse;border:1px solid var(--line);border-radius:8px;overflow:hidden;table-layout:fixed}
+  table.dt thead th{background:var(--navy);color:#fff;font-size:12px;font-weight:700;letter-spacing:.02em;
+                    padding:11px 12px;text-align:center;border-right:1px solid #2C3D62}
+  table.dt thead th:first-child{text-align:left}
+  table.dt thead th:last-child{border-right:none}
+  table.dt tbody th{text-align:left;font-size:14px;font-weight:700;color:var(--ink);
+                    padding:9px 12px;background:#FAFAF8;border-right:1px solid var(--line);border-top:1px solid #F0F0EC}
+  table.dt tbody td{padding:7px 10px;border-right:1px solid #F0F0EC;border-top:1px solid #F0F0EC;text-align:center}
+  table.dt tbody td:last-child{border-right:none}
+  table.dt tbody tr:first-child th,table.dt tbody tr:first-child td{border-top:none}
+  table.dt .ym{display:flex;align-items:center;justify-content:center;gap:6px;font-size:13px;color:var(--muted)}
+  table.dt .ym input{width:100%;min-width:0;text-align:center;font-size:14px;padding:8px 6px}
+  table.dt select{border:1px solid transparent;background:transparent;text-align:center;text-align-last:center;padding:7px 4px;font-size:14px}
+  table.dt select:hover{border-color:#C9CCC6;background:#fff}
+  @media (max-width:860px){
+    table.dt,table.dt tbody,table.dt tr,table.dt th,table.dt td{display:block;width:auto}
+    table.dt thead{display:none}
+    table.dt tbody tr{border-top:1px solid var(--line);padding:4px 0}
+    table.dt tbody th{background:transparent;border:none;color:var(--navy);padding:10px 12px 2px}
+    table.dt tbody td{border:none;text-align:left;padding:5px 12px}
+    table.dt select{border-color:#C9CCC6;background:#fff;width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="hd">
+    <div class="hd-left">
+      <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원" width="195" height="35">
+      <div class="org">삼성표준인증원</div>
+      <div class="bar"></div>
+      <div class="sub">ISO 인증심사 신청</div>
+    </div>
+    <a class="home-btn" href="https://ssr1.co.kr" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3.2l9 7.4"/><path d="M5.4 9.6V19.8a1 1 0 0 0 1 1h11.2a1 1 0 0 0 1-1V9.6"/><path d="M10 20.8v-5.4h4v5.4"/></svg>
+      삼성표준인증원 홈페이지
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <div class="steps">
+    <div class="st"><div class="st-n">✓</div><div class="st-t">신청서 작성</div></div>
+    <div class="st-sep">›</div>
+    <div class="st on"><div class="st-n">2</div><div class="st-t">설문 작성</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">3</div><div class="st-t">서류 첨부</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">4</div><div class="st-t">계약서 서명</div></div>
+    <div class="st-sep">›</div>
+    <div class="st"><div class="st-n">5</div><div class="st-t">최종 확인 · 제출</div></div>
+  </div>
+
+  <h1>설문 작성</h1>
+  <p class="lead">신청하신 인증표준에 따라 <b id="seccount">아래</b> 항목으로 구성되었습니다.</p>
+  <p class="reqnote"><em>*</em> 표시는 필수 입력 항목입니다. 임시저장하시면 이 화면으로 다시 돌아오실 수 있습니다.</p>
+
+  <div class="errbox" id="errbox" hidden>
+    <div class="errbox-t">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      <span id="errcount">응답하지 않은 필수 항목이 있습니다</span>
+    </div>
+    <ul id="errlist"></ul>
+  </div>
+
+  <section>
+    <h2><span class="no">1</span>전환심사 신청정보</h2>
+    <div>
+      <div class="q"><span class="q-t">이전 인증기관<em>*</em></span>
+        <div class="fill"><input data-req="이전 인증기관" type="text" class="wide" placeholder="예: OO인증원"></div>
+        <div class="note-s">인증표준별로 인증기관이 다른 경우 나열하여 모두 기재해 주십시오.</div>
+      </div>
+      <div class="q"><span class="q-t">전환 대상 인증표준<em>*</em></span>
+        <div class="note-s" style="margin:0 0 10px">신청서에서 선택하신 인증표준 중 전환 대상만 선택해 주십시오.</div>
+        <div class="checks c4" data-reqgroup="전환 대상 인증표준"><label class="chk"><input type="checkbox" class="trchk" value="ISO 9001"> ISO 9001</label><label class="chk"><input type="checkbox" class="trchk" value="ISO 14001"> ISO 14001</label><label class="chk"><input type="checkbox" class="trchk" value="ISO 45001"> ISO 45001</label><label class="chk"><input type="checkbox" class="trchk" value="ISO/IEC 27001"> ISO/IEC 27001</label><label class="chk"><input type="checkbox" class="trchk" value="ISO 37001"> ISO 37001</label><label class="chk"><input type="checkbox" class="trchk" value="ISO 22000"> ISO 22000</label><label class="chk"><input type="checkbox" class="trchk" value="ISO 22716"> ISO 22716</label></div>
+        <div class="note-s">선택하신 인증표준별로 아래에 입력란이 생성됩니다.</div>
+        <div class="trempty" id="trempty">전환 대상 인증표준을 선택해 주십시오.</div>
+        <div class="trlist" id="trlist"></div>
+      </div>
+      <div class="q row"><span class="q-t">전환 사유<em>*</em></span>
+        <div class="opts w" data-reqgroup="전환 사유"><label class="opt sm"><input type="radio" name="tr-why" value="0"><span>기존 인증기관에 대한 불만</span></label><label class="opt sm"><input type="radio" name="tr-why" value="1"><span>삼성표준인증원에 대한 신뢰</span></label><label class="opt sm"><input type="radio" name="tr-why" value="2"><span>고객의 요청</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t">법규 준수 측면에서 규제기관과 체결된 협약이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="법규 준수 측면에서 규제기관과 체결된 협약이 있습니까?"><label class="opt sm"><input type="radio" name="tr-pact" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="tr-pact" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="tr-pact:예" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="협약 내용"></div>
+        </div>
+      </div>
+      <div class="q"><span class="q-t">제출 문서</span>
+        <div class="docs"><span>이전 인증서 (국문)</span><span>이전 인증서 (영문)</span><span>이전 심사보고서 · 직전년도</span><span>이전 심사보고서 · 전전년도</span></div>
+        <div class="note-s">이전 인증서는 국문 · 영문 모두, 이전 심사보고서는 <b>최소 2개년분</b>이 필요합니다. 모두 서류 첨부 단계에서 제출해 주십시오.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">2</span>기본 설문 사항</h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>인증준비 추진 방법<em>*</em></span>
+        <div class="opts w" data-reqgroup="인증준비 추진 방법"><label class="opt sm"><input type="radio" name="prep" value="자체추진"><span>자체추진</span></label><label class="opt sm"><input type="radio" name="prep" value="컨설팅"><span>컨설팅</span></label>
+          <div class="when" data-when="prep:컨설팅" hidden>
+            <div class="fill"><input type="text" placeholder="컨설팅 기관명" style="flex:0 0 152px"> <input type="text" placeholder="컨설턴트 성명" style="flex:0 0 132px"></div>
+          </div>
+        </div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>인증표준별 시스템 현황<em>*</em></span>
+        <table class="dt">
+          <colgroup><col style="width:23%"><col style="width:35%"><col style="width:21%"><col style="width:21%"></colgroup>
+          <thead><tr><th>인증표준</th><th>시스템 제정 · 개정 시기</th><th>내부심사</th><th>경영검토</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">ISO 9001</th><td><span class="ym"><input type="number" data-req="인증표준별 시스템 현황" placeholder="2026"> 년 <input type="number" placeholder="00"> 월</span></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td></tr>
+            <tr><th scope="row">ISO 14001</th><td><span class="ym"><input type="number" placeholder="2026"> 년 <input type="number" placeholder="00"> 월</span></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td></tr>
+            <tr><th scope="row">ISO 45001</th><td><span class="ym"><input type="number" placeholder="2026"> 년 <input type="number" placeholder="00"> 월</span></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td></tr>
+            <tr><th scope="row">ISO/IEC 27001</th><td><span class="ym"><input type="number" placeholder="2026"> 년 <input type="number" placeholder="00"> 월</span></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td></tr>
+            <tr><th scope="row">ISO 37001</th><td><span class="ym"><input type="number" placeholder="2026"> 년 <input type="number" placeholder="00"> 월</span></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td><td><select><option value="">선택</option><option>완료</option><option>예정</option><option>미정</option></select></td></tr>
+          </tbody>
+        </table>
+        <div class="note-s">신청하신 인증표준만 표시됩니다.</div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>기타 획득한 인증 보유 현황<em>*</em></span>
+        <div class="opts w" data-reqgroup="기타 획득한 인증 보유 현황"><label class="opt sm"><input type="radio" name="oc" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="oc" value="없음"><span>없음</span></label></div>
+        <div class="when nt" data-when="oc:있음" hidden>
+        <div class="note-s">서류 첨부 단계에서 해당 인증서를 제출해 주십시오.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">3</span>건설 · 감리업 추가 설문</h2>
+    <div>
+      <div class="q row"><span class="q-t">건설 · 감리업 해당 여부<em>*</em></span>
+        <div class="opts w" data-reqgroup="건설 · 감리업 해당 여부">
+          <label class="opt sm"><input type="radio" name="con" value="해당 있음"><span>해당 있음</span></label>
+          <label class="opt sm"><input type="radio" name="con" value="해당 없음" checked><span>해당 없음</span></label>
+        </div>
+      </div>
+      <div class="when" data-when="con:해당 있음" hidden>
+        <div class="grid" style="gap:20px 24px">
+          <div class="f full"><label for="cf">심사 대상 분야</label><input id="cf" type="text" placeholder="예: 건축공사업 · 건설사업관리"></div>
+          <div class="f"><label for="cl">보유 면허 수</label><div class="fill"><input id="cl" type="number" style="flex:0 0 120px"> 종</div></div>
+          <div class="f"><label for="cs">시공 현장 수</label><div class="fill"><input id="cs" type="number" style="flex:0 0 120px"> 개</div></div>
+          <div class="f"><label for="cp">시공 현장 공정률</label><div class="fill"><input id="cp" type="number" style="flex:0 0 120px"> %</div></div>
+          <div class="f"><label for="cw">시공 현장 투입 인원</label><div class="fill"><input id="cw" type="number" style="flex:0 0 120px"> 명</div></div>
+        </div>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--line)">
+          <div class="docs"><span>시공현장리스트</span></div>
+          <div class="note-s">서류 첨부 단계에서 양식을 내려받아 작성 후 제출해 주십시오.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">4</span>통합경영시스템 신청 정보 확인<span class="tip" tabindex="0">!<span class="tiptext">2개 이상의 인증표준을 하나의 경영시스템으로 통합 운영하는 경우 해당됩니다. ISO 22000 · 22716 은 통합 대상이 아닙니다.</span></span></h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>적절하게 개발된 업무지침 등을 포함하는 문서세트가 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="적절하게 개발된 업무지침 등을 포함하는 문서세트가 있습니까?"><label class="opt sm"><input type="radio" name="ims0" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims0" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">2.</span>전체적인 사업전략 및 계획을 고려하는 경영검토를 실시합니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="전체적인 사업전략 및 계획을 고려하는 경영검토를 실시합니까?"><label class="opt sm"><input type="radio" name="ims1" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims1" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>내부심사에 대한 통합된 접근방법이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="내부심사에 대한 통합된 접근방법이 있습니까?"><label class="opt sm"><input type="radio" name="ims2" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims2" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>방침 및 목표에 대한 통합된 접근방법이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="방침 및 목표에 대한 통합된 접근방법이 있습니까?"><label class="opt sm"><input type="radio" name="ims3" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims3" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>시스템 프로세스에 대한 통합된 접근방법이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="시스템 프로세스에 대한 통합된 접근방법이 있습니까?"><label class="opt sm"><input type="radio" name="ims4" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims4" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">6.</span>개선절차에 대한 통합된 접근방법이 있습니까? (시정 및 예방조치, 측정 및 지속적 개선)<em>*</em></span>
+        <div class="opts w" data-reqgroup="개선절차에 대한 통합된 접근방법이 있습니까? (시정 및 예방조치, 측…"><label class="opt sm"><input type="radio" name="ims5" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims5" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">7.</span>통합된 경영지원 및 책임 체계가 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="통합된 경영지원 및 책임 체계가 있습니까?"><label class="opt sm"><input type="radio" name="ims6" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="ims6" value="아니오"><span>아니오</span></label></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">5</span>환경경영시스템 운영 정보 확인</h2>
+    <div>
+      <div class="q"><span class="q-t"><span class="q-n">1.</span>사업장 입지 조건<em>*</em></span>
+        <div class="opts w" data-reqgroup="사업장 입지 조건"><label class="opt sm"><input type="radio" name="e1" value="0"><span>특별대책지역</span></label><label class="opt sm"><input type="radio" name="e1" value="1"><span>상수원보호구역</span></label><label class="opt sm"><input type="radio" name="e1" value="2"><span>산업단지</span></label><label class="opt sm"><input type="radio" name="e1" value="3"><span>도시지역</span></label><label class="opt sm"><input type="radio" name="e1" value="4"><span>농촌지역</span></label><label class="opt sm"><input type="radio" name="e1" value="기타"><span>기타</span></label>
+        <div class="when" data-when="e1:기타" hidden>
+          <div class="fill"><input type="text" placeholder="입지 조건을 간단히 기재" style="flex:0 0 220px"></div>
+        </div></div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>환경부하<em>*</em></span>
+        <div class="sub-q"><span class="q-t">대기 배출시설</span>
+        <div class="opts w" data-reqgroup="환경부하"><label class="opt sm"><input type="radio" name="e2a" value="0"><span>1종</span></label><label class="opt sm"><input type="radio" name="e2a" value="1"><span>2종</span></label><label class="opt sm"><input type="radio" name="e2a" value="2"><span>3종</span></label><label class="opt sm"><input type="radio" name="e2a" value="3"><span>4종</span></label><label class="opt sm"><input type="radio" name="e2a" value="4"><span>5종</span></label><label class="opt sm"><input type="radio" name="e2a" value="5"><span>무관</span></label></div>
+        </div>
+        <div class="sub-q"><span class="q-t">폐수 배출시설</span>
+        <div class="opts w"><label class="opt sm"><input type="radio" name="e2b" value="0"><span>1종</span></label><label class="opt sm"><input type="radio" name="e2b" value="1"><span>2종</span></label><label class="opt sm"><input type="radio" name="e2b" value="2"><span>3종</span></label><label class="opt sm"><input type="radio" name="e2b" value="3"><span>4종</span></label><label class="opt sm"><input type="radio" name="e2b" value="4"><span>5종</span></label><label class="opt sm"><input type="radio" name="e2b" value="5"><span>무관</span></label></div>
+        </div>
+        <div class="sub-q"><span class="q-t">폐기물 종류 및 발생량</span>
+        <div class="fill">지정폐기물 <input type="number" style="flex:0 0 100px"> 톤/년 &nbsp; 일반폐기물 <input type="number" style="flex:0 0 100px"> 톤/년</div>
+        </div>
+        <div class="sub-q"><span class="q-t">유해화학물질 사용 허가 대상 여부</span>
+        <div class="opts w"><label class="opt sm"><input type="radio" name="e2d" value="0"><span>대상</span></label><label class="opt sm"><input type="radio" name="e2d" value="1"><span>무관</span></label></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>환경친화기업으로 공공부문의 인증이나 공인을 받았습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="환경친화기업으로 공공부문의 인증이나 공인을 받았습니까?"><label class="opt sm"><input type="radio" name="e3" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="e3" value="아니오"><span>아니오</span></label></div>
+        <div class="when nt" data-when="e3:예" hidden>
+          <div class="note-s">허가증 등 증빙서류를 서류 첨부 단계에서 제출해 주십시오.</div>
+        </div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">4.</span>중대한 환경측면은 몇 가지입니까?<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">조직의 활동 · 제품 · 서비스 중 환경에 중대한 영향을 미치는 요소를 말합니다. 2개 이하인 경우 심사일수 산정 시 고려됩니다.</span></span></span>
+        <div class="fill"><input type="number" data-req="중대한 환경측면은 몇 가지입니까?" style="flex:0 0 90px" placeholder="0"> 개 이하 &nbsp; <input type="text" class="wide" placeholder="해당 환경측면을 기재해 주십시오"></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>해당 분야에 법적 규제 및 인허가 사항이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="해당 분야에 법적 규제 및 인허가 사항이 있습니까?"><label class="opt sm"><input type="radio" name="e5" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="e5" value="없음"><span>없음</span></label></div>
+        <div class="when" data-when="e5:있음" hidden>
+          <div class="fill"><textarea placeholder="관련 법규를 나열하여 모두 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">6.</span>환경측면 파악 및 환경영향 평가가 실시되었습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="환경측면 파악 및 환경영향 평가가 실시되었습니까?"><label class="opt sm"><input type="radio" name="e6" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="e6" value="아니오"><span>아니오</span></label></div>
+        <div class="when blk" data-when="e6:예" hidden>
+          <div class="grid" style="gap:14px 24px">
+            <div class="f"><label>환경측면 파악 및 영향 평가일자</label><input type="text" placeholder="2026-00-00"></div>
+            <div class="f"><label>대상 공정</label><input type="text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">7.</span>최근 3년 이내에 환경 사고가 발생된 사례가 있었습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="최근 3년 이내에 환경 사고가 발생된 사례가 있었습니까?"><label class="opt sm"><input type="radio" name="e7" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="e7" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="e7:예" hidden>
+          <div class="fill"><textarea placeholder="사례를 모두 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">6</span>안전보건경영시스템 운영 정보 확인</h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>안전보건경영시스템 범위에 적용되는 위험요소를 식별하였습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="안전보건경영시스템 범위에 적용되는 위험요소를 식별하였습니까?"><label class="opt sm"><input type="radio" name="o1" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="o1" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="o1:예" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="위험 요소"></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">2.</span>공정에 사용되는 주요 유해 물질이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="공정에 사용되는 주요 유해 물질이 있습니까?"><label class="opt sm"><input type="radio" name="o2" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="o2" value="없음"><span>없음</span></label></div>
+        <div class="when" data-when="o2:있음" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="물질명"></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>안전보건경영시스템 범위에 적용되는 준수평가를 실시하였습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="안전보건경영시스템 범위에 적용되는 준수평가를 실시하였습니까?"><label class="opt sm"><input type="radio" name="o3" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="o3" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="o3:예" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="준수평가 적용 법규"></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>조직의 사업장 밖에서 근무하는 직원이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="조직의 사업장 밖에서 근무하는 직원이 있습니까?"><label class="opt sm"><input type="radio" name="o4" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="o4" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="o4:예" hidden>
+          <div class="fill"><textarea placeholder="사례를 모두 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>과거 3년 동안 안전보건사고가 발생하였거나 관련 규제당국으로부터 법적 처분을 받은 적이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="과거 3년 동안 안전보건사고가 발생하였거나 관련 규제당국으로부터 법적…"><label class="opt sm"><input type="radio" name="o5" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="o5" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="o5:예" hidden>
+          <div class="fill"><textarea placeholder="사례를 모두 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">7</span>정보보안경영시스템 운영 정보 확인</h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>리스크평가가 완료되었습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="리스크평가가 완료되었습니까?"><label class="opt sm"><input type="radio" name="i1" value="완료"><span>완료</span></label><label class="opt sm"><input type="radio" name="i1" value="예정"><span>예정</span></label>
+        <div class="when" data-when="i1:*" hidden>
+          <div class="fill"><input type="number" placeholder="2026" style="flex:0 0 84px"> 년 <input type="number" placeholder="00" style="flex:0 0 66px"> 월</div>
+        </div></div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>인증범위에 포함될 보안시스템의 종류별 장소 · 개수를 입력해 주십시오.<em>*</em></span>
+        <div class="mini"><span class="h">종류</span><span class="h">장소</span><span class="h">개수</span><label>IT 플랫폼</label><input type="text" data-req="인증범위에 포함될 보안시스템의 종류별 장소 · 개수를 입력해 주십시오."><input type="number"><label>서버</label><input type="text"><input type="number"><label>데이터베이스</label><input type="text"><input type="number"><label>네트워크</label><input type="text"><input type="number"><label>기타</label><input type="text"><input type="number"></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>적용성 보고서 최신 현황<em>*</em><span class="tip" tabindex="0">!<span class="tiptext">ISO/IEC 27001 부속서 A 통제항목의 적용 여부와 근거를 정리한 문서(SoA) 입니다.</span></span></span>
+        <div class="fill">개정일자 <input type="text" data-req="적용성 보고서 최신 현황" placeholder="2026-00-00"> &nbsp; Rev <input type="text" style="flex:0 0 110px"></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>ISO/IEC 27001 부속서 A 의 통제항목 중 적용 제외된 항목이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="ISO/IEC 27001 부속서 A 의 통제항목 중 적용 제외된 항목…"><label class="opt sm"><input type="radio" name="i4" value="예"><span>예</span></label>
+        <div class="when" data-when="i4:예" hidden>
+          <div class="fill"><input type="number" style="flex:0 0 84px"> 개</div>
+        </div>
+        <label class="opt sm"><input type="radio" name="i4" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>사이트의 개수<em>*</em></span>
+        <div class="rblk">
+          <div class="fill"><input type="number" data-req="사이트의 개수" style="flex:0 0 100px"> 개</div>
+          <div class="note-s">본사 · 원격사이트 · 임시사이트 · 재해복구 · 백업사이트를 모두 포함합니다.</div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">6.</span>법규 위반사례가 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="법규 위반사례가 있습니까?"><label class="opt sm"><input type="radio" name="i6" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="i6" value="없음"><span>없음</span></label></div>
+        <div class="when" data-when="i6:있음" hidden>
+          <div class="fill"><textarea placeholder="사례를 모두 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">7.</span>기밀 또는 민감한 정보에 대한 심사팀 검토에 접근이 제한되는 장소가 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="기밀 또는 민감한 정보에 대한 심사팀 검토에 접근이 제한되는 장소가…"><label class="opt sm"><input type="radio" name="i7" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="i7" value="없음"><span>없음</span></label></div>
+        <div class="when blk" data-when="i7:있음" hidden>
+          <div class="grid" style="gap:14px 24px">
+            <div class="f full"><label>제한 내용</label><input type="text"></div>
+            <div class="f"><label>세부 사항</label><input type="text"></div>
+            <div class="f"><label>접근 세부 절차</label><input type="text"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="sub-sec"><h3>사업 복잡성 (IT 제외)<span class="tip" tabindex="0">!<span class="tiptext">심사일수 산정 시 조직의 사업 특성을 구간으로 반영합니다. (SSR-P-902 부속서 D)</span></span></h3></div>
+      <div class="q"><span class="q-t"><span class="q-n">1.</span>비즈니스 유형 및 규제 요구사항<em>*</em></span>
+        <div class="opts w" data-reqgroup="비즈니스 유형 및 규제 요구사항"><label class="opt sm long"><input type="radio" name="c1" value="0"><span>비 핵심 사업 부문 및 비 규제 부문의 조직 업무</span></label><label class="opt sm long"><input type="radio" name="c1" value="1"><span>핵심 사업 부문에서 조직이 보유한 고객</span></label><label class="opt sm long"><input type="radio" name="c1" value="2"><span>핵심 사업 부문에서의 조직 업무</span></label></div>
+        <div class="note-s">핵심 사업 부문 : 국가에 매우 부정적 영향을 미칠 수 있는 건강 · 보안 · 경제 · 이미지 · 정부의 능력에 리스크를 야기할 가능성이 있는 중요 공공 서비스에 영향을 미치는 부문</div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>프로세스 및 과업<em>*</em></span>
+        <div class="opts w" data-reqgroup="프로세스 및 과업"><label class="opt sm long"><input type="radio" name="c2" value="0"><span>표준 및 반복 작업, 동일한 과업을 수행하는 다수의 인원, 적은 수의 제품 및 서비스에 대한 표준 프로세스</span></label><label class="opt sm long"><input type="radio" name="c2" value="1"><span>다수의 제품 및 서비스에 대한 표준이지만 반복적이지 않은 과정</span></label><label class="opt sm long"><input type="radio" name="c2" value="2"><span>복잡한 과정, 다수의 제품 및 서비스, 인증범위를 포함한 다수의 사업 단위</span></label></div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">3.</span>경영시스템 구축 수준<em>*</em></span>
+        <div class="opts w" data-reqgroup="경영시스템 구축 수준"><label class="opt sm long"><input type="radio" name="c3" value="0"><span>ISMS 가 이미 잘 구축되었고 그리고/또는 다른 경영시스템이 갖춰져 있음</span></label><label class="opt sm long"><input type="radio" name="c3" value="1"><span>다른 경영시스템의 일부 요소는 수행되고 일부는 그렇지 않음</span></label><label class="opt sm long"><input type="radio" name="c3" value="2"><span>어떠한 경영시스템도 수행되지 않음. ISMS 가 신규이며 구축되어 있지 않음</span></label></div>
+      </div>
+    </div>
+      <div class="sub-sec"><h3>IT 복잡성<span class="tip" tabindex="0">!<span class="tiptext">심사일수 산정 시 조직의 IT 환경을 구간으로 반영합니다. (SSR-P-902 부속서 D)</span></span></h3></div>
+      <div class="q"><span class="q-t"><span class="q-n">1.</span>IT 인프라 복잡성<em>*</em></span>
+        <div class="opts w" data-reqgroup="IT 인프라 복잡성"><label class="opt sm long"><input type="radio" name="t1" value="0"><span>약간 또는 고도로 표준화된 IT 플랫폼 · 서버 · 운영 시스템 · 데이터베이스 · 네트워크</span></label><label class="opt sm long"><input type="radio" name="t1" value="1"><span>일부 다른 IT 플랫폼 · 서버 · 운영 시스템 · 데이터베이스 · 네트워크</span></label><label class="opt sm long"><input type="radio" name="t1" value="2"><span>여러 다른 IT 플랫폼 · 서버 · 운영 시스템 · 데이터베이스 · 네트워크</span></label></div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>클라우드 서비스를 포함한 아웃소싱 및 공급자 의존성<em>*</em></span>
+        <div class="opts w" data-reqgroup="클라우드 서비스를 포함한 아웃소싱 및 공급자 의존성"><label class="opt sm long"><input type="radio" name="t2" value="0"><span>아웃소싱 또는 공급자에게 거의 또는 전혀 의존하지 않음</span></label><label class="opt sm long"><input type="radio" name="t2" value="1"><span>일부 관련된 아웃소싱 또는 공급자에 의존하는 일부 중요한 사업</span></label><label class="opt sm long"><input type="radio" name="t2" value="2"><span>아웃소싱 및 공급자에 대한 높은 의존성. 대부분 중요 사업 활동에 영향을 미침</span></label></div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">3.</span>정보시스템 개발<em>*</em></span>
+        <div class="opts w" data-reqgroup="정보시스템 개발"><label class="opt sm long"><input type="radio" name="t3" value="0"><span>인하우스 시스템 · 어플리케이션 개발이 전혀 없거나 매우 제한됨</span></label><label class="opt sm long"><input type="radio" name="t3" value="1"><span>일부 중요 사업을 위한 일부 인하우스 또는 아웃소싱 시스템 · 어플리케이션 개발</span></label><label class="opt sm long"><input type="radio" name="t3" value="2"><span>중요한 사업 목표를 위한 광범위한 인하우스 또는 아웃소싱 시스템 · 어플리케이션 개발</span></label></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">8</span>부패방지경영시스템 운영 정보 확인</h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>최근 3년 내에 뇌물수수 조사 또는 처벌 이력이 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="최근 3년 내에 뇌물수수 조사 또는 처벌 이력이 있습니까?"><label class="opt sm"><input type="radio" name="a1" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a1" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="a1:예" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="처벌 내용"></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">2.</span>부패방지 준수 책임자를 파악하고 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="부패방지 준수 책임자를 파악하고 있습니까?"><label class="opt sm"><input type="radio" name="a2" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a2" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>부패 리스크를 파악하였습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="부패 리스크를 파악하였습니까?"><label class="opt sm"><input type="radio" name="a3" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a3" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>기업 지배구조를 운영하고 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="기업 지배구조를 운영하고 있습니까?"><label class="opt sm"><input type="radio" name="a4" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a4" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="a4:예" hidden>
+          <div class="fill"><input type="text" class="wide" placeholder="지배구조 내용"></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>준수의무사항을 충족하고 있습니까? (법규 · 사규 · 상대 회사와의 계약 등)<em>*</em></span>
+        <div class="opts w" data-reqgroup="준수의무사항을 충족하고 있습니까? (법규 · 사규 · 상대 회사와의…"><label class="opt sm"><input type="radio" name="a5" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a5" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="a5:예" hidden>
+          <div class="fill"><textarea placeholder="내용을 상세히 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">6.</span>주요 통제수단이 있습니까? (신고제도 · 실사 등)<em>*</em></span>
+        <div class="opts w" data-reqgroup="주요 통제수단이 있습니까? (신고제도 · 실사 등)"><label class="opt sm"><input type="radio" name="a6" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a6" value="아니오"><span>아니오</span></label></div>
+        <div class="when" data-when="a6:예" hidden>
+          <div class="fill"><textarea placeholder="통제수단의 내용을 상세히 기재해 주십시오"></textarea></div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">7.</span>ESG 혹은 SR(사회적 책임) 검증보고서를 보유하고 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="ESG 혹은 SR(사회적 책임) 검증보고서를 보유하고 있습니까?"><label class="opt sm"><input type="radio" name="a7" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="a7" value="아니오"><span>아니오</span></label></div>
+        <div class="when nt" data-when="a7:예" hidden>
+        <div class="note-s">서류 첨부 단계에서 보고서를 제출해 주십시오.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">9</span>식품안전경영시스템 운영 정보 확인</h2>
+    <div>
+      <div class="q"><span class="q-t"><span class="q-n">1.</span>제품군 (유형)<em>*</em></span>
+        <div class="grid" style="gap:14px 24px">
+          <div class="f"><label>제품군 (유형) 수<span class="tip" tabindex="0">!<span class="tiptext">유사한 위해요소와 유사한 프로세스 · 기술을 공유하는 제품 묶음의 수입니다. 식품사슬범주 분류와 함께 기본 심사기간을 결정합니다.</span></span></label><input type="number" data-req="제품군 (유형)" placeholder="0"></div>
+          <div class="f"><label>운영 PRPs 수<span class="tip" tabindex="0">!<span class="tiptext">운영전제조건프로그램(OPRP) 의 수입니다. 위해요소 관리에 필수적인 관리수단 중 중요관리점(CCP) 으로 관리하지 않는 것을 말합니다.</span></span></label><input type="number" placeholder="0"></div>
+          <div class="f"><label>CCP 수<span class="tip" tabindex="0">!<span class="tiptext">중요관리점(CCP) 의 수입니다. 위해요소를 예방 · 제거하거나 허용 수준까지 감소시키기 위해 반드시 관리해야 하는 공정 단계를 말합니다.</span></span></label><input type="number" placeholder="0"></div>
+          <div class="f"><label>HACCP 연구 건수<span class="tip" tabindex="0">!<span class="tiptext">제품군별로 실시한 위해요소 분석의 건수입니다. 첫 번째 연구는 기본 심사기간에 포함되며, 추가되는 연구 1건마다 심사일수가 가산됩니다.</span></span></label><input type="number" placeholder="0"></div>
+        </div>
+        <div class="note-s">필요 시 관련 자료를 서류 첨부 단계에서 제출해 주십시오.</div>
+      </div>
+      <div class="q"><span class="q-t"><span class="q-n">2.</span>기업의 활동 범위<em>*</em></span>
+        <div class="checks" data-reqgroup="기업의 활동 범위"><label class="chk"><input type="checkbox"> 1차 생산</label><label class="chk"><input type="checkbox"> 운송 / 보관</label><label class="chk"><input type="checkbox"> 가공생산</label><label class="chk"><input type="checkbox"> 장비</label><label class="chk"><input type="checkbox"> 케이터링</label><label class="chk"><input type="checkbox"> 포장재</label><label class="chk"><input type="checkbox"> 유통 / 서비스</label><label class="chk"><input type="checkbox"> 기타 <input type="text" placeholder="해당 시 입력" style="margin-left:8px;flex:1 1 120px;min-width:0;padding:6px 9px;font-size:13px"></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>기술적 및 법규 요구사항<em>*</em></span>
+        <div class="opts w" data-reqgroup="기술적 및 법규 요구사항"><label class="opt sm"><input type="radio" name="f3" value="해당"><span>해당</span></label><label class="opt sm"><input type="radio" name="f3" value="해당 없음"><span>해당 없음</span></label></div>
+        <div class="when nt" data-when="f3:해당" hidden>
+          <div class="note-s">인허가 서류를 서류 첨부 단계에서 제출해 주십시오.</div>
+        </div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>외주처리된 활동 및 프로세스<em>*</em></span>
+        <div class="opts w" data-reqgroup="외주처리된 활동 및 프로세스"><label class="opt sm"><input type="radio" name="f4" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="f4" value="없음"><span>없음</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>자동화 공정<em>*</em></span>
+        <div class="opts w" data-reqgroup="자동화 공정"><label class="opt sm"><input type="radio" name="f5" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="f5" value="없음"><span>없음</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">6.</span>자체 시험소에서의 시험<em>*</em></span>
+        <div class="opts w" data-reqgroup="자체 시험소에서의 시험"><label class="opt sm"><input type="radio" name="f6" value="있음"><span>있음</span></label><label class="opt sm"><input type="radio" name="f6" value="없음"><span>없음</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">7.</span>시설 수준<em>*</em></span>
+        <div class="opts w" data-reqgroup="시설 수준"><label class="opt sm"><input type="radio" name="f7" value="오래되고 낙후된 구조"><span>오래되고 낙후된 구조</span></label><label class="opt sm"><input type="radio" name="f7" value="신축 · 우수한 구조"><span>신축 · 우수한 구조</span></label></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">10</span>화장품 우수제조관리기준 운영 정보 확인</h2>
+    <div>
+      <div class="q row"><span class="q-t"><span class="q-n">1.</span>생산라인이 3개 이상으로 운영되거나 공정 단계가 복잡한 경우에 해당됩니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="생산라인이 3개 이상으로 운영되거나 공정 단계가 복잡한 경우에 해당됩…"><label class="opt sm"><input type="radio" name="g1" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="g1" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">2.</span>자체 실험실을 운영하고 있습니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="자체 실험실을 운영하고 있습니까?"><label class="opt sm"><input type="radio" name="g2" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="g2" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">3.</span>수출용 제품이 다수입니까?<em>*</em></span>
+        <div class="opts w" data-reqgroup="수출용 제품이 다수입니까?"><label class="opt sm"><input type="radio" name="g3" value="해당없음"><span>해당없음</span></label><label class="opt sm"><input type="radio" name="g3" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="g3" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">4.</span>OEM / ODM 을 관리하고 있습니까? (위탁생산 또는 설계 · 생산 일괄위탁)<em>*</em></span>
+        <div class="opts w" data-reqgroup="OEM / ODM 을 관리하고 있습니까? (위탁생산 또는 설계 · 생…"><label class="opt sm"><input type="radio" name="g4" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="g4" value="아니오"><span>아니오</span></label></div>
+      </div>
+      <div class="q row"><span class="q-t"><span class="q-n">5.</span>기존에 ISO 9001 을 유지하고 있습니까? (업그레이드 심사 적용)<em>*</em></span>
+        <div class="opts w" data-reqgroup="기존에 ISO 9001 을 유지하고 있습니까? (업그레이드 심사 적용)"><label class="opt sm"><input type="radio" name="g5" value="예"><span>예</span></label><label class="opt sm"><input type="radio" name="g5" value="아니오"><span>아니오</span></label></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">11</span>신청인 확인</h2>
+      <div class="agree">위와 같이 인증신청 정보를 제공합니다.</div>
+      <div class="grid">
+        <div class="f"><label for="sd">작성일</label><input id="sd" type="text" value="2026-09-21" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+        <div class="f"><label for="sn">신청인</label><input id="sn" type="text" value="대표자명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+        <div class="f full"><label>회사 직인</label>
+          <div class="stamp"><div class="stamp-box">직인<br>미리보기</div><span class="note-s" style="margin:0">신청서 작성 단계에서 업로드하신 직인이 자동으로 반영됩니다. 변경하시려면 신청서 단계로 돌아가 주십시오.</span></div>
+        </div>
+      </div>
+  </section>
+
+
+  <div class="actions">
+    <div class="left">
+      <button class="btn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 18-6-6 6-6"/></svg>
+        이전
+      </button>
+      <button class="btn danger" type="button">신청 취소</button>
+    </div>
+    <div class="right">
+      <button class="btn" type="button">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
+        임시저장
+      </button>
+      <button class="btn p" type="button">
+        다음
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+      </button>
+    </div>
+  </div>
+
+</main>
+
+<a class="totop" href="#top">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  맨 위로
+</a>
+
+<footer>
+  <div class="ft">
+    <div class="ft-l">
+      <div class="ft-tel">
+        <span class="ft-sub">연락처</span>
+        <span class="ft-num">02-6951-2009</span>
+        <span class="ft-sub">팩스 070-4032-2006</span>
+        <span class="ft-sub">ssr@ssr1.co.kr</span>
+      </div>
+      <div class="ft-time">
+        평일 09:00 &ndash; 18:00 &nbsp;·&nbsp; 점심 12:30 &ndash; 13:30 &nbsp;·&nbsp; 주말 · 공휴일 휴무<br>
+        서울특별시 금천구 벚꽃로 244, 1010호 (가산동, 벽산디지털밸리 5차)<br>
+        Copyright 2026 &copy; SSR. All rights reserved.
+      </div>
+    </div>
+    <div class="ft-r">
+      <a class="kab" href="https://www.kab.or.kr" target="_blank" rel="noopener">
+        <span class="kab-tag">인정기관</span>
+        한국인정평가원
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+      <div class="ft-links">
+        <a href="#terms">이용약관</a>
+        <a href="#privacy">개인정보처리방침</a>
+        <a href="#noemail">이메일무단수집거부</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* 선택한 답에 따라 후속 입력란을 표시 */
+(function(){
+  document.querySelectorAll('.when').forEach(function(box){
+    var spec = box.getAttribute('data-when').split(':');
+    var name = spec[0], want = spec[1];
+    document.querySelectorAll('input[name="' + name + '"]').forEach(function(radio){
+      radio.addEventListener('change', function(){
+        box.hidden = (want === '*') ? !radio.checked : (radio.value !== want);
+      });
+    });
+  });
+})();
+
+/* 전환 대상 인증표준을 선택하면 표준별 입력란 생성 */
+(function(){
+  var list = document.getElementById('trlist');
+  var empty = document.getElementById('trempty');
+  if (!list) return;
+  function sync(){
+    var picked = [].slice.call(document.querySelectorAll('.trchk:checked')).map(function(c){ return c.value; });
+    list.innerHTML = '';
+    picked.forEach(function(name, i){
+      var row = document.createElement('div');
+      row.className = 'trrow';
+      row.innerHTML =
+        '<div class="trrow-t">' + name + '</div>' +
+        '<div class="fill"><span class="lbl">유효기간</span>' +
+          '<input type="text" placeholder="시작일" style="flex:0 0 140px"> ~ ' +
+          '<input type="text" placeholder="종료일" style="flex:0 0 140px"></div>' +
+        '<div class="fill"><span class="lbl">최근 심사</span>' +
+          '<input type="text" placeholder="심사일자" style="flex:0 0 140px;margin-right:8px">' +
+          '<label class="opt sm"><input type="radio" name="trt' + i + '"><span>최초</span></label>' +
+          '<label class="opt sm"><input type="radio" name="trt' + i + '"><span>사후</span></label>' +
+          '<label class="opt sm"><input type="radio" name="trt' + i + '"><span>갱신</span></label></div>';
+      list.appendChild(row);
+    });
+    empty.hidden = picked.length > 0;
+  }
+  document.querySelectorAll('.trchk').forEach(function(c){ c.addEventListener('change', sync); });
+  sync();
+})();
+
+/* 섹션 번호 · 구성 안내
+   번호는 하드코딩하지 않습니다. 실제로 렌더된 블록만 위에서부터 1 번으로 다시 매깁니다.
+   구현 시 미선택 인증표준의 블록은 DOM 에 넣지 마십시오. display:none 으로 숨기면 번호가 어긋납니다. */
+(function(){
+  var secs = document.querySelectorAll('main section');
+  var n = 0;
+  secs.forEach(function(sec){
+    var no = sec.querySelector('h2 > .no');
+    if (no) { n += 1; no.textContent = n; }
+  });
+  var out = document.getElementById('seccount');
+  if (out) out.textContent = n + '개';
+})();
+
+/* 필수 항목 검증 — 오류 요약 + 점프 */
+(function(){
+  var nextBtn = document.querySelector('.btn.p');
+  var box = document.getElementById('errbox');
+  var list = document.getElementById('errlist');
+  var count = document.getElementById('errcount');
+  if (!nextBtn || !box) return;
+
+  function clearMarks(){
+    document.querySelectorAll('.q.invalid').forEach(function(el){ el.classList.remove('invalid'); });
+    document.querySelectorAll('.err-msg').forEach(function(el){ el.remove(); });
+  }
+  function mark(el, label, kind){
+    var q = el.closest('.q');
+    if (!q) return;
+    q.classList.add('invalid');
+    if (!q.querySelector('.err-msg')) {
+      var m = document.createElement('span');
+      m.className = 'err-msg';
+      m.textContent = label + (kind === 'group' ? '을(를) 선택해 주십시오.' : '을(를) 입력해 주십시오.');
+      q.appendChild(m);
+    }
+  }
+
+  nextBtn.addEventListener('click', function(){
+    clearMarks();
+    var missing = [];
+
+    document.querySelectorAll('[data-reqgroup]').forEach(function(g){
+      if (!g.querySelector('input:checked')) {
+        var label = g.getAttribute('data-reqgroup');
+        missing.push({ el: g, label: label });
+        mark(g, label, 'group');
+      }
+    });
+    document.querySelectorAll('[data-req]').forEach(function(el){
+      if (!el.value.trim()) {
+        var label = el.getAttribute('data-req');
+        missing.push({ el: el, label: label });
+        mark(el, label, 'input');
+      }
+    });
+
+    if (!missing.length) { box.hidden = true; return; }
+
+    list.innerHTML = '';
+    count.textContent = '응답하지 않은 필수 항목이 ' + missing.length + '개 있습니다';
+    missing.forEach(function(m){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#';
+      a.textContent = m.label;
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var q = m.el.closest('.q') || m.el;
+        q.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var f = m.el.tagName === 'INPUT' ? m.el : m.el.querySelector('input, select, textarea');
+        if (f) setTimeout(function(){ try { f.focus({ preventScroll: true }); } catch(x) {} }, 400);
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    box.hidden = false;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+
+</body>
+</html>
