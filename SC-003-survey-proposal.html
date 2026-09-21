@@ -14,6 +14,7 @@
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
+  main section{scroll-margin-top:96px}
   html,body{margin:0;padding:0}
   body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,'Malgun Gothic',sans-serif;
        background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -150,6 +151,35 @@
          font-size:14px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.10);transition:background .18s ease,border-color .18s ease,color .18s ease}
   .totop:hover{background:var(--navy);border-color:var(--navy);color:#fff}
   .totop:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  /* 간이 네비게이션 — 렌더된 블록 수만큼 자동 생성 */
+  .secnav{position:fixed;right:28px;bottom:160px;z-index:10;display:flex;flex-direction:column;gap:2px;
+          align-items:stretch;padding:5px;background:#fff;border:1px solid #C9CCC6;
+          border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.10)}
+  .secnav a{position:relative;height:23px;padding:0 8px;border-radius:6px;background:transparent;border:0;
+            color:var(--muted);font-size:11px;font-weight:700;line-height:1;letter-spacing:.1px;
+            display:flex;align-items:center;gap:7px;text-decoration:none;white-space:nowrap;
+            transition:background .14s ease,color .14s ease}
+  .secnav a .n{flex:0 0 11px;text-align:right;color:#A8ABA4;font-variant-numeric:tabular-nums}
+  .secnav a .t{flex:1 1 auto}
+  .secnav a:hover{background:rgba(38,48,63,.07);color:var(--navy)}
+  .secnav a:hover .n{color:var(--navy)}
+  .secnav a.on{background:var(--navy);color:#fff}
+  .secnav a.on .n{color:var(--gold)}
+  .secnav a:focus-visible{outline:2px solid var(--gold);outline-offset:1px}
+  .secnav .lb{position:absolute;right:calc(100% + 6px);top:50%;transform:translateY(-50%);
+              background:#26303F;color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap;
+              padding:5px 9px;border-radius:6px;opacity:0;visibility:hidden;pointer-events:none;
+              transition:opacity .14s ease,visibility .14s ease}
+  .secnav a:hover .lb,.secnav a:focus-visible .lb{opacity:1;visibility:visible}
+  .secnav[hidden]{display:none}
+  /* 본문이 1080px 이므로 창이 좁으면 약어 패널이 본문을 가립니다.
+     좁을 때는 번호만 두고, 패널에 마우스를 올리면 약어가 펼쳐집니다. */
+  @media (max-width:1339px){
+    .secnav a{justify-content:flex-end}
+    .secnav a .t{display:none}
+    .secnav:hover a .t,.secnav:focus-within a .t{display:block}
+  }
+  @media (max-width:860px),(max-height:560px){ .secnav{display:none} }
   .left,.right{display:flex;gap:12px;flex-wrap:wrap}
   .btn{font-family:inherit;font-size:15px;font-weight:700;padding:14px 26px;border-radius:9px;border:1px solid #C9CCC6;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
        transition:background .18s ease,border-color .18s ease,color .18s ease}
@@ -369,7 +399,7 @@
     <ul id="errlist"></ul>
   </div>
 
-  <section>
+  <section data-nav="전환심사">
     <h2><span class="no">1</span>전환심사 신청정보</h2>
     <div>
       <div class="q"><span class="q-t">이전 인증기관<em>*</em></span>
@@ -399,7 +429,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="기본설문">
     <h2><span class="no">2</span>기본 설문 사항</h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>인증준비 추진 방법<em>*</em></span>
@@ -432,7 +462,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="건설감리">
     <h2><span class="no">3</span>건설 · 감리업 추가 설문</h2>
     <div>
       <div class="q row"><span class="q-t">건설 · 감리업 해당 여부<em>*</em></span>
@@ -457,7 +487,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="통합신청">
     <h2><span class="no">4</span>통합경영시스템 신청 정보 확인<span class="tip" tabindex="0">!<span class="tiptext">2개 이상의 인증표준을 하나의 경영시스템으로 통합 운영하는 경우 해당됩니다. ISO 22000 · 22716 은 통합 대상이 아닙니다.</span></span></h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>적절하게 개발된 업무지침 등을 포함하는 문서세트가 있습니까?<em>*</em></span>
@@ -484,7 +514,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 14001">
     <h2><span class="no">5</span>환경경영시스템 운영 정보 확인</h2>
     <div>
       <div class="q"><span class="q-t"><span class="q-n">1.</span>사업장 입지 조건<em>*</em></span>
@@ -540,7 +570,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 45001">
     <h2><span class="no">6</span>안전보건경영시스템 운영 정보 확인</h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>안전보건경영시스템 범위에 적용되는 위험요소를 식별하였습니까?<em>*</em></span>
@@ -576,7 +606,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 27001">
     <h2><span class="no">7</span>정보보안경영시스템 운영 정보 확인</h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>리스크평가가 완료되었습니까?<em>*</em></span>
@@ -646,7 +676,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 37001">
     <h2><span class="no">8</span>부패방지경영시스템 운영 정보 확인</h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>최근 3년 내에 뇌물수수 조사 또는 처벌 이력이 있습니까?<em>*</em></span>
@@ -688,7 +718,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 22000">
     <h2><span class="no">9</span>식품안전경영시스템 운영 정보 확인</h2>
     <div>
       <div class="q"><span class="q-t"><span class="q-n">1.</span>제품군 (유형)<em>*</em></span>
@@ -724,7 +754,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="ISO 22716">
     <h2><span class="no">10</span>화장품 우수제조관리기준 운영 정보 확인</h2>
     <div>
       <div class="q row"><span class="q-t"><span class="q-n">1.</span>생산라인이 3개 이상으로 운영되거나 공정 단계가 복잡한 경우에 해당됩니까?<em>*</em></span>
@@ -745,7 +775,7 @@
     </div>
   </section>
 
-  <section>
+  <section data-nav="신청인확인">
     <h2><span class="no">11</span>신청인 확인</h2>
       <div class="agree">위와 같이 인증신청 정보를 제공합니다.</div>
       <div class="grid">
@@ -779,6 +809,8 @@
   </div>
 
 </main>
+
+<nav class="secnav" id="secnav" aria-label="설문 항목 이동"></nav>
 
 <a class="totop" href="#top">
   <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
@@ -860,16 +892,90 @@
 
 /* 섹션 번호 · 구성 안내
    번호는 하드코딩하지 않습니다. 실제로 렌더된 블록만 위에서부터 1 번으로 다시 매깁니다.
-   구현 시 미선택 인증표준의 블록은 DOM 에 넣지 마십시오. display:none 으로 숨기면 번호가 어긋납니다. */
-(function(){
-  var secs = document.querySelectorAll('main section');
+   구현 시 미선택 인증표준의 블록은 DOM 에 넣지 마십시오. display:none 으로 숨기면 번호가 어긋납니다.
+
+   재정렬이 필요한 시점
+   - 페이지 로드 : 아래에서 1 회 호출합니다.
+   - 블록 구성이 화면 안에서 바뀌는 경우 : window.ssrRenumber() 를 다시 호출해 주십시오.
+     예) 신청서로 돌아가지 않고 이 화면에서 인증표준을 바꿀 수 있게 구현한 경우.
+     페이지를 다시 불러오는 방식이면 별도 호출이 필요하지 않습니다. */
+window.ssrRenumber = (function(){
+  var spyFn = null;
+
+  function build(){
+  var nav = document.getElementById('secnav');
+  var items = [];
   var n = 0;
-  secs.forEach(function(sec){
-    var no = sec.querySelector('h2 > .no');
-    if (no) { n += 1; no.textContent = n; }
+
+  if (nav) nav.innerHTML = '';
+
+  document.querySelectorAll('main section').forEach(function(sec){
+    var h2 = sec.querySelector('h2');
+    var no = h2 && h2.querySelector('.no');
+    if (!no) return;
+    n += 1;
+    no.textContent = n;
+    if (!sec.id) sec.id = 'sec' + n;
+
+    /* 블록 제목 — 번호와 도움말 아이콘을 뺀 순수 텍스트 */
+    var t = h2.cloneNode(true);
+    t.querySelectorAll('.no, .tip').forEach(function(x){ x.remove(); });
+    var title = t.textContent.replace(/\s+/g, ' ').trim();
+
+    if (nav) {
+      /* 네비게이션에 쓰는 짧은 이름은 section 의 data-nav 로 지정합니다.
+         지정이 없으면 블록 제목을 그대로 씁니다. */
+      var short = sec.getAttribute('data-nav') || title;
+
+      var a = document.createElement('a');
+      a.href = '#' + sec.id;
+      a.setAttribute('aria-label', n + '. ' + title);
+
+      var num = document.createElement('span');
+      num.className = 'n';
+      num.textContent = n;
+      var txt = document.createElement('span');
+      txt.className = 't';
+      txt.textContent = short;
+      var lb = document.createElement('span');
+      lb.className = 'lb';
+      lb.textContent = title;
+
+      a.appendChild(num);
+      a.appendChild(txt);
+      a.appendChild(lb);
+      nav.appendChild(a);
+      items.push({ sec: sec, link: a });
+    }
   });
+
   var out = document.getElementById('seccount');
   if (out) out.textContent = n + '개';
+
+  /* 블록이 5개 이하면 네비게이션을 쓰지 않습니다.
+     스크롤이 짧아 이동 수단으로서의 값이 없고, 숫자만 떠 있으면 무엇인지 알기 어렵습니다.
+     단일 인증표준 신청은 대부분 이 경우에 해당합니다. */
+  if (nav) nav.hidden = (items.length <= 5);
+
+  /* 현재 보고 있는 블록 표시 */
+  if (!items.length || !nav || nav.hidden) { spyFn = null; return; }
+  spyFn = function(){
+    var line = 140, cur = items[0];
+    items.forEach(function(it){
+      if (it.sec.getBoundingClientRect().top <= line) cur = it;
+    });
+    items.forEach(function(it){ it.link.classList.toggle('on', it === cur); });
+  };
+  spyFn();
+  }
+
+  /* 스크롤 · 리사이즈 감시는 한 번만 등록하고, 재정렬 때는 대상만 갈아끼웁니다. */
+  function onMove(){ if (spyFn) spyFn(); }
+  window.addEventListener('scroll', onMove, { passive: true });
+  window.addEventListener('resize', onMove);
+
+  build();
+  return build;
 })();
 
 /* 필수 항목 검증 — 오류 요약 + 점프 */
