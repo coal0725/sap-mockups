@@ -249,6 +249,70 @@
   .dl-note b{color:var(--navy)}
   .dl-note ul{margin:8px 0 0;padding-left:18px}
   .dl-note li{margin:3px 0;color:var(--muted)}
+
+  /* ── 계약서 카드 (복수 계약서) ───────────────── */
+  .sumbar{display:flex;align-items:center;gap:12px;margin:0 0 18px;padding:13px 18px;
+          background:#fff;border:1px solid var(--line);border-radius:10px}
+  .sumbar b{font-size:14px;font-weight:700;color:var(--navy)}
+  .sum-n{font-size:13px;font-weight:700;color:var(--muted);margin-left:auto}
+  .sum-n em{font-style:normal;color:var(--navy);font-size:15px}
+  .sumbar .bar{flex:0 0 108px;height:6px;border-radius:999px;background:var(--navy-soft);overflow:hidden}
+  .sumbar .bar i{display:block;height:100%;width:0;background:var(--gold);border-radius:999px;transition:width .25s}
+
+  .ctr-card{border:1px solid var(--line);border-radius:12px;background:var(--card);margin-top:16px;overflow:hidden}
+  .ctr-card:first-of-type{margin-top:0}
+  .ctr-card.done{border-color:#BFD4C4}
+  .cc-head{display:flex;align-items:center;gap:13px;padding:16px 20px;background:#FAFAF8;
+           border-bottom:1px solid var(--line)}
+  .ctr-card.done .cc-head{background:#F1F7F2;border-bottom-color:#DCEAE0}
+  .ctr-card.folded .cc-head{border-bottom:none}
+  .cc-no{flex:0 0 26px;height:26px;border-radius:999px;background:var(--navy);color:#fff;
+         font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .ctr-card.done .cc-no{background:#2F7D4F}
+  .cc-t{min-width:0}
+  .cc-t b{display:block;font-size:14.5px;font-weight:700;color:var(--ink)}
+  .cc-std{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-top:2px}
+  .cc-right{margin-left:auto;display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .badge-done{font-size:11.5px;font-weight:700;color:#1F6B41;background:#E4F1E8;
+              border:1px solid #BFD9C9;border-radius:999px;padding:4px 11px}
+  .cc-fold{font-family:inherit;font-size:12.5px;font-weight:600;color:var(--muted);
+           background:transparent;border:1px solid var(--line);border-radius:7px;padding:5px 10px;cursor:pointer}
+  .cc-fold:hover{color:var(--navy);border-color:var(--navy)}
+  .cc-fold[hidden]{display:none}
+  .cc-body{padding:20px}
+  .ctr-card.folded .cc-body{display:none}
+  .cc-meta{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+  .cc-same{margin:0 0 12px;padding:10px 14px;background:var(--navy-soft);border-radius:8px;
+           font-size:12.5px;line-height:1.7;color:var(--navy)}
+  .cc-same b{font-weight:700}
+  .cc-sig{display:flex;align-items:center;gap:26px;flex-wrap:wrap;margin-top:16px;
+          padding:14px 16px;border:1px solid var(--line);border-radius:9px;background:#FAFAF8}
+  .cc-sig .grp{display:flex;align-items:center;gap:11px;font-size:13px}
+  .cc-sig .who{font-size:12.5px;font-weight:700;color:var(--navy)}
+  .cc-sig .nm{font-size:13.5px;color:var(--ink)}
+  .stamp-sm{width:56px;height:56px;border:1px dashed #A8AEA9;border-radius:8px;background:#fff;
+            display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--muted);
+            text-align:center;line-height:1.45;flex-shrink:0}
+  .cc-sig .wait{font-size:12.5px;color:var(--muted)}
+  @media (max-width:760px){ .cc-sig{gap:14px} }
+
+  table.dl-t{width:100%;border-collapse:collapse;margin:10px 0 0;font-size:12.5px}
+  table.dl-t th{background:var(--navy-soft);color:var(--navy);font-weight:700;font-size:12px;
+                text-align:left;padding:8px 11px;border:1px solid var(--line);white-space:nowrap}
+  table.dl-t td{padding:9px 11px;border:1px solid var(--line);line-height:1.65;color:var(--ink);vertical-align:top}
+  table.dl-t td:first-child{white-space:nowrap;font-weight:700;color:var(--navy);width:92px}
+  table.dl-t td:nth-child(2){white-space:nowrap;color:var(--muted);font-weight:600;width:118px}
+  .dl-note > p{margin:9px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+
+  .ctr-note{margin:10px 0 0;font-size:12.5px;line-height:1.7;color:var(--muted)}
+  .ctr-note b{color:var(--navy)}
+  .cc-agree{padding:16px 20px}
+  .cc-agree .agree-chk{margin-top:0}
+
+  .ctr-foot .att{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;
+        color:var(--navy);border-bottom:1px solid rgba(26,42,79,.35);padding-bottom:1px;margin-left:2px}
+  .ctr-foot .att:hover{border-bottom-color:var(--navy)}
+  .ctr-foot .att svg{opacity:.75}
 </style>
 </head>
 <body>
@@ -284,120 +348,144 @@
 
   <h1>계약서 서명</h1>
   <p class="lead">인증심사 계약 내용을 확인하시고 서명해 주십시오.</p>
-  <p class="reqnote">지금 결정하지 않으셔도 됩니다. <b>임시저장하시면 이 단계부터 다시 이어서 진행하실 수 있습니다.</b></p>
-
-  <div class="split">
-    <b>선택하신 인증표준에 따라 계약서가 분리됩니다.</b><br>
-    인정 인증스킴(ISO 9001 &#183; 14001 &#183; 45001 &#183; 27001 &#183; 37001)은 하나의 계약서로 체결하고,
-    자체 인증스킴(ISO 22000 &#183; 22716)은 각각 별도 계약서로 체결합니다.
-    자체 인증스킴은 서로도 통합되지 않습니다.<br>
-    이 화면에는 계약서가 분리된 수만큼 아래에 순서대로 표시되며, 모든 계약서에 동의하셔야 다음 단계로 진행하실 수 있습니다.
-  </div>
+  <p class="reqnote">이 단계에서는 계약 내용에 동의만 하시면 됩니다. <b>계약이 확정되기 전까지는 신청현황 조회에서 신청을 취소하실 수 있습니다.</b></p>
 
   <section>
     <h2><span class="no">1</span>계약 정보</h2>
     <div class="grid">
-      <div class="f"><label for="o1">신청 조직명</label><input id="o1" type="text" value="회사명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
-      <div class="f"><label for="o2">대표자</label><input id="o2" type="text" value="대표자명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+      <div class="f full"><label for="o1">신청 조직명</label><input id="o1" type="text" value="회사명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
       <div class="f full"><label for="o3">주소</label><input id="o3" type="text" value="본사 주소 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
       <div class="f full"><label>신청 표준</label>
-        <div class="docs"><span>ISO 9001</span><span>ISO 14001</span></div>
-        <span class="sub-hint">신청서에서 선택하신 인증표준이 표시됩니다</span>
+        <div class="docs"><span>ISO 9001</span><span>ISO 14001</span><span>ISO 22000</span></div>
+        <span class="sub-hint">신청서에서 선택하신 인증표준입니다. 아래에서 계약서 2건으로 분리되었습니다.</span>
       </div>
     </div>
   </section>
 
   <section>
-    <h2><span class="no">2</span>계약 내용<span class="h2-right"><span class="docno">SSR-P-901-05 (Rev.2)</span><a class="dl-link" href="#preview" download><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>계약서 원문 내려받기</a></span></h2>
+    <h2><span class="no">2</span>계약 내용<span class="h2-right"><span class="docno">SSR-P-901-05 (Rev.2)</span><a class="dl-link" href="assets/contract-view.pdf" download="인증심사 계약서 (열람용).pdf"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></svg>계약서 원문 내려받기</a></span></h2>
     <div class="ctr">
       <div class="ctr-body" id="ctrbody">
-        <p style="padding:0;text-indent:0;margin-bottom:18px">본 계약서는 삼성표준인증원(이하 "SSR" 이라 함)과 상기 조직(이하 "신청조직" 이라 함)이 인증심사 및 인증마크 사용권한에 대하여 체결한다.</p>
+        <p style="padding:0;text-indent:0;margin-bottom:18px">본 계약서는 삼성표준인증원(이하 "SSR"이라 함)과 상기 조직(이하 "신청조직"이라 함)이 인증심사 및 인증마크 사용권한에 대하여 체결한다.</p>
         <h4>1. 계약범위</h4>
         <p>1.1 신청조직은 상기 인증 표준에 대하여 신청한다.</p>
         <p>1.2 인증 범위는 신청조직이 신청한 조직의 제품 및 활동 범위 내에서 협의하여 결정한다.</p>
         <p>1.3 최초 인증심사 비용은, 심사 7일 전까지 해당 비용을 납부한다. 단, 별도의 협의를 통해 신청조직의 비용 집행 규정(납부기한)에 따라 해당 비용을 납부할 수 있다.</p>
-        <p>1.4 최초 인증심사 비용은 비용 산정에 영향을 미치는 정보(사업장, 심사일수)의 변경에 따라 신청조직과 SSR 의 협의에 의해 변경될 수 있다.</p>
+        <p>1.4 최초 인증심사 비용은 비용 산정에 영향을 미치는 정보(사업장, 심사일수)의 변경에 따라 신청조직과 SSR의 협의에 의해 변경될 수 있다.</p>
         <h4>2. 계약기간 및 계약종료</h4>
         <p>2.1 본 계약에 의한 동의 사항은 두 기관이 서명을 함으로써 그 효력이 발생하며 인증이 유지되는 기간 동안 그 효력이 지속된다.</p>
         <p>2.2 계약기간은 최초 계약일로부터 인증서 발행 후 3년으로 한다. 단, 계약종료 1개월 전까지 본 계약의 변경이나 종료 의사 표명이 없는 경우, 3년의 계약기간이 연장된 것으로 간주한다. 또한, 이후에도 이와 같은 방법으로 계약이 갱신된다.</p>
         <h4>3. 기밀유지</h4>
-        <p>3.1 SSR 은 인정기관의 요청 또는 다음의 경우를 제외하고, 신청 조직의 사전 동의 없이 인증 활동의 수행과정에서 입수했거나 생성된 조직의 정보에 대해 기밀을 유지해야 하며, 기밀유지에 대한 의무는 인증 유지 기간 및 본 계약이 종료된 후에도 지켜져야 한다.</p>
-        <p class="d2">3.1.1 일반 대중에게 공개되는 인증 정보 : 인증 조직명, 주소, 표준, 범위, 상태(유지 / 정지 / 취소), 일자</p>
-        <p class="d2">3.1.2 인정 등록을 위하여 요구되는 정보 : 인증 조직명, 주소, 표준, 범위, 상태(유지 / 정지 / 취소), 일자</p>
+        <p>3.1 SSR은 인정기관의 요청 또는 다음의 경우를 제외하고, 신청조직의 사전 동의 없이 인증 활동의 수행 과정에서 입수했거나 생성된 조직의 정보에 대해 기밀을 유지해야 하며, 기밀유지에 대한 의무는 인증 유지 기간 및 본 계약이 종료된 후에도 지켜져야 한다.</p>
+        <p class="d2">3.1.1 일반 대중에게 공개되는 인증 정보: 인증 조직명, 주소, 표준, 범위, 상태(유지/정지/취소), 일자</p>
+        <p class="d2">3.1.2 인정 등록을 위하여 요구되는 정보: 인증 조직명, 주소, 표준, 범위, 상태(유지/정지/취소), 일자</p>
         <p class="d2">3.1.3 법정에서 소환장에 의거하여 공개가 요구되는 정보</p>
         <h4>4. 이의제기 및 불만</h4>
-        <p>4.1 신청 조직은 SSR 의 인증 절차에 대해 이의 제기 및 불만을 신청할 수 있으며, SSR 은 이의 제기 및 불만처리 절차에 따라 해결한다.</p>
-        <p>4.2 SSR 은 해당 이의 제기자 및 불만 제기자에 대해 어떠한 차별적 조치를 취하지 않으며, 접수사실, 경과보고 및 결과를 해당 제기자에게 제공해야 한다.</p>
+        <p>4.1 신청조직은 SSR의 인증 절차에 대해 이의제기 및 불만을 신청할 수 있으며, SSR은 이의제기 및 불만처리 절차에 따라 해결한다.</p>
+        <p>4.2 SSR은 해당 이의제기자 및 불만제기자에 대해 어떠한 차별적 조치를 취하지 않으며, 접수사실, 경과보고 및 결과를 해당 제기자에게 제공해야 한다.</p>
         <p>4.3 이의제기 프로세스는 부적합 처리 또는 인증 취소 프로세스 진행 시점에 영향을 미치지 않는다.</p>
         <h4>5. 법률선택</h4>
         <p>5.1 본 계약에 관련된 모든 분쟁의 사법권역은 SSR 소재지의 관할 법원이다. 본 계약은 대한민국 법에 의한다.</p>
-        <h4>6. 신청 조직의 일반 권리와 의무</h4>
+        <h4>6. 신청조직의 일반 권리와 의무</h4>
         <p>6.1 신청조직은 이 계약서에 근거하여 신청조직의 경영시스템을 해당 인증 요구사항에 따라 적합하게 운영할 것을 합의한다.</p>
         <p>6.2 신청조직은 심사 시 심사원이 인증범위에 관련된 기록을 심사할 수 있도록 해야 하며, 심사 대상이 되는 조직 내 부서 및 단위조직에 접근할 수 있도록 편의를 제공하여야 한다.</p>
-        <p>6.3 인증 승인 이후, 신청 조직은 계약된 경영시스템 인증 유지에 영향을 줄 수 있는 다음과 같은 사안에 대하여 지체없이 (15일 이내) SSR 에 통보해야 할 의무가 있다.</p>
+        <p>6.3 인증 승인 이후, 신청조직은 계약된 경영시스템 인증 유지에 영향을 줄 수 있는 다음과 같은 사안에 대하여 지체 없이(15일 이내) SSR에 통보해야 할 의무가 있다.</p>
         <p class="d2">6.3.1 법적, 상업적, 조직적 지위 또는 소유권 상황</p>
-        <p class="d2">6.3.2 조직 및 경영진 (예: 핵심경영진, 의사결정자 또는 기술직 직원)</p>
+        <p class="d2">6.3.2 조직 및 경영진(예: 핵심경영진, 의사결정자 또는 기술직 직원)</p>
         <p class="d2">6.3.3 연락주소 및 사업장</p>
         <p class="d2">6.3.4 인증 받은 표준 운영의 적용범위</p>
         <p class="d2">6.3.5 인증 받은 표준 운영의 프로세스에 대한 변경</p>
-        <p class="d2">6.3.6 인증 받은 표준과 관련된 이해관계자의 이의 제기 발생 시</p>
-        <p class="d2">6.3.7 (ISO 45001 신청 조직) 안전보건 관련 중대한 사건(예: 중대재해)이나, 관련된 규제당국이 관여(예: 조사)할 필요가 있는 법규 위반 사항이 발생한 경우</p>
-        <p>6.4 신청 조직은 8항에 따라 인증마크 및 인증사실에 대해 홍보할 수 있다.</p>
-        <p>6.5 신청 조직은 인정기관의 인정업무 수행(심사원 입회평가, 이해관계자 조사 요구)을 위한 필요한 조사에 협조하여야 한다. 단, SSR 은 인정 업무 활동에 대한 범위를 사전에 조직에게 안내하고 일정 등을 협의하여야 한다.</p>
-        <p class="cont">(인정 업무 수행과 관련된 모든 비용은 SSR 또는 인정기관에서 부담한다.)</p>
-        <h4>7. SSR 의 일반 권리와 의무</h4>
-        <p>7.1 SSR 은 신청조직의 최초인증, 사후인증, 갱신인증을 위한 의무를 사전에 안내하여야 한다.</p>
-        <p>7.2 SSR 은 인증 승인, 유지, 갱신, 확대, 축소, 정지, 취소 및 복원을 포함하여 인증에 관련된 결정에 대한 책임과 권한을 갖는다.</p>
-        <p>7.3 SSR 은 인증 요구사항의 변경에 대해 신청 조직에게 적절한 기간을 두고 통지해야 하며, 새로운 요구사항을 준수하는지를 검증해야 한다.</p>
-        <p>7.4 SSR 은 신청조직의 기밀사항을 포함한 모든 정보를 접할 수 있으며, 이러한 정보는 시스템을 평가할 목적으로만 다루어야 한다.</p>
-        <p>7.5 SSR 은 인증 절차 안내 후, 인증심사를 수행하고, 심사결과가 긍정적일 경우, 인증서를 발행하거나 유지시킨다.</p>
-        <p>7.6 SSR 은 인증된 조직의 명부를 상세한 인증 코드 범위와 함께 유지해야 한다.</p>
-        <p>7.7 (ISO 45001 신청조직) 상기 6.3.7항의 중대한 사건에 대한 수집된 정보(신청조직 제공 또는 SSR 특별심사)에 의해 안전보건경영시스템이 인증 요구사항을 충족하는데 심각하게 실패한 것이 실증된 경우, 신청 조직의 인증을 정지, 취소할 수 있다.</p>
-        <p>7.8 SSR 은 상기 7.7항에 따라 신청조직의 인증을 정지, 취소하는 것을 포함하여, 취할 조치를 결정하는 근거를 신청조직에게 제공한다.</p>
+        <p class="d2">6.3.6 인증 받은 표준과 관련된 이해관계자의 이의제기 발생 시</p>
+        <p class="d2">6.3.7 (ISO 45001 신청조직) 안전보건 관련 중대한 사건(예: 중대재해)이나, 관련된 규제당국이 관여(예: 조사)할 필요가 있는 법규 위반 사항이 발생한 경우</p>
+        <p>6.4 신청조직은 8항에 따라 인증마크 및 인증사실에 대해 홍보할 수 있다.</p>
+        <p>6.5 신청조직은 인정기관(KAB)의 인정업무 수행(심사원 입회평가, 이해관계자 조사 요구)을 위한 필요한 조사에 협조하여야 한다. 단, SSR은 인정업무 활동에 대한 범위를 사전에 조직에게 안내하고 일정 등을 협의하여야 한다.</p>
+        <p class="cont">(인정업무 수행과 관련된 모든 비용은 SSR 또는 인정기관(KAB)에서 부담한다.)</p>
+        <h4>7. SSR의 일반 권리와 의무</h4>
+        <p>7.1 SSR은 신청조직의 최초인증, 사후인증, 갱신인증을 위한 의무를 사전에 안내하여야 한다.</p>
+        <p>7.2 SSR은 인증 승인, 유지, 갱신, 확대, 축소, 정지, 취소 및 복원을 포함하여 인증에 관련된 결정에 대한 책임과 권한을 갖는다.</p>
+        <p>7.3 SSR은 인증 요구사항의 변경에 대해 신청조직에게 적절한 기간을 두고 통지해야 하며, 새로운 요구사항을 준수하는지를 검증해야 한다.</p>
+        <p>7.4 SSR은 신청조직의 기밀사항을 포함한 모든 정보를 접할 수 있으며, 이러한 정보는 시스템을 평가할 목적으로만 다루어야 한다.</p>
+        <p>7.5 SSR은 인증 절차 안내 후, 인증심사를 수행하고, 심사결과가 긍정적일 경우, 인증서를 발행하거나 유지시킨다.</p>
+        <p>7.6 SSR은 인증된 조직의 명부를 상세한 인증 코드 범위와 함께 유지해야 한다.</p>
+        <p>7.7 (ISO 45001 신청조직) 상기 6.3.7항의 중대한 사건에 대한 수집된 정보(신청조직 제공 또는 SSR 특별심사)에 의해 안전보건경영시스템이 인증 요구사항을 충족하는 데 심각하게 실패한 것이 실증된 경우, 신청조직의 인증을 정지, 취소할 수 있다.</p>
+        <p>7.8 SSR은 상기 7.7항에 따라 신청조직의 인증을 정지, 취소하는 것을 포함하여, 취할 조치를 결정하는 근거를 신청조직에게 제공한다.</p>
         <h4>8. SSR 인증마크 사용 권리 및 범위</h4>
-        <p>8.1 인증마크에 대한 소유권은 SSR 에 있다.</p>
-        <p>8.2 신청 조직은 인증서가 발급된 날로부터 SSR 의 "인증표시 사용절차"에 따라 인증 마크 및 인증 사실을 홍보할 수 있다.</p>
-        <p>8.3 SSR 은 신청조직이 SSR 의 "인증표시 사용절차"와 부합되지 않는 방식으로 오용하는 경우에 대해 시정 및 시정조치 요구, 인증 정지, 취소, 위반사실에 대한 공표, 그리고 필요한 경우 법적 조치를 취할 수 있다.</p>
-        <p>8.4 신청조직의 인증이 취소된 경우 인증 마크 사용 및 인증서 유지에 관한 효력이 종료되며, SSR 은 인증서를 회수하거나 취소할 권한을 갖는다.</p>
-        <p>8.5 인증마크 사용에 관한 권리의 종료 시에 신청조직은 인증서를 SSR 에 반납해야 한다.</p>
+        <p>8.1 인증마크에 대한 소유권은 SSR에 있다.</p>
+        <p>8.2 신청조직은 인증서가 발급된 날로부터 SSR의 "인증사용 로고지침"에 따라 인증마크 및 인증사실을 홍보할 수 있다.</p>
+        <p>8.3 SSR은 신청조직이 SSR의 "인증사용 로고지침"과 부합되지 않는 방식으로 오용하는 경우에 대해 시정 및 시정조치 요구, 인증 정지, 취소, 위반사실에 대한 공표, 그리고 필요한 경우 법적 조치를 취할 수 있다.</p>
+        <p>8.4 신청조직의 인증이 취소된 경우 인증마크 사용 및 인증서 유지에 관한 효력이 종료되며, SSR은 인증서를 회수하거나 취소할 권한을 갖는다.</p>
+        <p>8.5 인증마크 사용에 관한 권리의 종료 시에 신청조직은 인증서를 SSR에 반납해야 한다.</p>
         <h4>9. 계약 동의</h4>
         <p>9.1 본 계약서는 2부로 발행하며 SSR 및 신청조직의 대표자에 의해 서명된다.</p>
       </div>
-      <div class="ctr-foot">첨부 &nbsp;· 견적서 (요청 시) &nbsp;· 인증마크 사용 지침</div>
+      <div class="ctr-foot">첨부 &nbsp;&#183;&nbsp; <a class="att" href="https://ssr1.co.kr/useinfo/logo" target="_blank" rel="noopener"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>인증사용 로고지침</a></div>
     </div>
     <div class="scrollhint" id="hint">계약 내용을 끝까지 확인해 주십시오.</div>
+    <p class="ctr-note">&#183; 위 내용은 <b>아래 계약서 모두에 동일하게 적용</b>됩니다. 계약서마다 <b>신청 표준만 다릅니다.</b><br>
+       &#183; 내려받으시는 원문은 <b>열람용</b>이며 신청 조직 정보와 신청 표준은 비어 있습니다. 해당 내용은 서명본에 기재됩니다.</p>
   </section>
 
   <section>
-    <h2><span class="no">3</span>서명<span class="h2-right"><span class="badge-wait">서명 대기</span></span></h2>
-    <div class="agree">위의 사항에 동의합니다.</div>
-    <label class="agree-chk" id="agreechk"><input type="checkbox" disabled> <span>계약 내용을 모두 확인하였으며 이에 동의합니다<em>*</em></span></label>
-    <div class="sig">
-      <div class="sig-card">
-        <h5>신청조직</h5>
-        <div class="sig-row"><span class="lbl">성명</span><input type="text" value="대표자명 자동 입력" readonly style="background:#F2F3F0;color:var(--muted)"></div>
-        <div class="sig-row" style="margin-top:12px"><span class="lbl">서명</span>
-          <div class="stamp-box">직인<br>미리보기</div>
+    <h2><span class="no">3</span>계약서별 동의</h2>
+    <div class="sumbar">
+      <b>계약서 2건</b>
+      <span class="bar"><i id="pbar"></i></span>
+      <span class="sum-n"><em id="pnum">0</em> / 2 동의 완료</span>
+    </div>
+
+    <div class="ctr-card" data-c="1">
+      <div class="cc-head">
+        <span class="cc-no">&#9312;</span>
+        <div class="cc-t"><b>인정 인증스킴</b><span class="cc-std">ISO 9001 &#183; ISO 14001</span></div>
+        <div class="cc-right"><span class="badge-wait">서명 대기</span></div>
+      </div>
+      <div class="cc-agree">
+        <label class="agree-chk"><input type="checkbox" data-agree disabled> <span>계약 내용을 모두 확인하였으며 이에 동의합니다<em>*</em></span></label>
+        <div class="cc-sig">
+          <div class="grp"><span class="who">신청조직</span><span class="nm">대표자명 자동 입력</span>
+            <div class="stamp-sm">직인<br>미리보기</div></div>
+          <div class="grp"><span class="who">삼성표준인증원</span><span class="wait">접수 담당자 확인 후 서명됩니다</span></div>
         </div>
-        <div class="note-s" style="margin-top:10px">신청서 작성 단계에서 업로드하신 직인이 반영됩니다.</div>
-      </div>
-      <div class="sig-card">
-        <h5>삼성표준인증원</h5>
-        <div class="pend">접수 담당자 확인 후 서명됩니다.</div>
       </div>
     </div>
-    <div class="grid" style="margin-top:20px">
-      <div class="f"><label for="cd">계약일</label><input id="cd" type="text" value="2026-09-21" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+    <div class="ctr-card" data-c="2">
+      <div class="cc-head">
+        <span class="cc-no">&#9313;</span>
+        <div class="cc-t"><b>비인정 인증스킴</b><span class="cc-std">ISO 22000</span></div>
+        <div class="cc-right"><span class="badge-wait">서명 대기</span></div>
+      </div>
+      <div class="cc-agree">
+        <label class="agree-chk"><input type="checkbox" data-agree disabled> <span>계약 내용을 모두 확인하였으며 이에 동의합니다<em>*</em></span></label>
+        <div class="cc-sig">
+          <div class="grp"><span class="who">신청조직</span><span class="nm">대표자명 자동 입력</span>
+            <div class="stamp-sm">직인<br>미리보기</div></div>
+          <div class="grp"><span class="who">삼성표준인증원</span><span class="wait">접수 담당자 확인 후 서명됩니다</span></div>
+        </div>
+      </div>
     </div>
+  </section>
+
+  <section>
+    <h2><span class="no">4</span>계약 체결일</h2>
+    <div class="grid">
+      <div class="f"><label for="cd">계약일</label><input id="cd" type="text" value="양측 서명 후 확정됩니다" readonly style="background:#F2F3F0;color:var(--muted)"></div>
+    </div>
+    <p class="note-s" style="margin-top:10px">계약은 신청조직과 삼성표준인증원 양측이 서명한 날 효력이 발생합니다 (계약서 2.1). 접수 담당자 확인 후 계약일이 기재됩니다.</p>
   </section>
 
   <div class="dl-note">
     <b>계약서 내려받기</b>
-    <ul>
-      <li>이 화면 &#183; 서명 전 &nbsp;&#8212;&nbsp; 계약서 원문 (열람용, 서명란 비어 있음)</li>
-      <li>최종 확인 &#183; 제출 &nbsp;&#8212;&nbsp; 기업 서명본</li>
-      <li>신청현황 조회 &#183; 계약 확정 후 &nbsp;&#8212;&nbsp; 양측 서명이 들어간 계약서 최종본</li>
-    </ul>
+    <table class="dl-t">
+      <thead><tr><th>시점</th><th>받는 곳</th><th>내용</th></tr></thead>
+      <tbody>
+        <tr><td>서명 전</td><td>이 화면</td>
+            <td>열람용 계약서 원문</td></tr>
+        <tr><td>계약 확정 후</td><td>신청현황 조회</td>
+            <td>양측 서명과 계약일이 기재된 계약서 최종본</td></tr>
+      </tbody>
+    </table>
+    <p>&#183; 계약 확정은 <b>계약 검토가 완료되고 심사 진행이 가능한 것으로 확인된 시점</b>입니다.<br>
+       &#183; 계약이 확정된 뒤에 <b>취소나 변경</b>이 필요한 경우에는 삼성표준인증원으로 문의해 주시면 안내해 드립니다.</p>
   </div>
 
   <div class="actions">
@@ -458,22 +546,41 @@
 </footer>
 
 <script>
-/* 계약 내용을 끝까지 스크롤하면 동의 체크박스 활성화 */
+/* 계약 내용 스크롤 확인 → 계약서별 동의 → 진행 요약 */
 (function(){
-  var body = document.getElementById('ctrbody');
-  var chk  = document.querySelector('#agreechk input');
-  var hint = document.getElementById('hint');
-  if (!body || !chk) return;
-  function check(){
-    if (body.scrollTop + body.clientHeight >= body.scrollHeight - 8) {
-      chk.disabled = false;
-      hint.textContent = '계약 내용을 모두 확인하셨습니다.';
-    }
+  var box   = document.getElementById('ctrbody');
+  var hint  = document.getElementById('hint');
+  var cards = [].slice.call(document.querySelectorAll('.ctr-card'));
+  var pbar  = document.getElementById('pbar'), pnum = document.getElementById('pnum');
+  var next  = document.querySelector('.actions .btn.p');
+
+  function sync(){
+    var n = cards.filter(function(c){ return c.classList.contains('done'); }).length;
+    pnum.textContent = n;
+    pbar.style.width = (n / cards.length * 100) + '%';
+    next.disabled = n < cards.length;
+    next.style.opacity = n < cards.length ? .5 : 1;
   }
-  body.addEventListener('scroll', check);
-  check();
+
+  box.addEventListener('scroll', function(){
+    if (box.scrollTop + box.clientHeight >= box.scrollHeight - 12) {
+      cards.forEach(function(c){ c.querySelector('[data-agree]').disabled = false; });
+      hint.textContent = '확인이 완료되었습니다. 아래에서 계약서별로 동의해 주십시오.';
+    }
+  });
+
+  cards.forEach(function(card){
+    var chk = card.querySelector('[data-agree]');
+    var badge = card.querySelector('.badge-wait, .badge-done');
+    chk.addEventListener('change', function(){
+      if (chk.checked) { card.classList.add('done'); badge.className='badge-done'; badge.textContent='동의 완료'; }
+      else { card.classList.remove('done'); badge.className='badge-wait'; badge.textContent='서명 대기'; }
+      sync();
+    });
+  });
+
+  sync();
 })();
 </script>
-
 </body>
 </html>
