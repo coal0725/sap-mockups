@@ -22,8 +22,10 @@
   4. 인증상태는 표시 문자열이 아니라 data-state 값으로 판정하십시오.
        valid 유효 · deferred 유예 · suspended 정지 · withdrawn 취소
        · 만료는 상태가 아닙니다. 인증만료일이 지나고 갱신하지 않으면 취소로 전환됩니다.
-       · 유예는 천재지변 등으로 심사가 미뤄진 경우입니다. 인증 자체는 유효하므로
-         유효와 같은 본문색으로 표시하고, 정지 · 취소만 회색으로 둡니다.
+       · 유예는 천재지변 등으로 심사가 미뤄진 경우입니다. 인증 자체는 유효합니다.
+       · 색은 세 단계입니다. 유효는 초록, 유예는 본문색, 정지 · 취소는 회색입니다.
+         강조색 배지는 쓰지 않습니다 — 정지 · 취소를 붉게 띄우면 낙인이 되므로,
+         긍정 쪽에만 색을 주고 부정 쪽은 회색으로 물러나게 합니다.
   5. 「시안 확인용」으로 표시된 블록과 스크립트 하단을 삭제하십시오.
   6. 데이터는 전부 가상입니다. 시드 데이터의 회사명을 썼습니다.
 
@@ -176,6 +178,7 @@
     --cs-navy:#1A2A4F; --cs-navy-soft:#E9ECF3;
     --cs-ink:#1A1D1B;  --cs-muted:#6B706C;  --cs-line:#E2E3DE;
     --cs-card:#FFFFFF; --cs-req:#C0392B;    --cs-dim:rgba(14,18,26,.52);
+    --cs-ok:#207A4B;   /* 유효 — SSR 로고 초록 계열. 흰 배경 대비 4.8:1 */
   }
 
   /* ─── 2. 오버레이 ─── */
@@ -244,8 +247,8 @@
   .cs-city{color:var(--cs-muted)}
   .cs-no,.cs-date{font-variant-numeric:tabular-nums}
   .cs-date{color:var(--cs-muted)}
-  /* 인증상태 — 강조색 배지를 쓰지 않습니다. 유효만 본문색, 나머지는 회색 */
-  .cs-state[data-state="valid"],
+  /* 인증상태 — 유효 초록 · 유예 본문색 · 정지 · 취소 회색. 배지는 쓰지 않습니다 */
+  .cs-state[data-state="valid"]{color:var(--cs-ok); font-weight:700}
   .cs-state[data-state="deferred"]{color:var(--cs-ink)}
   .cs-state[data-state="suspended"],
   .cs-state[data-state="withdrawn"]{color:var(--cs-muted)}
