@@ -463,6 +463,27 @@
   .md p b{color:var(--req)}
   .md-act{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;flex-wrap:wrap}
   .md-act .btn{margin:0}
+  @media (max-width:560px){
+    header{padding:0 16px}
+    .hd{height:auto;padding:14px 0;flex-wrap:wrap;gap:10px}
+    .hd-left{flex:1 1 100%;flex-wrap:wrap;gap:8px 11px}
+    .logo{height:27px}
+    .org{font-size:15px}
+    .bar{display:none}
+    .sub{font-size:13px;white-space:normal}
+    .home-btn{font-size:13px;padding:8px 11px}
+    .tip .tiptext{width:min(250px,calc(100vw - 48px));max-width:none;left:auto;right:-8px;transform:none}
+    .tip .tiptext::after{left:auto;right:14px;transform:none}
+    table.rev-t{font-size:13px}
+    table.rev-t th,table.rev-t.two th{width:86px}
+    table.rev-t th,table.rev-t td{padding:9px 9px;word-break:break-word}
+  }
+  @media (max-width:400px){
+    table.rev-t{font-size:12.5px;table-layout:fixed;width:100%}
+    table.rev-t th,table.rev-t.two th{width:74px}
+    table.rev-t th,table.rev-t td{padding:8px 7px}
+    table.rev-t td .chip{font-size:11px;margin-right:4px}
+  }
 </style>
 </head>
 <body>
