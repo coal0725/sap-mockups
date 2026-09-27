@@ -173,8 +173,20 @@
     첨부 대상이 아닙니다 — 이 화면이 그 서류를 만들어냅니다.
     FN-CH-005 의 「법인등기부등본」은 서식에 없는 항목입니다.
 
+  조회 결과는 세 갈래입니다
+    일치          보유 인증표준 목록을 표시하고 신청을 계속합니다
+    정지 · 취소     진행할 수 없음을 알리고 인증원 문의로 보냅니다
+    불일치         입력을 다시 하도록 안내합니다
+
+    불일치에서는 어느 값이 틀렸는지 구분하지 않습니다 — SC007-03 과 같은 원칙입니다.
+    사업자등록번호가 공개 정보이므로, 「사업자등록번호는 맞고 인증번호가 틀렸다」를
+    알려 주면 번호를 맞혀 볼 수 있게 됩니다.
+    정지 · 취소는 붉은 경고로, 불일치는 중립 톤으로 두었습니다 —
+    전자는 진행이 막힌 것이고 후자는 다시 입력하면 되는 것이므로 무게가 다릅니다.
+
   시안 확인용 동작
-    인증번호 끝이 9999 이면 정지 · 취소 안내가 표시됩니다.
+    인증번호 뒤 5자리에 00000 을 넣으면 조회 실패가 표시됩니다.
+    끝이 9999 이면 정지 · 취소 안내가 표시됩니다.
     그 밖의 값이면 보유 인증표준 목록이 표시됩니다.
     실제로는 서버 응답으로 갈라집니다.
 -->
@@ -299,6 +311,9 @@
   .stdgrp:first-of-type{margin-top:4px}
   .stdgrp-h{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.4px;margin-bottom:8px}
   .decl{font-size:15px;line-height:1.75;padding:19px 21px;background:var(--navy-soft);border-radius:10px;margin-bottom:22px}
+  .nf{border:1px solid var(--line);border-radius:10px;padding:18px 20px;background:#FAFAF8}
+  .nf-t{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px}
+  .nf p{margin:0;font-size:14px;color:var(--muted);line-height:1.8}
   .warn{border:1px solid #E4C4BE;background:#FDF7F6;border-radius:10px;padding:18px 20px;margin-top:16px}
   .warn-t{font-size:14px;font-weight:700;color:#A2372A;display:flex;align-items:center;gap:8px;margin-bottom:9px}
   .warn p{margin:0;font-size:14px;line-height:1.7}
@@ -487,6 +502,17 @@
         인증 확인
       </button>
       <span class="sub-hint">확인이 완료되면 보유하신 인증표준이 아래에 표시됩니다</span>
+    </div>
+
+    <div class="blk" data-when="인증확인:불일치" hidden>
+      <div class="nf">
+        <div class="nf-t">입력하신 정보와 일치하는 인증이 없습니다</div>
+        <p>
+          &#183; 사업자등록번호와 인증번호를 다시 확인해 주십시오.<br>
+          &#183; 인증번호 뒤 5자리는 <b>인증서에 기재된 번호</b>입니다.<br>
+          &#183; 계속 조회되지 않으면 <b>ssr@ssr1.co.kr</b> 로 기업명과 함께 문의해 주십시오.
+        </p>
+      </div>
     </div>
 
     <div class="blk" data-when="인증확인:정지취소" hidden>
@@ -922,11 +948,12 @@
   var btn = document.getElementById('chk-cert');
   if (!btn) return;
   btn.addEventListener('click', function(){
-    var cno = (document.getElementById('cno') || {}).value || '';
-    var stopped = /9999$/.test(cno.trim());
+    var cno = ((document.getElementById('cno') || {}).value || '').trim();
+    var mode = /^0{5}$/.test(cno) ? '불일치'
+             : /9999$/.test(cno)  ? '정지취소'
+             : '완료';
     document.querySelectorAll('[data-when^="인증확인:"]').forEach(function(el){
-      var v = el.getAttribute('data-when').split(':')[1];
-      el.hidden = stopped ? (v !== '정지취소') : (v !== '완료');
+      el.hidden = el.getAttribute('data-when').split(':')[1] !== mode;
     });
   });
 })();
