@@ -1,0 +1,930 @@
+<!doctype html>
+<!--
+  SC-010  인증변경 신청          /change
+  삼성표준인증원 SAP 인증심사 플랫폼 개선안 시안
+  장은수 · 2026-09-28
+
+  기준 문서 : SSR 인증범위 변경 신청 / 확인서 서식
+  이 시안은 서식의 기업 기재란을 화면으로 옮긴 것입니다.
+  서식 하단의 「이후 내용은 삼성표준인증원 작성란」은 관리자 화면
+  SC-096 변경신청 상세 / 처리 의 영역이므로 이 화면에 없습니다.
+
+  변경 유형은 서식의 다섯 가지입니다
+    상호 · 조직 및 경영진 · 주소/사업장 · 인증범위(품목) · 기타변경 및 통보사항
+    FN-CH-001 의 목록과 일치합니다.
+    현재 화면의 「표준」 「직원수」와 FN-CH-003 의 「사업장 이전」은
+    서식에 없는 항목이므로 넣지 않았습니다.
+    인증표준 추가는 변경이 아니라 신규 신청입니다.
+    인원은 유형이 아니라 상호 블록의 입력란입니다.
+
+  용어는 SC-002 신청서 작성과 맞추었습니다
+    종업원 수 · 담당자명 · 회사 전화번호 · 회사 팩스번호 · ISO 담당자 E-mail
+    서식은 「인 원」 「담당자」 「전화번호」 「팩스번호」로 되어 있습니다.
+    같은 값을 두 화면에서 다르게 부르면 DB 필드도 갈라지므로 화면 용어를 통일했고,
+    서식 문구 정정은 인증원 내부 검토 사항입니다.
+
+  표준 표기
+    「ISO 9001:2015」처럼 규격명과 판만 적었습니다.
+    서식에는 「ISO 9001:2015 / KS Q ISO 9001:2015」로 병기되어 있으나,
+    이 화면은 기업이 보유한 인증서를 고르는 곳이고 인증번호로 이미 특정되므로
+    KS 병기가 선택에 기여하지 않습니다.
+    SC-002 신청서 작성도 「ISO 9001」로 적고 있어 표기가 맞습니다.
+    KS 병기는 인증서와 계약서에서 의미가 있습니다.
+
+  인정 스킴과 자체 스킴
+    인정   ISO 9001(Q) · 14001(E) · 45001(O) · 27001(IS) · 37001(AB)
+    자체   ISO 22000(F) 등
+    서식의 인증번호 다섯 칸(SSR-Q · E · O · IS · AB)이 인정 5종과 정확히 일치하므로
+    서식은 인정 스킴 전용으로 만들어진 것으로 보입니다.
+    자체 인증이 전체의 약 1/3 이므로 서식에 「기타(    ) -」 칸을 추가하거나
+    자체 전용 서식을 두어야 합니다. 검수 항목이 아니라 서식 개정 사항입니다.
+
+  속성 규약
+    data-req        필수 입력 항목. 값은 오류 목록에 표시되는 이름입니다
+    data-reqgroup   선택형 필수 항목. 하나 이상 선택되어야 합니다
+    data-when       조건부 표시. 「필드:값」 형식이며 값이 선택될 때만 표시됩니다
+                    변경신청내용:상호 / 조직 / 주소 / 범위 / 기타
+                    인증확인:완료 / 정지취소
+
+  조회와 자동 채움 — FN-CH-001 비고 「기존 인증정보 자동 로드 X」를 조정했습니다
+  변경 대상 인증표준은 전부 선택된 상태가 기본값입니다
+    두 실수의 비용이 비대칭이기 때문입니다.
+      다 선택된 채로 접수되면   인증원이 확인 단계에서 대상을 줄이면 됩니다
+      일부만 선택되어 접수되면  나머지 인증서에 옛 상호 · 주소가 남고
+                             한참 뒤에 발견됩니다
+    상호 · 주소 변경은 물론이고 인증범위 변경도 여러 표준을 한꺼번에
+    바꾸는 경우가 많으므로, 빈도상으로도 전체 선택이 기본값인 편이 손이 덜 갑니다.
+    안내 문구에 「인증범위 변경처럼」 같은 예시를 넣지 않았습니다 —
+    인증범위 변경이 곧 일부 표준이라는 잘못된 암시가 되어
+    기업이 불필요하게 표준을 해제하게 됩니다.
+    전부 해제하면 필수 항목 검증에 걸립니다.
+
+  조회 열쇠는 사업자등록번호 + 인증번호 뒤 5자리입니다.
+    기업을 특정하는 것은 사업자등록번호이고 뒤 5자리는 본인 확인용 보조 열쇠이므로,
+    보유한 인증서 중 아무 한 장의 번호로도 조회됩니다.
+    인정 스킴(0 으로 시작)과 자체 스킴(2 로 시작)의 일련번호가 서로 다르기 때문입니다.
+
+    두 열쇠가 모두 공개 정보이므로 채우는 범위를 나누었습니다.
+      실제값 채움   회사명(국문 · 영문) · Home-Page · 사업자등록번호 · 인증번호
+                   SSR-P-901 3.2.2 (c)(g) 공개 범위 안의 항목입니다
+      가려 표시     대표자 · 소재지 · 담당자명 · 회사 전화번호 · E-mail
+                   공개 범위에 없는 항목이므로 입력란은 비워 두고,
+                   그 아래에 「등록된 값  김**」처럼 마스킹해 보여 줍니다.
+                   기업은 이것으로 자사 기록임을 확인하고 실제 값을 직접 채웁니다.
+                   가린 값이 그대로 제출되는 사고를 막습니다.
+
+    조회 직후에 기업 정보 카드를 따로 두지 않았습니다.
+    2 기업 정보의 마스킹 힌트가 같은 값을 이미 보여 주므로 중복입니다.
+    조회 성공은 인증표준 목록이 나타나는 것으로, 기업 확인은
+    회사명 입력란에 실제 상호가 채워지는 것으로 전달됩니다.
+
+  2 기업 정보는 조회 표시 전용입니다
+    변경 전 값을 4 변경 내용에서 받으므로 2 에서 또 입력받으면 같은 값을 두 번 씁니다.
+    회사명 · 대표자 · 주소는 읽기 전용으로 두고, 가릴 항목만 마스킹합니다.
+    입력란은 하나도 두지 않았습니다.
+    담당자 변경도 「변경」이므로 기타변경 및 통보사항으로 받습니다.
+    2 에 담당자 입력란을 두면 같은 정보를 받는 경로가 둘이 되어,
+    기업이 2 에만 새 담당자를 적고 기타에는 적지 않았을 때
+    그것이 변경 신청인지 단순 기재인지 인증원이 판단할 수 없습니다.
+    등록된 담당자와 연락처를 마스킹해 보여 주는 것은,
+    기업이 「지금 사람과 다르다」를 알아채고 기타 통보사항에 적게 하기 위함입니다.
+    종업원 수는 조회 표시에 두지 않았습니다. 조회 열쇠가 공개 정보이므로
+    제3자가 영업 정보를 볼 수 있어, 조직 변경 블록에서 변경 전 · 후로만 받습니다.
+
+  대표자 · 종업원 수를 「조직 및 경영진」에 둔 이유
+    서식은 두 항목을 상호 칸에 붙여 두었으나 이는 지면 배치이며 의미 분류가 아닙니다.
+    상호만 바뀌고 대표자는 그대로인 경우가 더 많고 그 반대도 마찬가지입니다.
+    「조직 및 경영진」이라는 유형명에 대표자가 빠지면 그 유형이 담을 항목이 없어집니다.
+
+  화면에 없는 것 — 의도적으로 넣지 않았습니다
+    임시저장        서식이 신청서와 확인서가 한 장으로 묶인 양식입니다.
+                   앉은 자리에서 작성해 제출하므로 이어쓰기가 필요하지 않습니다.
+                   FN-CH-004 와 SC-011 은 삭제 대상으로 판단했습니다.
+    접수번호        인증변경은 번호를 발급하지 않고 인증원이 직접 연락합니다.
+    감사 모드 필터링   이 화면은 비회원 화면이므로 FN-AD-041 감사 모드의
+                   필터링 대상이 아닙니다. 감사 기간에도 자체 인증 건의
+                   변경 신청을 받아야 하며, 자체 인증이 전체의 약 1/3 이라
+                   가리면 그 기간 업무가 멈춥니다. 검수 항목 SC010-22 입니다.
+
+  신청인은 입력란이 아니라 자동 기재입니다
+    열어 두면 대표자 변경 건에서 「변경 후」 대표자 이름을 적는 기업이 있습니다.
+    그러면 변경 전 대표자가 서명한 신청서가 아니게 되어 효력이 문제됩니다.
+    화면에는 마스킹한 값을 읽기 전용으로 보여 주고,
+    제출되는 값은 서버가 보관한 실제 대표자명으로 채워 주십시오.
+    「대표자가 변경되는 경우에도 변경 전 대표자가 신청인입니다」를 함께 적었습니다.
+
+  「대표자 서명 또는 직인」 — 두 가지를 모두 받습니다
+    서식의 「신청인 :        (인)」 란에 대응합니다.
+    실무에서 회사 직인을 찍는 기업과 대표자가 서명하는 기업이 모두 있으므로
+    한쪽으로 고정하지 않았습니다.
+    SC-002 신청서 작성은 「회사 직인」으로만 적혀 있습니다 —
+    신청 단계에서도 서명이 통용되는지는 인증원 확인이 필요하며,
+    통용된다면 SC-002 의 문구도 같이 고쳐야 합니다.
+    다만 여기서 받은 이미지는 이 변경신청서에만 삽입되며,
+    SC-002 처럼 신청서 · 설문서 · 계약서에 재사용하지 않습니다.
+    서명 · 직인 이미지는 오용될 수 있으므로 신청 건에 묶어 보관하고
+    인증원 담당자 외에는 열람하지 않아야 합니다 — 검수 항목 SC010-23 입니다.
+
+  주소 · 인증범위는 주소 검색을 쓰지 않고 자유 입력으로 두었습니다
+    축소  기존 사업장 · 품목을 빼는 것이므로 「새 주소를 찾는」 도구로 표현되지 않습니다
+    추가  사업장 · 품목이 여러 개가 될 수 있으나 주소 검색은 한 번에 하나만 반환합니다
+    영문  인증서의 영문 표기는 기업이 써 온 방식이 있어(Seongnam-si / Sungnam 등)
+          우편번호 API 표기를 강제하면 기존 인증서와 어긋납니다
+    변경 전 칸은 이미 인증서에 기재된 값을 옮겨 적는 것이므로 검색 대상이 아닙니다.
+    안내는 「인증서에 기재될 표기를 그대로 사용해 주십시오」 한 줄로 두었습니다.
+    변경 후 값이 곧 새 인증서의 문구가 되므로, 기업이 임의로 다듬으면
+    재발행된 인증서의 표기가 달라져 이력이 끊깁니다.
+    품목은 여러 개여도 줄을 나누지 않고 한 문장으로 서술합니다
+    — 인증서 표기 방식이 그렇기 때문입니다.
+    SC-002 신청서 작성은 본사 주소 한 곳을 정확히 받는 화면이므로 주소 검색이 맞습니다.
+    두 화면의 방식이 다른 것은 의도한 것입니다.
+
+  서버에서 정해 주실 것
+    인증 확인 응답   사업자등록번호 + 인증번호 뒤 5자리로 조회한 결과로
+                   보유 인증표준 목록(표준명 · 인증번호 · 인정 / 자체 구분)과
+                   인증상태, 그리고 마스킹한 기업 정보를 내려 주십시오.
+                   마스킹은 서버에서 하고 화면은 받은 문자열을 그대로 표시합니다.
+                   상태가 유효가 아니면 신청을 진행할 수 없습니다.
+                   상태 값은 SC-008 과 같은 유효 · 정지 · 취소 세 가지입니다.
+    첨부서류 업로드    파일 5개 고정 슬롯이며, 각 줄마다 서류 종류를 고르게 했습니다.
+                   종류는 매뉴얼 · 조직도 · 사업자등록증 사본 · 기타 네 가지입니다.
+                   「기타」를 고르면 서류 이름 입력란이 나타납니다 —
+                   종류만 「기타」로 오면 인증원이 무슨 파일인지 알 수 없습니다.
+                   5개를 넘는 자료와 대용량 파일은 메일로 받습니다.
+    첨부서류 허용 형식   xlsx · pdf · jpg · png · docx 로 적었습니다. FN-CH-005 기준입니다.
+                   매뉴얼은 용량이 큰 파일이므로 업로드 한도를 확인해 주십시오.
+
+  첨부서류에 필요 서류 목록을 두지 않았습니다
+    필요한 서류가 건마다 달라, 화면에 목록을 박아 두면 그것이 틀린 안내가 됩니다.
+    기업이 목록에 없는 서류를 빼거나, 목록에 있다는 이유로 불필요한 서류를
+    억지로 만들어 오게 됩니다.
+    대신 선택한 변경 주제만 나열하고, 종류를 고를 수 있는 5개 슬롯을 둡니다.
+    부족한 서류는 인증원이 확인 연락을 드릴 때 안내합니다.
+    참고로 통상 받는 서류는 사업자등록증 사본 · 매뉴얼 · 조직도 세 가지입니다.
+    서식에 함께 적힌 「인증범위 확인서」는 인증변경 신청서류 자체를 가리키므로
+    첨부 대상이 아닙니다 — 이 화면이 그 서류를 만들어냅니다.
+    FN-CH-005 의 「법인등기부등본」은 서식에 없는 항목입니다.
+
+  시안 확인용 동작
+    인증번호 끝이 9999 이면 정지 · 취소 안내가 표시됩니다.
+    그 밖의 값이면 보유 인증표준 목록이 표시됩니다.
+    실제로는 서버 응답으로 갈라집니다.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<title>인증변경 신청 | 삼성표준인증원</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --navy:#1A2A4F; --navy-soft:#E9ECF3; --gold:#C9A227;
+    --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE;
+    --bg:#F7F7F4; --card:#FFFFFF; --req:#C0392B;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  html,body{margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,'Malgun Gothic',sans-serif;
+       background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+
+  header{background:var(--card);border-bottom:1px solid var(--line);padding:0 24px}
+  .hd{max-width:1080px;margin:0 auto;height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .hd-left{display:flex;align-items:center;gap:14px;min-width:0}
+  .logo{height:32px;width:auto;display:block;flex-shrink:0}
+  .org{font-size:17px;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
+  .bar{width:1px;height:18px;background:var(--line)}
+  .sub{font-size:15px;color:var(--muted);white-space:nowrap}
+  .home-btn{font-size:14px;font-weight:600;color:var(--navy);display:flex;align-items:center;gap:6px;padding:10px 14px;border:1px solid var(--line);border-radius:8px;white-space:nowrap;transition:border-color .18s ease}
+  .home-btn:hover{border-color:var(--navy)}
+
+  main{max-width:1080px;margin:0 auto;padding:40px 24px 48px}
+
+  .steps{display:flex;align-items:center;gap:0;margin-bottom:32px;flex-wrap:wrap}
+  .st{flex:1 1 130px;display:flex;align-items:center;gap:10px;padding:14px 16px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+  .st.on{background:var(--navy);border-color:var(--navy);color:#fff}
+  .st-n{width:26px;height:26px;flex-shrink:0;border-radius:999px;background:var(--navy-soft);color:var(--navy);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .st.on .st-n{background:var(--gold);color:var(--navy)}
+  .st-t{font-size:14px;font-weight:600}
+  .st-sep{width:24px;text-align:center;color:#B4B8B3;flex-shrink:0}
+
+  h1{margin:0 0 8px;font-size:32px;font-weight:800;letter-spacing:-.02em}
+  .lead{margin:0;font-size:15px;color:var(--muted);line-height:1.6}
+  .reqnote{margin:16px 0 28px;font-size:13px;color:var(--muted)}
+  .reqnote em{color:var(--req);font-style:normal;font-weight:700}
+
+  section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:26px 28px;margin-bottom:20px}
+  h2{margin:0 0 20px;font-size:17px;font-weight:700;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .no{width:25px;height:25px;border-radius:7px;background:var(--navy);color:#fff;font-size:13px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  h3{margin:0 0 14px;font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
+  h3::before{content:"";width:3px;height:13px;background:var(--gold);border-radius:2px}
+  .sub-sec{margin-top:26px}
+  .hint{font-size:13px;color:var(--muted);font-weight:400}
+
+  /* 도움말 툴팁 */
+  .tip{position:relative;display:inline-flex;align-items:center;justify-content:center;
+       width:15px;height:15px;margin-left:5px;flex:none;border-radius:50%;
+       border:1px solid #A8AEA9;background:#fff;color:#6B706C;
+       font-size:10px;font-weight:700;line-height:1;cursor:help;vertical-align:middle;
+       transition:border-color .15s ease,color .15s ease}
+  .tip:hover{border-color:var(--navy);color:var(--navy)}
+  .tip .tiptext{position:absolute;left:50%;bottom:calc(100% + 9px);transform:translateX(-50%);
+       width:250px;padding:10px 13px;border-radius:8px;background:#26303F;color:#fff;
+       font-size:12px;font-weight:400;line-height:1.6;letter-spacing:-.01em;text-align:left;
+       opacity:0;visibility:hidden;pointer-events:none;z-index:40;
+       box-shadow:0 6px 18px rgba(0,0,0,.18);transition:opacity .15s ease}
+  .tip .tiptext::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+       border:5px solid transparent;border-top-color:#26303F}
+  .tip:hover .tiptext,.tip:focus-visible .tiptext{opacity:1;visibility:visible}
+
+  .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 24px}
+  .full{grid-column:1 / -1}
+  .f{display:flex;flex-direction:column;gap:7px}
+  .f > label{font-size:14px;font-weight:600}
+  .f > label em{color:var(--req);font-style:normal;margin-left:2px}
+  input[type=text],input[type=email],input[type=tel],input[type=number],textarea{
+    font-family:inherit;font-size:15px;padding:11px 13px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;width:100%}
+  textarea{min-height:84px;resize:vertical}
+  ::placeholder{color:#A8AEA9}
+  input:focus,textarea:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+  .sub-hint{font-size:12px;color:var(--muted);line-height:1.5}
+
+  .opts{display:flex;gap:10px;flex-wrap:wrap;padding:2px 0}
+  .opt{display:flex;align-items:center;gap:8px;font-size:15px;padding:11px 17px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .opt:hover{border-color:var(--navy);background:#FAFBFC}
+  .opt small{color:var(--muted);font-size:13px}
+  input[type=file]{width:100%;font-size:14px;padding:13px 15px;border:1px dashed #C9CCC6;border-radius:8px;background:#fff;cursor:pointer}
+  input[type=file]:hover{border-color:var(--navy)}
+  .opts.vert{flex-direction:column;align-items:stretch;gap:9px}
+  .opts.vert .opt{justify-content:flex-start}
+  .blk{border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin-top:16px;background:#FCFCFB}
+  .blk-h{font-size:14px;font-weight:700;color:var(--navy);margin:0 0 16px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+  .upload{display:flex;align-items:center;gap:11px;padding:16px 18px;border:1px dashed #A8AEA9;border-radius:8px;background:#FAFAF8;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .upload:hover{border-color:var(--navy);background:var(--navy-soft)}
+  .upload small{font-weight:400;color:var(--muted);font-size:13px}
+  .upload svg{flex-shrink:0}
+  .upload span{min-width:0;overflow-wrap:anywhere}
+  .uprows{display:flex;flex-direction:column;gap:11px}
+  .uprow{display:grid;grid-template-columns:24px minmax(0,200px) minmax(0,1fr);align-items:center;gap:11px}
+  .uprow:has(.upetc:not([hidden])){grid-template-columns:24px minmax(0,200px) minmax(0,1fr) minmax(0,1fr)}
+  .upno{font-size:13px;color:var(--muted);text-align:center}
+  .upsel{font-size:14px;padding:11px 12px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;width:100%;color:var(--ink)}
+  .upsel:focus{outline:2px solid var(--navy);outline-offset:1px;border-color:var(--navy)}
+  .upetc{font-size:14px !important;padding:11px 12px !important}
+  .upfile{font-size:13.5px}
+  .upnote{margin:18px 0 0;font-size:13px;color:var(--muted);line-height:1.8}
+  .sect-empty{margin:0;font-size:14px;color:var(--muted);padding:16px 0}
+  .cur{margin:0 0 26px;display:grid;grid-template-columns:132px minmax(0,1fr);gap:0;
+       border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:15px}
+  .cur dt{background:#FAFAF8;color:var(--muted);font-size:14px;padding:12px 15px;border-bottom:1px solid var(--line)}
+  .cur dd{margin:0;padding:12px 15px;border-bottom:1px solid var(--line);border-left:1px solid var(--line)}
+  .cur dt:nth-last-of-type(1),.cur dd:nth-last-of-type(1){border-bottom:0}
+  .cur.one{grid-template-columns:132px minmax(0,1fr);margin:0 0 20px}
+  .cur-n{margin:-10px 0 0;font-size:13px;color:var(--muted);line-height:1.8}
+  .cur dd.mask{letter-spacing:.3px;color:var(--muted)}
+  .sect-lead{margin:-6px 0 20px;font-size:14px;color:var(--muted);line-height:1.65}
+  .prefill{display:block;margin-top:7px;font-size:13px;color:var(--muted)}
+  .prefill b{color:var(--ink);font-weight:600;letter-spacing:.2px}
+  .stdgrp{margin-top:14px}
+  .stdgrp:first-of-type{margin-top:4px}
+  .stdgrp-h{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.4px;margin-bottom:8px}
+  .decl{font-size:15px;line-height:1.75;padding:19px 21px;background:var(--navy-soft);border-radius:10px;margin-bottom:22px}
+  .warn{border:1px solid #E4C4BE;background:#FDF7F6;border-radius:10px;padding:18px 20px;margin-top:16px}
+  .warn-t{font-size:14px;font-weight:700;color:#A2372A;display:flex;align-items:center;gap:8px;margin-bottom:9px}
+  .warn p{margin:0;font-size:14px;line-height:1.7}
+  .checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .chk{display:flex;align-items:flex-start;gap:10px;font-size:15px;padding:13px 15px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .chk:hover{border-color:var(--navy);background:#FAFBFC}
+  .chk small{color:var(--muted);font-size:13px}
+  .chk input{margin-top:3px;flex-shrink:0}
+  .chk-b{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .chk-b b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .chk-b small{font-size:12px;line-height:1.5;color:var(--muted)}
+
+  .upload{display:flex;align-items:center;gap:11px;padding:16px 18px;border:1px dashed #A8AEA9;border-radius:8px;background:#FAFAF8;font-size:15px;font-weight:600;color:var(--ink);cursor:pointer;transition:border-color .18s ease,background .18s ease}
+  .upload:hover{border-color:var(--navy);background:var(--navy-soft)}
+  .upload small{font-weight:400;color:var(--muted);font-size:13px}
+
+  .addr-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .btn-sm{font-family:inherit;font-size:14px;font-weight:700;padding:11px 16px;border-radius:8px;border:1px solid var(--navy);background:#fff;color:var(--navy);cursor:pointer;display:inline-flex;align-items:center;gap:7px;white-space:nowrap;transition:background .18s ease,color .18s ease}
+  .btn-sm:hover{background:var(--navy);color:#fff}
+  .btn-sm:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  .inline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:15px}
+  .inline input{width:84px}
+
+  .errbox{background:#FDECEC;border:1px solid #F0C9C9;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+  .errbox-t{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;color:#A13F3F;margin-bottom:14px}
+  .errbox ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+  .errbox li a{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#A13F3F;background:#fff;border:1px solid #F0C9C9;border-radius:8px;padding:9px 13px;transition:background .18s ease,border-color .18s ease}
+  .errbox li a:hover{background:#A13F3F;border-color:#A13F3F;color:#fff}
+  .invalid input,input.invalid,textarea.invalid{border-color:#C0392B;background:#FFFBFB}
+  .invalid > label{color:#A13F3F}
+  .err-msg{font-size:12px;color:#C0392B;font-weight:600}
+
+  /* 개인정보 수집 · 이용 동의 */
+  .consent{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px 26px;margin-bottom:20px}
+  .consent-h{display:flex;align-items:center;gap:9px;font-size:15px;font-weight:700;margin-bottom:10px}
+  .consent > p{margin:0 0 14px;font-size:13px;color:var(--muted);line-height:1.6}
+  .consent details{margin-bottom:16px}
+  .consent summary{font-size:13px;font-weight:600;color:var(--navy);cursor:pointer;list-style:none;
+                   display:inline-flex;align-items:center;gap:6px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;
+                   transition:border-color .18s ease,background .18s ease}
+  .consent summary:hover{border-color:var(--navy);background:#FAFBFC}
+  .consent summary::-webkit-details-marker{display:none}
+  .consent summary::after{content:"\25BE";font-size:10px}
+  .consent details[open] summary::after{content:"\25B4"}
+  .consent-body{font-size:13px;line-height:1.75;color:var(--muted);background:#FAFAF8;
+                border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin-top:10px}
+  .consent-body b{display:block;color:var(--ink);font-size:13px;margin-top:12px}
+  .consent-body b:first-child{margin-top:0}
+  .consent-body a{color:var(--navy);font-weight:600;text-decoration:underline}
+  .consent .agree-chk{margin-bottom:0}
+
+  .callout[hidden]{display:none}
+  .callout{background:var(--navy-soft);border-radius:8px;padding:13px 16px;font-size:13px;color:var(--navy);line-height:1.6;margin-top:14px}
+
+  .same-chk{display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;padding:11px 16px;border:1px solid #C9CCC6;border-radius:8px;background:#fff;cursor:pointer;margin-bottom:20px;transition:border-color .18s ease,background .18s ease}
+  .same-chk:hover{border-color:var(--navy);background:#FAFBFC}
+
+  .agree{font-size:14px;line-height:1.7;background:var(--navy-soft);border-radius:8px;padding:18px 20px;margin-bottom:18px}
+  .agree-chk{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:600;margin-bottom:20px;cursor:pointer}
+  .agree-chk em{color:var(--req);font-style:normal}
+
+  .actions{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap;
+           position:sticky;bottom:0;z-index:5;background:rgba(247,247,244,.94);backdrop-filter:blur(6px);
+           border-top:1px solid var(--line);padding:16px 0}
+  .totop{position:fixed;right:28px;bottom:108px;z-index:10;padding:13px 18px;border-radius:12px;
+         background:#fff;border:1px solid #C9CCC6;color:var(--navy);display:inline-flex;align-items:center;gap:8px;
+         font-size:14px;font-weight:700;box-shadow:0 2px 12px rgba(0,0,0,.10);transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .totop:hover{background:var(--navy);border-color:var(--navy);color:#fff}
+  .totop:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+  .left,.right{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{font-family:inherit;font-size:15px;font-weight:700;padding:14px 26px;border-radius:9px;border:1px solid #C9CCC6;background:#fff;color:var(--ink);cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+       transition:background .18s ease,border-color .18s ease,color .18s ease}
+  .btn:hover{background:#F2F3F0;border-color:#A8AEA9}
+  .btn.p{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.p:hover{background:#24386B;border-color:#24386B}
+  .btn.danger{color:#A13F3F;border-color:#D9BDBD}
+  .btn.danger:hover{background:#FDECEC;border-color:#C0392B;color:#C0392B}
+  .btn:focus-visible,.home-btn:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+  footer{background:#131313;color:#fff;margin-top:8px;padding:36px 24px}
+  .ft{max-width:1080px;margin:0 auto;display:flex;align-items:flex-start;justify-content:space-between;gap:48px;flex-wrap:wrap}
+  .ft-l{display:flex;flex-direction:column;gap:12px}
+  .ft-tel{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .ft-num{font-size:24px;font-weight:800;color:#fff}
+  .ft-sub{font-size:13px;color:#A6A6A6}
+  .ft-time{font-size:13px;color:#A6A6A6;line-height:1.8}
+  .kab{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#fff;border:1px solid #3A3A3A;border-radius:8px;padding:9px 13px}
+  .kab-tag{font-size:11px;font-weight:700;color:#fff;background:#2E2E2E;padding:3px 7px;border-radius:4px}
+  .ft-r{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+  .ft-links{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .ft-links a{font-size:13px;font-weight:700;color:#fff}
+
+  @media (max-width:860px){
+    h1{font-size:26px}
+    .grid,.checks{grid-template-columns:1fr}
+    .st-sep{display:none}
+    .steps{gap:10px}
+    .ft{flex-direction:column;gap:24px}
+    .ft-r{align-items:flex-start}
+  }
+  @media (max-width:560px){
+    header{padding:0 16px}
+    .hd{height:auto;padding:14px 0;flex-wrap:wrap;gap:10px}
+    .hd-left{flex:1 1 100%;flex-wrap:wrap;gap:8px 11px}
+    .logo{height:27px}
+    .org{font-size:15px}
+    .bar{display:none}
+    .sub{font-size:13px;white-space:normal}
+    .home-btn{font-size:13px;padding:8px 11px}
+    .uprow,.uprow:has(.upetc:not([hidden])){grid-template-columns:1fr;gap:7px;padding:13px 0;border-top:1px solid var(--line)}
+    .uprows > .uprow:first-child{border-top:0;padding-top:0}
+    .upno{text-align:left;font-weight:700}
+    .tip .tiptext{width:min(250px,calc(100vw - 48px));max-width:none;left:auto;right:-8px;transform:none}
+    .tip .tiptext::after{left:auto;right:14px;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<header id="top">
+  <div class="hd">
+    <div class="hd-left">
+      <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원" width="195" height="35">
+      <div class="org">삼성표준인증원</div>
+      <div class="bar"></div>
+      <div class="sub">인증변경 신청</div>
+    </div>
+    <a class="home-btn" href="https://ssr1.co.kr" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.6 12 3.2l9 7.4"/><path d="M5.4 9.6V19.8a1 1 0 0 0 1 1h11.2a1 1 0 0 0 1-1V9.6"/><path d="M10 20.8v-5.4h4v5.4"/></svg>
+      삼성표준인증원 홈페이지
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <h1>인증변경 신청</h1>
+  <p class="lead">이미 발급된 인증의 상호 &#183; 조직 &#183; 주소 &#183; 인증범위 변경사항을 신청하실 수 있습니다.</p>
+  <p class="reqnote"><em>*</em> 표시는 필수 입력 항목입니다. 이 신청서는 한 화면에서 작성해 제출하는 양식이며 임시저장을 제공하지 않습니다. 작성 중인 내용은 창을 닫으면 사라집니다.</p>
+
+  <div class="errbox" id="errbox" hidden>
+    <div class="errbox-t">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+      <span id="errcount">입력하지 않은 필수 항목이 있습니다</span>
+    </div>
+    <ul id="errlist"></ul>
+  </div>
+
+  <div class="consent">
+    <div class="consent-h">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1A2A4F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      개인정보 수집 &#183; 이용 동의
+    </div>
+    <p>인증변경 신청을 위해 아래와 같이 개인정보를 수집 &#183; 이용합니다.</p>
+    <details>
+      <summary>수집 내용 전문 보기</summary>
+      <div class="consent-body">
+        <b>수집 항목</b>
+        회사명 &#183; 대표자 &#183; 사업자등록번호 &#183; 주소 &#183; 회사 연락처 / 담당자 성명 &#183; 전화번호 &#183; E-mail
+        <b>수집 &#183; 이용 목적</b>
+        인증변경 신청 접수, 변경 내용 확인 및 심의, 인증서 재발행 및 인증 유지 관리
+        <b>보유 및 이용 기간</b>
+        인증 유효기간에 1회의 인증 유효기간을 더한 기간(6년) 동안 보관하며, 기간 종료 후 안전하게 파기합니다.
+        <b>동의를 거부할 권리</b>
+        동의를 거부하실 수 있으나, 이 경우 인증변경 신청이 불가합니다.
+        <b>처리방침</b>
+        자세한 내용은 <a href="https://ssr1.co.kr/etc/privacy" target="_blank" rel="noopener">개인정보처리방침</a>에서 확인하실 수 있습니다.
+      </div>
+    </details>
+    <label class="agree-chk" data-reqgroup="개인정보 수집 &#183; 이용 동의"><input type="checkbox"> <span>개인정보 수집 &#183; 이용에 동의합니다<em>*</em></span></label>
+  </div>
+
+  <section>
+    <h2><span class="no">1</span>변경 대상 인증 확인</h2>
+    <div class="grid">
+      <div class="f"><label for="biz">사업자등록번호<em>*</em></label><input id="biz" data-req="사업자등록번호" type="text" placeholder="000-00-00000"></div>
+      <div class="f"><label for="cno">인증번호 뒤 5자리<em>*</em></label><input id="cno" data-req="인증번호 뒤 5자리" type="text" placeholder="00000" maxlength="5"><span class="sub-hint">보유하신 인증서 중 <b>아무 것이나 한 장</b>의 번호를 입력해 주십시오. 앞의 규격 표시(SSR-Q 등)는 입력하지 않으셔도 됩니다</span></div>
+    </div>
+    <div class="f">
+      <button class="btn-sm" type="button" id="chk-cert">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        인증 확인
+      </button>
+      <span class="sub-hint">확인이 완료되면 보유하신 인증표준이 아래에 표시됩니다</span>
+    </div>
+
+    <div class="blk" data-when="인증확인:정지취소" hidden>
+      <div class="warn">
+        <div class="warn-t">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4.5"/><path d="M12 16h.01"/></svg>
+          변경 신청을 진행하실 수 없습니다
+        </div>
+        <p>입력하신 인증은 현재 유효한 상태가 아닙니다. <b>ssr@ssr1.co.kr</b> 로 기업명과 함께 문의해 주십시오.</p>
+      </div>
+    </div>
+
+    <div class="blk" data-when="인증확인:완료" hidden>
+      <div class="f">
+        <label data-reqgroup="변경 대상 인증표준">변경 대상 인증표준<em>*</em></label>
+        <div class="stdgrp">
+          <div class="stdgrp-h">인정</div>
+          <div class="opts vert">
+            <label class="opt"><input type="checkbox" name="std" checked> ISO 9001:2015 <small>SSR-Q-00422</small></label>
+            <label class="opt"><input type="checkbox" name="std" checked> ISO 14001:2015 <small>SSR-E-00422</small></label>
+            <label class="opt"><input type="checkbox" name="std" checked> ISO 45001:2018 <small>SSR-O-00422</small></label>
+          </div>
+        </div>
+        <div class="stdgrp">
+          <div class="stdgrp-h">자체</div>
+          <div class="opts vert">
+            <label class="opt"><input type="checkbox" name="std" checked> ISO 22000:2018 <small>SSR-F-20137</small></label>
+          </div>
+        </div>
+        <span class="sub-hint"><b>보유하신 인증 전부가 선택되어 있습니다.</b> <b>일부 표준만 해당하는 경우</b>에만 해당하지 않는 표준을 해제해 주십시오</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">2</span>기업 정보</h2>
+    <p class="sect-lead">조회된 <b>현재</b> 인증 정보입니다. 일부 항목은 보호를 위해 가려 표시합니다.</p>
+    <dl class="cur">
+      <dt>회사명 (국문)</dt><dd>주식회사 나린테크</dd>
+      <dt>회사명 (영문)</dt><dd>NARIN TECH CO., LTD.</dd>
+      <dt>대표자</dt><dd class="mask">김**</dd>
+      <dt>본사 주소</dt><dd class="mask">경기도 성남시 ***</dd>
+      <dt>사업장 주소</dt><dd class="mask">경기도 성남시 ***</dd>
+      <dt>담당자</dt><dd class="mask">장**</dd>
+      <dt>전화번호</dt><dd class="mask">031-***-**89</dd>
+      <dt>E-mail</dt><dd class="mask">ny****@narin.co.kr</dd>
+      <dt>Home-Page</dt><dd>narintech.co.kr</dd>
+    </dl>
+    <p class="cur-n">
+      &#183; 변경하실 내용은 아래 <b>4 변경 내용</b>에 적어 주십시오.<br>
+      &#183; <b>담당자나 연락처가 바뀌었다면</b> 3 변경신청내용에서 <b>기타변경 및 통보사항</b>을 선택해 적어 주십시오.<br>
+      &nbsp;&nbsp;인증원이 확인 연락을 드리는 창구이므로 바뀌었다면 함께 알려 주십시오.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="no">3</span>변경신청내용</h2>
+    <div class="f">
+      <label data-reqgroup="변경신청내용">해당하는 항목을 모두 선택해 주십시오<em>*</em></label>
+      <div class="opts vert" id="types">
+        <label class="opt"><input type="checkbox" value="상호"> 상호</label>
+        <label class="opt"><input type="checkbox" value="조직"> 조직 및 경영진</label>
+        <label class="opt"><input type="checkbox" value="주소"> 주소 / 사업장</label>
+        <label class="opt"><input type="checkbox" value="범위"> 인증범위 (품목)</label>
+        <label class="opt"><input type="checkbox" value="기타"> 기타변경 및 통보사항</label>
+      </div>
+      <span class="sub-hint">선택하신 항목의 입력란과 첨부서류 목록이 아래에 표시됩니다. 여러 항목을 함께 신청하실 수 있습니다</span>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">4</span>변경 내용</h2>
+    <p class="sect-empty" id="no-type">위에서 변경신청내용을 선택하시면 입력란이 표시됩니다.</p>
+
+    <div class="blk" data-when="변경신청내용:상호" hidden>
+      <div class="blk-h">상호</div>
+      <div class="grid">
+        <div class="f"><label>변경 전 (국문)</label><input type="text"></div>
+        <div class="f"><label>변경 후 (국문)</label><input type="text"></div>
+        <div class="f"><label>변경 전 (영문)</label><input type="text"></div>
+        <div class="f"><label>변경 후 (영문)</label><input type="text"></div>
+      </div>
+      <span class="sub-hint"><b>해당하는 란에만</b> 작성해 주십시오</span>
+    </div>
+
+    <div class="blk" data-when="변경신청내용:조직" hidden>
+      <div class="blk-h">조직 및 경영진</div>
+      <div class="grid">
+        <div class="f"><label>대표자 변경 전</label><input type="text"></div>
+        <div class="f"><label>대표자 변경 후</label><input type="text"></div>
+        <div class="f"><label>종업원 수 변경 전</label><input type="text" placeholder="명"></div>
+        <div class="f"><label>종업원 수 변경 후</label><input type="text" placeholder="명"></div>
+      </div>
+      <span class="sub-hint"><b>해당하는 란에만</b> 작성해 주십시오</span>
+    </div>
+
+    <div class="blk" data-when="변경신청내용:주소" hidden>
+      <div class="blk-h">주소 / 사업장</div>
+      <div class="f">
+        <label>구분</label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox"> 이전</label>
+          <label class="opt"><input type="checkbox"> 축소</label>
+          <label class="opt"><input type="checkbox"> 추가</label>
+          <label class="opt"><input type="checkbox"> 기타</label>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="f full"><label>변경 전 (국문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 후 (국문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 전 (영문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 후 (영문)</label><textarea rows="2"></textarea></div>
+      </div>
+      <span class="sub-hint"><b>인증서에 기재될 표기</b>를 그대로 사용해 주십시오</span>
+    </div>
+
+    <div class="blk" data-when="변경신청내용:범위" hidden>
+      <div class="blk-h">인증범위 (품목)</div>
+      <div class="f">
+        <label>구분</label>
+        <div class="opts">
+          <label class="opt"><input type="checkbox"> 축소</label>
+          <label class="opt"><input type="checkbox"> 추가</label>
+          <label class="opt"><input type="checkbox"> 기타</label>
+        </div>
+      </div>
+      <div class="grid">
+        <div class="f full"><label>변경 전 (국문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 후 (국문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 전 (영문)</label><textarea rows="2"></textarea></div>
+        <div class="f full"><label>변경 후 (영문)</label><textarea rows="2"></textarea></div>
+      </div>
+      <span class="sub-hint"><b>인증서에 기재될 표기</b>를 그대로 사용해 주십시오</span>
+    </div>
+
+    <div class="blk" data-when="변경신청내용:기타" hidden>
+      <div class="blk-h">기타변경 및 통보사항</div>
+      <div class="f full"><label>내용</label><textarea rows="4" placeholder="담당자 변경 · 연락처 변경 · 홈페이지 변경 등 위 항목에 해당하지 않는 변경이나 통보사항"></textarea><span class="sub-hint">담당자가 바뀐 경우에는 <b>성명 · 전화번호 · E-mail</b> 을 함께 적어 주십시오</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">5</span>첨부서류</h2>
+    <p class="sect-empty" id="no-doc">위에서 변경신청내용을 선택하시면 제출하실 서류 목록이 표시됩니다.</p>
+    <p class="sect-lead" id="doc-lead" hidden>변경신청서는 이 화면으로 제출되므로 따로 첨부하지 않으셔도 됩니다.</p>
+    <dl class="cur one" id="selbox" hidden>
+      <dt>신청하신 변경</dt><dd id="seltypes"></dd>
+    </dl>
+
+    <div class="blk" id="upblk" hidden>
+      <div class="blk-h">파일 첨부</div>
+      <div class="uprows">
+        <div class="uprow">
+          <span class="upno">1</span>
+          <select class="upsel" aria-label="1번째 서류 종류">
+            <option value="">서류 종류를 선택하세요</option>
+            <option value="매뉴얼">매뉴얼</option>
+            <option value="조직도">조직도</option>
+            <option value="사업자등록증">사업자등록증 사본</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="upetc" type="text" placeholder="서류 이름을 적어 주십시오" hidden>
+          <input class="upfile" type="file">
+        </div>
+        <div class="uprow">
+          <span class="upno">2</span>
+          <select class="upsel" aria-label="2번째 서류 종류">
+            <option value="">서류 종류를 선택하세요</option>
+            <option value="매뉴얼">매뉴얼</option>
+            <option value="조직도">조직도</option>
+            <option value="사업자등록증">사업자등록증 사본</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="upetc" type="text" placeholder="서류 이름을 적어 주십시오" hidden>
+          <input class="upfile" type="file">
+        </div>
+        <div class="uprow">
+          <span class="upno">3</span>
+          <select class="upsel" aria-label="3번째 서류 종류">
+            <option value="">서류 종류를 선택하세요</option>
+            <option value="매뉴얼">매뉴얼</option>
+            <option value="조직도">조직도</option>
+            <option value="사업자등록증">사업자등록증 사본</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="upetc" type="text" placeholder="서류 이름을 적어 주십시오" hidden>
+          <input class="upfile" type="file">
+        </div>
+        <div class="uprow">
+          <span class="upno">4</span>
+          <select class="upsel" aria-label="4번째 서류 종류">
+            <option value="">서류 종류를 선택하세요</option>
+            <option value="매뉴얼">매뉴얼</option>
+            <option value="조직도">조직도</option>
+            <option value="사업자등록증">사업자등록증 사본</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="upetc" type="text" placeholder="서류 이름을 적어 주십시오" hidden>
+          <input class="upfile" type="file">
+        </div>
+        <div class="uprow">
+          <span class="upno">5</span>
+          <select class="upsel" aria-label="5번째 서류 종류">
+            <option value="">서류 종류를 선택하세요</option>
+            <option value="매뉴얼">매뉴얼</option>
+            <option value="조직도">조직도</option>
+            <option value="사업자등록증">사업자등록증 사본</option>
+            <option value="기타">기타</option>
+          </select>
+          <input class="upetc" type="text" placeholder="서류 이름을 적어 주십시오" hidden>
+          <input class="upfile" type="file">
+        </div>
+      </div>
+      <p class="upnote">
+        &#183; <b>최대 5개</b>까지 첨부하실 수 있습니다. xlsx &#183; pdf &#183; jpg &#183; png &#183; docx 형식을 올리실 수 있습니다.<br>
+        &#183; 5개를 넘는 자료나 용량이 큰 파일은 <b>ssr@ssr1.co.kr</b> 로 보내 주십시오.<br>
+        &#183; 필요한 서류는 변경 내용에 따라 다릅니다. <b>준비되신 자료를 먼저 올려 주시고</b>,<br>
+        &nbsp;&nbsp;추가로 필요한 서류는 인증원이 확인 연락을 드릴 때 안내드립니다.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="no">6</span>신청인 확인</h2>
+    <div class="decl">
+      상기와 같이 당사의 인증사항을 변경하고자 인증변경신청서를 제출하오니 귀 인증원의 절차에 따라 처리하여 주시기 바랍니다.
+    </div>
+    <div class="grid">
+      <div class="f"><label>신청일자</label><input type="text" value="2026-09-28" readonly style="background:#F2F3F0"></div>
+      <div class="f"><label for="sgn">신청인 (대표자)</label><input id="sgn" type="text" value="김**" readonly style="background:#F2F3F0;color:var(--muted)"><span class="sub-hint">등록된 대표자로 자동 기재됩니다. 대표자가 변경되는 경우에도 <b>변경 전 대표자가 신청인</b>입니다</span></div>
+      <div class="f full">
+        <label for="seal">대표자 서명 또는 직인<em>*</em></label>
+        <div class="upload" data-reqgroup="대표자 서명 또는 직인">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5-5 5 5"/><path d="M12 5v12"/></svg>
+          <span>서명 또는 직인 이미지 선택 &nbsp;<small>PNG &#183; JPG</small></span>
+          <input id="seal" type="file" accept="image/png,image/jpeg" hidden>
+        </div>
+        <span class="sub-hint">서식의 「(인)」란을 대신합니다. 대표자 서명 이미지와 회사 직인 <b>어느 쪽이든</b> 올리실 수 있습니다. 업로드하신 이미지는 <b>이 변경신청서에만</b> 삽입되며 다른 문서에는 사용되지 않습니다</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="actions end">
+    <div class="left">
+      <a class="btn" href="SC-001-welcome-proposal.html">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        처음 화면으로
+      </a>
+    </div>
+    <button class="btn p" type="button">
+      신청 제출
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+    </button>
+  </div>
+
+</main>
+
+<a class="totop" href="#top">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+  맨 위로
+</a>
+
+<footer>
+  <div class="ft">
+    <div class="ft-l">
+      <div class="ft-tel">
+        <span class="ft-sub">연락처</span>
+        <span class="ft-num">02-6951-2009</span>
+        <span class="ft-sub">팩스 070-4032-2006</span>
+        <span class="ft-sub">이메일 ssr@ssr1.co.kr</span>
+      </div>
+      <div class="ft-time">
+        평일 09:00 &ndash; 18:00 &nbsp;·&nbsp; 점심 12:30 &ndash; 13:30 &nbsp;·&nbsp; 주말 · 공휴일 휴무<br>
+        서울특별시 금천구 벚꽃로 244, 1010호 (가산동, 벽산디지털밸리 5차)<br>
+        Copyright 2026 &copy; SSR. All rights reserved.
+      </div>
+    </div>
+    <div class="ft-r">
+      <a class="kab" href="https://www.kab.or.kr" target="_blank" rel="noopener">
+        <span class="kab-tag">인정기관</span>
+        한국인정평가원
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#A6A6A6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+      <div class="ft-links">
+        <a href="#terms">이용약관</a>
+        <a href="#privacy">개인정보처리방침</a>
+        <a href="#noemail">이메일무단수집거부</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nextBtn = document.querySelector('.btn.p');
+  var box = document.getElementById('errbox');
+  var list = document.getElementById('errlist');
+  var count = document.getElementById('errcount');
+
+  function clearMarks(){
+    document.querySelectorAll('.invalid').forEach(function(el){ el.classList.remove('invalid'); });
+    document.querySelectorAll('.err-msg').forEach(function(el){ el.remove(); });
+  }
+
+  function mark(el, label){
+    var wrap = el.closest('.f');
+    if (wrap) {
+      wrap.classList.add('invalid');
+      if (!wrap.querySelector('.err-msg')) {
+        var m = document.createElement('span');
+        m.className = 'err-msg';
+        m.textContent = label + '을(를) 입력해 주십시오.';
+        wrap.appendChild(m);
+      }
+    }
+  }
+
+  nextBtn.addEventListener('click', function(){
+    clearMarks();
+    var missing = [];
+
+    /* 조건부 표시(data-when) 항목은 화면에 보일 때만 필수로 봅니다 */
+    function shown(el){ return el.offsetParent !== null || el.getClientRects().length > 0; }
+
+    document.querySelectorAll('[data-req]').forEach(function(el){
+      if (!shown(el)) return;
+      if (!el.value.trim()) {
+        var label = el.getAttribute('data-req');
+        missing.push({ el: el, label: label });
+        mark(el, label);
+      }
+    });
+
+    document.querySelectorAll('[data-reqgroup]').forEach(function(g){
+      if (!shown(g)) return;
+      var f = g.querySelector('input[type=file]');
+      var checked = f ? (f.files && f.files.length ? f : null) : g.querySelector('input:checked');
+      if (!checked) {
+        var label = g.getAttribute('data-reqgroup');
+        missing.push({ el: g, label: label });
+        var wrap = g.closest('.f') || g.closest('section');
+        if (wrap && wrap.classList.contains('f')) wrap.classList.add('invalid');
+      }
+    });
+
+    if (!missing.length) { box.hidden = true; return; }
+
+    list.innerHTML = '';
+    count.textContent = '입력하지 않은 필수 항목이 ' + missing.length + '개 있습니다';
+    missing.forEach(function(m, i){
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.href = '#';
+      a.textContent = m.label;
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        m.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        var f = m.el.tagName === 'INPUT' || m.el.tagName === 'TEXTAREA' ? m.el : m.el.querySelector('input');
+        if (f) setTimeout(function(){ f.focus({ preventScroll: true }); }, 400);
+      });
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+    box.hidden = false;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+
+<script>
+/* 변경신청내용 체크 -> data-when 블록 표시 · 첨부서류 목록 연동 */
+(function(){
+  var box = document.getElementById('types');
+  if (!box) return;
+  var noType = document.getElementById('no-type');
+  var noDoc  = document.getElementById('no-doc');
+  var upblk  = document.getElementById('upblk');
+
+  function sync(){
+    var on = [];
+    box.querySelectorAll('input[type=checkbox]').forEach(function(c){
+      if (c.checked) on.push(c.value);
+    });
+    document.querySelectorAll('[data-when^="변경신청내용:"]').forEach(function(el){
+      var v = el.getAttribute('data-when').split(':')[1];
+      el.hidden = on.indexOf(v) === -1;
+    });
+    var any = on.length > 0;
+    if (noType) noType.hidden = any;
+    if (noDoc)  noDoc.hidden  = any;
+    var dl = document.getElementById('doc-lead');
+    if (dl) dl.hidden = !any;
+    var sb = document.getElementById('selbox'), st = document.getElementById('seltypes');
+    if (sb && st) {
+      sb.hidden = !any;
+      st.textContent = on.map(function(v){
+        return {'상호':'상호','조직':'조직 및 경영진','주소':'주소 / 사업장',
+                '범위':'인증범위 (품목)','기타':'기타변경 및 통보사항'}[v];
+      }).join('  \u00B7  ');
+    }
+    if (upblk)  upblk.hidden  = !any;
+  }
+  box.addEventListener('change', sync);
+  sync();
+})();
+
+/* 직인 업로드 — 영역을 누르면 파일 선택이 열리고 파일명을 표시합니다 */
+(function(){
+  document.querySelectorAll('.upload').forEach(function(box){
+    var f = box.querySelector('input[type=file]');
+    var lb = box.querySelector('span');
+    if (!f || !lb) return;
+    var base = lb.innerHTML;
+    box.addEventListener('click', function(e){ if (e.target !== f) f.click(); });
+    f.addEventListener('change', function(){
+      lb.innerHTML = f.files && f.files.length
+        ? f.files[0].name + ' &nbsp;<small>다시 선택하려면 누르십시오</small>'
+        : base;
+    });
+  });
+})();
+
+/* 서류 종류에서 「기타」를 고르면 이름 입력란을 표시합니다 */
+(function(){
+  document.querySelectorAll('.uprow').forEach(function(row){
+    var sel = row.querySelector('.upsel'), etc = row.querySelector('.upetc');
+    if (!sel || !etc) return;
+    sel.addEventListener('change', function(){ etc.hidden = sel.value !== '기타'; });
+  });
+})();
+
+/* 인증 확인 — 시안 확인용. 실제로는 서버가 인증 상태를 내려줍니다 */
+(function(){
+  var btn = document.getElementById('chk-cert');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    var cno = (document.getElementById('cno') || {}).value || '';
+    var stopped = /9999$/.test(cno.trim());
+    document.querySelectorAll('[data-when^="인증확인:"]').forEach(function(el){
+      var v = el.getAttribute('data-when').split(':')[1];
+      el.hidden = stopped ? (v !== '정지취소') : (v !== '완료');
+    });
+  });
+})();
+</script>
+
+
+
+
+
+</body>
+</html>
