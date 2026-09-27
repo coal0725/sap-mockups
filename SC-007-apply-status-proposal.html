@@ -215,6 +215,9 @@
     .ft-r{align-items:flex-start}
     .ft-copy{text-align:left}
   }
+  /* 푸터를 화면 바닥에 붙입니다 — 내용이 짧아도 푸터 아래가 비지 않게 */
+  body{min-height:100vh;display:flex;flex-direction:column}
+  body > main{flex:1 0 auto;width:100%}
 </style>
 
 <!-- =========== SC-007 오버레이 스타일 =========== -->

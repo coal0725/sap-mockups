@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  SC-012  인증변경 접수 완료          [신설]
+  SC-010B  인증변경 접수 완료          [신설]
   삼성표준인증원 SAP 인증심사 플랫폼 개선안 시안
   장은수 · 2026-09-28
 
@@ -570,6 +570,9 @@
     .tip .tiptext::after{left:auto;right:14px;transform:none}
   }
   .after-link{margin:26px 0 0;text-align:center}
+  /* 푸터를 화면 바닥에 붙입니다 — 내용이 짧아도 푸터 아래가 비지 않게 */
+  body{min-height:100vh;display:flex;flex-direction:column}
+  body > main{flex:1 0 auto;width:100%}
 </style>
 </head>
 <body>

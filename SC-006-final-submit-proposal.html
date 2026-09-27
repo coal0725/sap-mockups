@@ -484,6 +484,9 @@
     table.rev-t th,table.rev-t td{padding:8px 7px}
     table.rev-t td .chip{font-size:11px;margin-right:4px}
   }
+  /* 푸터를 화면 바닥에 붙입니다 — 내용이 짧아도 푸터 아래가 비지 않게 */
+  body{min-height:100vh;display:flex;flex-direction:column}
+  body > main{flex:1 0 auto;width:100%}
 </style>
 </head>
 <body>
