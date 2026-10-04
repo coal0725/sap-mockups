@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>역할별 사이드네비</title>
+<style>
+:root{
+  --navy:#1A2A4F; --navy-deep:#142139; --navy-soft:#E9ECF3;
+  --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE; --bg:#F7F7F4;
+  --ok:#E8F3EC; --ok-ink:#2F6B45; --warn:#FFF4E5; --warn-ink:#9C4221;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6;
+}
+.page{max-width:1180px; margin:0 auto; padding:28px 24px 60px}
+h1{font-size:21px; font-weight:700; letter-spacing:-.4px}
+.sub{font-size:13px; color:var(--muted); margin-top:5px}
+
+/* 역할 탭 */
+.tabs{display:flex; gap:7px; margin:22px 0 18px; flex-wrap:wrap}
+.tab{
+  font:inherit; font-size:13px; padding:9px 15px; border-radius:7px; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--muted);
+  display:flex; align-items:center; gap:7px;
+}
+.tab:hover{background:#FAFAF8; color:var(--ink)}
+.tab.on{background:var(--navy); border-color:var(--navy); color:#fff}
+.tab b{font-weight:700}
+.tab .cd{
+  font-size:10.5px; padding:1px 6px; border-radius:3px;
+  background:#F0F0EC; color:var(--muted);
+}
+.tab.on .cd{background:rgba(255,255,255,.18); color:#fff}
+
+/* 본문 2단 */
+.wrap{display:grid; grid-template-columns:252px 1fr; gap:22px; align-items:start}
+
+.navbox{background:var(--navy-deep); border-radius:10px; overflow:hidden; padding-bottom:16px}
+.navbox .brand{padding:18px 18px 16px; border-bottom:1px solid rgba(255,255,255,.08)}
+.navbox .brand b{display:block; color:#fff; font-size:14px}
+.navbox .brand span{display:block; font-size:11px; color:rgba(255,255,255,.45); margin-top:3px}
+.navbox ul{list-style:none}
+.grp{
+  display:flex; align-items:center; gap:9px; padding:12px 18px;
+  font-size:13.5px; color:rgba(255,255,255,.8);
+}
+.grp.cur{background:var(--navy); color:#fff; font-weight:600}
+.grp .ic{
+  width:16px; height:16px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; opacity:.85;
+}
+.grp .arw{margin-left:auto; font-size:9px; opacity:.5}
+.sub2{background:rgba(0,0,0,.18)}
+.sub2 li{padding:9px 18px 9px 43px; font-size:12.5px; color:rgba(255,255,255,.58)}
+.sub2 li.new{color:#F3C98B}
+.sub2 li.ms{color:#9DC6E8}
+
+/* 설명 */
+.info{background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.info header{padding:15px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:9px}
+.info header h2{font-size:15px; font-weight:700}
+.info header .cd{font-size:11px; padding:2px 8px; border-radius:4px; background:var(--navy-soft); color:var(--navy); font-weight:700}
+.info .in{padding:16px 18px}
+.info p{font-size:13px; color:var(--muted); line-height:1.7}
+.info p + p{margin-top:10px}
+.info b{color:var(--ink)}
+.kv{display:grid; grid-template-columns:92px 1fr; gap:7px 12px; margin-top:14px; font-size:13px}
+.kv dt{color:var(--muted)}
+.pill{font-size:11px; padding:2px 8px; border-radius:11px; display:inline-block}
+.pill.add{background:var(--warn); color:var(--warn-ink)}
+.pill.ms{background:#E4EFF8; color:#2B5E88}
+
+/* 비교표 */
+.cmp{margin-top:26px; background:#fff; border:1px solid var(--line); border-radius:10px; overflow:hidden}
+.cmp header{padding:15px 18px; border-bottom:1px solid var(--line)}
+.cmp header h2{font-size:15px; font-weight:700}
+table{width:100%; border-collapse:collapse}
+th,td{font-size:12.5px; padding:9px 10px; border-bottom:1px solid #F0F0EC; text-align:center}
+th{background:#FAFAF8; color:var(--muted); font-weight:600; font-size:11.5px}
+th:first-child, td:first-child{text-align:left; padding-left:18px; width:30%}
+td.o{color:var(--ok-ink); font-weight:700}
+td.x{color:#D6D7D2}
+tbody tr:last-child td{border-bottom:0}
+.sec td{background:#FAFAF8; font-weight:700; color:var(--ink); text-align:left}
+
+.note{
+  margin-top:18px; padding:13px 15px; border-radius:8px;
+  background:#fff; border:1px solid var(--line); font-size:12.5px; color:var(--muted); line-height:1.7;
+}
+.note b{color:var(--ink)}
+
+@media (max-width:820px){ .wrap{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <h1>역할별 사이드네비</h1>
+  <p class="sub">역할 탭을 선택하면 해당 계정에 노출되는 메뉴가 표시됩니다.</p>
+
+  <div class="tabs" id="tabs"></div>
+
+  <div class="wrap">
+    <div class="navbox">
+      <div class="brand">
+        <b>SAP 심사원 플랫폼</b>
+        <span id="roleName">심사원</span>
+      </div>
+      <ul id="nav"></ul>
+    </div>
+
+    <div class="info">
+      <header>
+        <span class="cd" id="iCode">A</span>
+        <h2 id="iName">심사원</h2>
+      </header>
+      <div class="in">
+        <p id="iDesc"></p>
+        <dl class="kv">
+          <dt>대메뉴</dt><dd id="iCnt"></dd>
+          <dt>하위 메뉴</dt><dd id="iSub"></dd>
+          <dt>차이</dt><dd id="iDiff"></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <section class="cmp">
+    <header><h2>심사 계열 비교</h2></header>
+    <table>
+      <thead><tr><th>메뉴</th><th>PA 심사원보</th><th>A 심사원</th><th>LA 선임심사원</th><th>VA 검증심사원</th></tr></thead>
+      <tbody>
+        <tr class="sec"><td colspan="5">마이페이지</td></tr>
+        <tr><td>마이페이지</td><td class="o">●</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+        <tr class="sec"><td colspan="5">심사관리</td></tr>
+        <tr><td>심사 일정</td><td class="o">●</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+        <tr><td>심사 보고서</td><td class="x">✕</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+        <tr class="sec"><td colspan="5">검증관리</td></tr>
+        <tr><td>검증 보고서</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td><td class="o">●</td></tr>
+        <tr class="sec"><td colspan="5">게시판</td></tr>
+        <tr><td>공지사항</td><td class="o">●</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+        <tr><td>절차 및 서식</td><td class="o">●</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="note">
+    <b>메뉴 트리는 한 벌만 두고 역할에 따라 항목을 숨깁니다.</b>
+    역할별로 별도 구성을 만들면 메뉴가 추가될 때마다 여섯 벌을 모두 고쳐야 합니다.<br>
+    <b>심사 계열은 PA ⊂ A ⊂ LA ⊂ VA 포함관계입니다.</b>
+    선임심사원과 심사원은 메뉴가 같고, 보고서 화면 안에서 <b>제출 권한</b>으로 구분됩니다.<br>
+    <b>관리 계열은 심사 계열과 겹치지 않습니다.</b>
+    ISO/IEC 17021-1 상 인증 결정은 해당 심사에 참여하지 않은 자가 수행해야 하므로,
+    동일인이 두 역할을 맡는 경우 계정을 각각 생성합니다.
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var I = {
+    home:'<path d="M3 7.6L9 3l6 4.6V14a1 1 0 0 1-1 1h-3.4v-4H7.4v4H4a1 1 0 0 1-1-1z"/>',
+    cal :'<rect x="2.5" y="4" width="13" height="11" rx="1.4"/><path d="M2.5 7.5h13M6 2.5v3M12 2.5v3"/>',
+    chk :'<path d="M3 9.4l3.4 3.2L15 4.6"/>',
+    board:'<path d="M3 7.2v3.6h2.4L10 14V4L5.4 7.2z"/><path d="M12.6 6.6a3.4 3.4 0 0 1 0 4.8"/>',
+    user:'<circle cx="9" cy="6" r="2.8"/><path d="M3.4 15c0-2.6 2.5-4 5.6-4s5.6 1.4 5.6 4"/>',
+    build:'<rect x="3" y="3" width="8" height="12" rx="1"/><path d="M11 7h4v8h-4M5.6 6h2.8M5.6 9h2.8M5.6 12h2.8"/>',
+    doc :'<path d="M4.5 2.5h6L14 6v9.5H4.5z"/><path d="M10.2 2.5V6H14"/>',
+    cert:'<circle cx="9" cy="7" r="3.6"/><path d="M6.6 10.4L5.6 15.5 9 13.8l3.4 1.7-1-5.1"/>',
+    gear:'<circle cx="9" cy="9" r="2.4"/><path d="M9 2.4v1.8M9 13.8v1.8M15.6 9h-1.8M4.2 9H2.4M13.7 4.3l-1.3 1.3M5.6 12.4l-1.3 1.3M13.7 13.7l-1.3-1.3M5.6 5.6L4.3 4.3"/>'
+  };
+  var MY   = {t:'마이페이지', i:'home'};
+  var BRD  = {t:'게시판', i:'board', s:['공지사항','절차 및 서식']};
+
+  var R = {
+    PA:{n:'심사원보', d:'심사에 참여하지만 보고서를 작성하지 않습니다. 일정 확인과 게시판 열람까지만 가능합니다.',
+        diff:'기준',
+        m:[MY, {t:'심사관리', i:'cal', s:['심사 일정']}, BRD]},
+    A :{n:'심사원', d:'심사를 수행하고 보고서를 작성합니다. 제출은 심사팀장이 합니다.',
+        diff:'PA + 심사 보고서',
+        m:[MY, {t:'심사관리', i:'cal', s:['심사 일정','심사 보고서*']}, BRD]},
+    LA:{n:'선임심사원', d:'심사팀장입니다. 메뉴는 심사원과 같고 보고서 화면에서 제출 권한이 추가됩니다.',
+        diff:'A 와 메뉴 동일 · 제출 권한 추가',
+        m:[MY, {t:'심사관리', i:'cal', s:['심사 일정','심사 보고서']}, BRD]},
+    VA:{n:'검증심사원', d:'선임심사원의 기능에 더해 제출된 보고서를 검증합니다.',
+        diff:'LA + 검증관리',
+        m:[MY, {t:'심사관리', i:'cal', s:['심사 일정','심사 보고서']},
+           {t:'검증관리', i:'chk', s:['검증 보고서*']}, BRD]},
+    MN:{n:'일반관리자', d:'인증 관리는 기업과 인증원 사이의 과정(신청 · 계약 · 발급 · 변경), 심사 관리는 인증원 내부에서 심사를 운영하는 과정(일정 · 팀 · 보고서)입니다. 심사 계열 메뉴는 노출되지 않습니다.',
+        diff:'관리 계열 · 심사 계열과 분리',
+        m:[MY,
+           {t:'심사원 관리', i:'user', s:['심사원 계정','자격 승인','코드 승인']},
+           {t:'인증 관리', i:'build', s:['기업 정보','인증 신청','계약 · 비용','인증서 · 현황','인증 변경']},
+           {t:'심사 관리', i:'cal', s:['심사 일정','심사팀 배정','보고서 검증']},
+           {t:'게시판 관리', i:'board', s:['공지사항','절차 및 서식']}]},
+    MS:{n:'마스터관리자', d:'일반관리자의 모든 기능에 더해 시스템 설정을 관리합니다. 최종 승인 · 인증서 정보 입력 · 계정 완전삭제도 마스터 전용입니다.',
+        diff:'MN + 시스템',
+        m:[MY,
+           {t:'심사원 관리', i:'user', s:['심사원 계정','자격 승인','코드 승인']},
+           {t:'인증 관리', i:'build', s:['기업 정보','인증 신청','계약 · 비용','인증서 · 현황','인증 변경']},
+           {t:'심사 관리', i:'cal', s:['심사 일정','심사팀 배정','보고서 검증']},
+           {t:'게시판 관리', i:'board', s:['공지사항','절차 및 서식']},
+           {t:'시스템', i:'gear', s:['시스템 설정+','양식 관리+','직인 관리+','감사 모드+']}]}
+  };
+  var ORD = ['PA','A','LA','VA','MN','MS'];
+  var cur = 'A';
+
+  function draw(){
+    var r = R[cur];
+    document.getElementById('tabs').innerHTML = ORD.map(function(k){
+      return '<button class="tab'+(k===cur?' on':'')+'" data-r="'+k+'">'
+           + '<span class="cd">'+k+'</span><b>'+R[k].n+'</b></button>';
+    }).join('');
+
+    document.getElementById('nav').innerHTML = r.m.map(function(m, idx){
+      var h = '<li><div class="grp'+(idx===0?' cur':'')+'">'
+            + '<svg class="ic" viewBox="0 0 18 18">'+I[m.i]+'</svg>'+m.t
+            + (m.s ? '<span class="arw">▲</span>' : '') + '</div>';
+      if (m.s) h += '<ul class="sub2">' + m.s.map(function(s){
+        var cls = s.slice(-1)==='*' ? ' class="new"' : (s.slice(-1)==='+' ? ' class="ms"' : '');
+        return '<li'+cls+'>'+s.replace(/[*+]$/,'')+'</li>';
+      }).join('') + '</ul>';
+      return h + '</li>';
+    }).join('');
+
+    document.getElementById('roleName').textContent = r.n;
+    document.getElementById('iCode').textContent = cur;
+    document.getElementById('iName').textContent = r.n;
+    document.getElementById('iDesc').textContent = r.d;
+    document.getElementById('iCnt').textContent = r.m.length + '개';
+    var sc = r.m.reduce(function(a,m){ return a + (m.s ? m.s.length : 0); }, 0);
+    document.getElementById('iSub').textContent = sc + '개';
+    document.getElementById('iDiff').textContent = r.diff;
+  }
+
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    while (t && t !== document && !(t.getAttribute && t.getAttribute('data-r'))) t = t.parentNode;
+    if (t && t.getAttribute) { cur = t.getAttribute('data-r'); draw(); }
+  });
+  draw();
+})();
+</script>
+</body>
+</html>
