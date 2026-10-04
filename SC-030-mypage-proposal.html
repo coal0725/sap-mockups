@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SC-030 마이페이지</title>
 <style>
@@ -25,11 +26,7 @@ body{
   display:flex; align-items:center; gap:12px; padding:0 18px;
   background:#fff; border-bottom:1px solid var(--line);
 }
-.gnb .logo{
-  display:inline-grid; place-items:center; width:46px; height:24px; border-radius:3px;
-  border:1px dashed var(--line); background:#FAFAF8;
-  color:#B4B8B2; font-size:10px; letter-spacing:.5px;
-}
+.gnb .logo{height:22px; width:auto; display:block; flex:none}
 .gnb .nm{font-size:14.5px; font-weight:700; letter-spacing:-.3px}
 .gnb .rt{margin-left:auto; display:flex; align-items:center; gap:10px}
 .gnb .sw{
@@ -328,7 +325,7 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
 <body>
 
 <header class="gnb">
-  <span class="logo">로고</span>
+  <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원">
   <span class="nm">SAP 심사원 플랫폼</span>
   <div class="rt">
     <div class="udd">
@@ -639,13 +636,13 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
 
 <div class="foot">
   <span class="l">© 2026 삼성표준인증원<i>·</i>
-    <a href="https://www.ssr1.co.kr" target="_blank" rel="noopener">홈페이지
+    <a href="https://ssr1.co.kr" target="_blank" rel="noopener">홈페이지
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
   </span>
-  <span class="c">02-6951-2009<i>·</i>ssr@ssr1.co.kr<i>·</i>평일 09:00 – 18:00<i>·</i>토 · 일 · 공휴일 휴무</span>
+  <span class="c">02-6951-2009<i>·</i>팩스 070-4032-2006<i>·</i>ssr@ssr1.co.kr<i>·</i>평일 09:00 – 18:00<i>·</i>점심 12:30 – 13:30<i>·</i>주말 · 공휴일 휴무</span>
   <span class="r">
-    <a href="https://www.kab.or.kr" target="_blank" rel="noopener">KAB 한국인정지원센터
+    <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
     <i>|</i>SAP v0.1.0
