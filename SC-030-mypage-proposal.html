@@ -27,8 +27,6 @@ body{
 }
 .gnb .logo{height:22px; width:auto; display:block; flex:none}
 .gnb .nm{font-size:14.5px; font-weight:700; letter-spacing:-.3px}
-.jsok{font-size:11px; color:#2F6B45; background:#E8F3EC; padding:2px 7px; border-radius:3px}
-.jsok:empty{display:none}
 .gnb .rt{margin-left:auto; display:flex; align-items:center; gap:10px}
 .gnb .sw{
   font:inherit; font-size:12px; padding:5px 11px; border-radius:5px; cursor:pointer;
@@ -392,7 +390,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
 
 <header class="gnb">
   <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원">
-  <span class="nm">SAP 심사원 플랫폼</span><span id="jsok" class="jsok"></span>
+  <span class="nm">SAP 심사원 플랫폼</span>
   <div class="rt">
     <div class="udd">
       <div class="who" id="whoBtn" data-act="dd">안녕하세요, <b>장은수</b> 심사원님 <span class="cv">▾</span></div>
@@ -832,7 +830,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
-    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 05:43</span>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 05:56</span>
 </div>
 
 
@@ -946,7 +944,6 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     for(var i=0;i<ins.length;i++) ins[i].addEventListener('input', function(){ sv.disabled=false; });
   }
 
-  var vt=$('jsok'); if(vt) vt.textContent='JS 정상 · 05:43';
 })();
 </script>
 
