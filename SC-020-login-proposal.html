@@ -1,0 +1,323 @@
+<!doctype html>
+<!--
+  SC-020  로그인  ·  SC-020B  계정 잠금 안내
+  삼성표준인증원 SAP 인증심사 플랫폼 개선안 시안
+  장은수 · 2026-10-05
+
+  두 화면을 한 파일에 담았습니다. 로그인에서만 들어가는 보조 화면이라
+  흐름이 하나이고, 엑셀 시안 링크도 하나로 유지됩니다.
+  화면 하단의 검은 막대에서 전환하실 수 있으며, 그 막대는 시안 확인용입니다.
+
+
+  ■ SC-020 로그인 — 바꾼 것
+
+  좌측 안내 2줄을 제거했습니다
+    「심사원보 · 심사원 · 선임심사원 · 검증심사원 · 관리자 · 마스터관리자 계정으로
+    로그인합니다」 — 로그인하는 사람은 본인 역할을 알고 있습니다.
+    「인증심사 신청 기업은 로그인 없이 신청 절차를 진행할 수 있습니다」 —
+    비회원은 웰컴 화면(SC-001)이 정규 경로이고, 우측 하단 링크와도 중복이었습니다.
+
+  계정 문의 · 비회원 신청 링크를 제거했습니다
+    「계정 문의 · 삼성표준인증원 인증사업팀」은 연락처가 없어 행동으로 이어지지 않고,
+    바로 아래 잠금 안내와 중복됩니다. 연락처는 잠금 안내 화면에 모았습니다.
+
+  형식 검증 문구를 제거했습니다
+    「아이디는 3자 이상」 「비밀번호는 8자 이상」을 앞단에서 검사하지 않습니다.
+    로그인은 기존 계정으로 진입하는 화면이라 형식을 볼 이유가 없고,
+    「8자 이상」은 비밀번호 정책을 외부에 알려 주는 셈이 됩니다.
+    빈 칸일 때 「아이디를 입력해 주십시오」만 표시합니다.
+
+  로그인 실패 메시지를 하나로 통일했습니다
+    「아이디 또는 비밀번호가 올바르지 않습니다」
+    아이디가 없을 때와 비밀번호가 틀릴 때를 구분하면 어떤 아이디가 존재하는지
+    드러나 계정 열거가 가능해집니다. 신청현황 조회(SC-007)와 같은 원칙입니다.
+
+  「비밀번호를 잊으셨나요?」 링크를 추가했습니다
+    현재는 계정이 잠긴 뒤에야 잠금 안내 화면을 볼 수 있어,
+    비밀번호만 잊은 사람은 안내를 찾지 못합니다.
+
+  화면ID · FN 번호 배지를 두지 않았습니다
+    검수 기간에는 유용하므로 구현 화면에서는 유지하시고,
+    10/20 현업 적용 전에 제거하시면 됩니다(08_공통 CM-17).
+    시안에서는 최종 모습을 보여드리기 위해 뺐습니다.
+
+
+  ■ SC-020B 계정 잠금 안내 — 바꾼 것
+
+  연락처와 연락 가능 시간을 넣었습니다
+    「관리자에게 요청하세요」만으로는 어디로 연락할지 알 수 없습니다.
+    심사원이 야간 · 주말에 잠기면 이 화면이 유일한 안내입니다.
+
+  상황을 셋으로 나눴습니다
+    현재는 「자동 해제 15분」과 「관리자에게 재발급 요청」이 나란히 있어
+    어느 쪽을 해야 하는지 구분되지 않습니다. 15분만 기다리면 되는 사람도
+    관리자에게 연락하게 됩니다.
+
+      비밀번호를 알고 계신 경우     15분 후 다시 시도 · 연락 불필요
+      비밀번호를 잊으신 경우       인증원에 재발급 요청
+      계정이 비활성화된 경우       자동 해제 후에도 불가 · 별도 문의
+
+    세 번째가 중요합니다. 비활성화된 계정은 15분을 기다려도 들어오지 못하는데,
+    현재 화면에서는 그 사실이 목록 맨 아래 한 줄로만 적혀 있어
+    기다렸다가 다시 실패하는 일이 생깁니다.
+
+
+  ■ 바꾸지 않은 것
+
+  좌우 분할 구조        현재 구현이 보기 좋습니다.
+  15분 자동 해제        관리자 개입 없이 풀리는 설계가 맞습니다.
+  「로그인 화면으로」 버튼  유지했습니다.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<title>로그인 | 삼성표준인증원 SAP</title>
+<style>
+  :root{
+    --navy:#1A2A4F; --navy-deep:#142139; --navy-soft:#E9ECF3;
+    --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE;
+    --bg:#F7F7F4; --card:#FFFFFF; --warn:#FFF4E5; --warn-ink:#9C4221;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;
+       font-family:-apple-system,BlinkMacSystemFont,'Malgun Gothic','맑은 고딕',
+                   'Apple SD Gothic Neo',system-ui,sans-serif;
+       background:var(--navy-deep); color:var(--ink);
+       -webkit-font-smoothing:antialiased;
+       min-height:100vh; display:flex; flex-direction:column;
+       align-items:center; justify-content:center; padding:40px 20px 96px}
+
+  .stage{width:100%; max-width:980px}
+  [hidden]{display:none !important}
+
+  /* ───────────── 로그인 ───────────── */
+  .login{display:flex; background:var(--card); border-radius:4px; overflow:hidden;
+         box-shadow:0 8px 40px rgba(0,0,0,.28)}
+  .brand{flex:0 0 42%; background:var(--navy); color:#fff;
+         padding:56px 44px; display:flex; flex-direction:column}
+  .brand-logo{background:#fff; border-radius:3px; padding:14px 18px;
+              align-self:flex-start; margin-bottom:40px}
+  .brand-logo img{height:30px; width:auto; display:block}
+  .brand h1{margin:0 0 14px; font-size:27px; font-weight:700; letter-spacing:-.02em}
+  .brand p{margin:0; font-size:14px; line-height:1.75; color:#AEB8CC}
+
+  .form{flex:1 1 58%; padding:56px 48px; display:flex; flex-direction:column}
+  .form h2{margin:0 0 32px; font-size:23px; font-weight:700; color:var(--navy);
+           letter-spacing:-.02em}
+  .fld{margin-bottom:20px}
+  .fld label{display:block; font-size:14px; font-weight:700; margin-bottom:9px}
+  .fld input{width:100%; font-size:15px; padding:14px 15px; border-radius:7px;
+             border:1px solid #C9CCC6; background:var(--card); color:var(--ink);
+             font-family:inherit}
+  .fld input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+  .hint{margin:7px 0 0; font-size:13px; color:#B4241F; display:none}
+  .fld.err input{border-color:#B4241F}
+  .fld.err .hint{display:block}
+
+  .submit{width:100%; font-size:16px; font-weight:700; padding:15px;
+          border-radius:7px; border:0; background:var(--navy); color:#fff;
+          cursor:pointer; margin-top:6px; font-family:inherit;
+          transition:background .18s ease}
+  .submit:hover{background:var(--navy-deep)}
+
+  .formerr{margin:16px 0 0; font-size:14px; color:#B4241F; display:none;
+           background:#FDF2F2; border:1px solid #F3C9C7; border-radius:7px;
+           padding:12px 14px; line-height:1.6}
+  .formerr.on{display:block}
+
+  .foot{margin-top:28px; padding-top:22px; border-top:1px solid var(--line)}
+  .foot a{font-size:14px; color:var(--navy); font-weight:600; text-decoration:underline;
+          text-underline-offset:3px; cursor:pointer}
+
+  /* ───────────── 잠금 안내 ───────────── */
+  .lock{background:var(--card); border-radius:4px; padding:48px 52px;
+        box-shadow:0 8px 40px rgba(0,0,0,.28); max-width:620px; margin:0 auto}
+  .lock-ico{width:52px; height:52px; border-radius:10px; background:var(--warn);
+            color:var(--warn-ink); font-size:28px; font-weight:700;
+            display:flex; align-items:center; justify-content:center;
+            margin:0 auto 22px}
+  .lock h2{margin:0 0 10px; font-size:25px; font-weight:700; text-align:center;
+           letter-spacing:-.02em}
+  .lock-sub{margin:0 0 28px; font-size:15px; color:var(--muted); text-align:center;
+            line-height:1.7}
+
+  .timer{background:var(--navy-soft); border-radius:9px; padding:18px 20px;
+         margin-bottom:28px}
+  .timer b{display:block; font-size:16px; color:var(--navy); margin-bottom:6px}
+  .timer span{font-size:14px; color:var(--muted); line-height:1.7}
+
+  .cases{border:1px solid var(--line); border-radius:9px; overflow:hidden;
+         margin-bottom:26px}
+  .case{padding:18px 20px; border-bottom:1px solid var(--line)}
+  .case:last-child{border-bottom:0}
+  .case b{display:block; font-size:15px; font-weight:700; margin-bottom:7px}
+  .case p{margin:0; font-size:14px; color:var(--muted); line-height:1.75}
+
+  .contact{background:var(--bg); border:1px solid var(--line); border-radius:9px;
+           padding:18px 20px; margin-bottom:28px; font-size:14px; line-height:1.9}
+  .contact .ct-l{color:var(--muted); display:inline-block; width:58px}
+  .contact b{color:var(--ink); font-weight:600}
+
+  .lock .back{width:100%; font-size:15px; font-weight:700; padding:14px;
+              border-radius:7px; border:1px solid #C9CCC6; background:var(--card);
+              color:var(--ink); cursor:pointer; font-family:inherit}
+  .lock .back:hover{border-color:var(--navy)}
+
+  /* 시안 확인용 — 구현 대상이 아닙니다 */
+  .demo{position:fixed; left:0; right:0; bottom:0; z-index:40; background:#131313;
+        display:flex; align-items:center; justify-content:center;
+        gap:8px; padding:11px 16px; flex-wrap:wrap}
+  .demo-l{font-size:12px; color:#8C918C; margin-right:4px}
+  .demo button{font-size:13px; padding:8px 13px; border-radius:7px;
+               border:1px solid #3A3D3A; background:#1F211F; color:#D6D9D6;
+               cursor:pointer; font-family:inherit}
+  .demo button:hover{background:#2A2D2A}
+  .demo button.on{background:#fff; color:#131313; border-color:#fff; font-weight:700}
+
+  @media (max-width:760px){
+    body{padding:28px 16px 110px}
+    .login{flex-direction:column}
+    .brand{flex:none; padding:34px 28px}
+    .brand-logo{margin-bottom:26px}
+    .brand h1{font-size:23px}
+    .form{padding:34px 28px}
+    .lock{padding:34px 26px}
+    .lock h2{font-size:21px}
+    .demo{gap:6px; padding:9px 12px}
+    .demo button{font-size:12px; padding:7px 10px}
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+
+  <!-- ───────── SC-020 로그인 ───────── -->
+  <div class="login" id="v-login">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="assets/ssr-logo.svg" alt="삼성표준인증원" width="165" height="30">
+      </div>
+      <h1>SAP 심사원 플랫폼</h1>
+      <p>삼성표준인증원 인증심사 업무 시스템<br>Samsung Standard Registrar</p>
+    </div>
+
+    <div class="form">
+      <h2>로그인</h2>
+
+      <div class="fld" id="f-id">
+        <label for="i-id">아이디</label>
+        <input type="text" id="i-id" placeholder="아이디를 입력하세요" autocomplete="username">
+        <p class="hint">아이디를 입력해 주십시오.</p>
+      </div>
+
+      <div class="fld" id="f-pw">
+        <label for="i-pw">비밀번호</label>
+        <input type="password" id="i-pw" placeholder="비밀번호를 입력하세요" autocomplete="current-password">
+        <p class="hint">비밀번호를 입력해 주십시오.</p>
+      </div>
+
+      <button type="button" class="submit" id="btn-login">로그인</button>
+
+      <p class="formerr" id="f-err">아이디 또는 비밀번호가 올바르지 않습니다.</p>
+
+      <div class="foot">
+        <a id="go-lock">비밀번호를 잊으셨나요?</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ───────── SC-020B 계정 잠금 안내 ───────── -->
+  <div class="lock" id="v-lock" hidden>
+    <div class="lock-ico">!</div>
+    <h2>계정이 잠겼습니다</h2>
+    <p class="lock-sub">연속된 로그인 실패로 계정이 일시적으로 잠겼습니다.</p>
+
+    <div class="timer">
+      <b>자동 해제 · 15분 후</b>
+      <span>마지막 로그인 실패 시각으로부터 15분이 지나면 다시 로그인하실 수 있습니다.</span>
+    </div>
+
+    <div class="cases">
+      <div class="case">
+        <b>비밀번호를 알고 계신 경우</b>
+        <p>15분 후 다시 로그인해 주십시오. 별도로 연락하실 필요가 없습니다.</p>
+      </div>
+      <div class="case">
+        <b>비밀번호를 잊으신 경우</b>
+        <p>인증원에 비밀번호 재발급을 요청해 주십시오. 등록된 이메일로 임시 비밀번호를 보내 드립니다.</p>
+      </div>
+      <div class="case">
+        <b>계정이 비활성화된 경우</b>
+        <p>15분이 지나도 로그인하실 수 없습니다. 인증원에 문의해 주십시오.</p>
+      </div>
+    </div>
+
+    <div class="contact">
+      <span class="ct-l">전화</span><b>02-6951-2009</b><br>
+      <span class="ct-l">이메일</span><b>ssr@ssr1.co.kr</b><br>
+      <span class="ct-l">운영시간</span><b>평일 09:00 ~ 18:00</b>
+    </div>
+
+    <button type="button" class="back" id="go-login">로그인 화면으로</button>
+  </div>
+
+</div>
+
+<div class="demo">
+  <span class="demo-l">시안 확인용</span>
+  <button type="button" data-v="login" class="on">SC-020 로그인</button>
+  <button type="button" data-v="empty">빈 칸 안내</button>
+  <button type="button" data-v="fail">로그인 실패</button>
+  <button type="button" data-v="lock">SC-020B 잠금 안내</button>
+</div>
+
+<script>
+(function(){
+  var vLogin = document.getElementById('v-login'),
+      vLock  = document.getElementById('v-lock'),
+      fId    = document.getElementById('f-id'),
+      fPw    = document.getElementById('f-pw'),
+      fErr   = document.getElementById('f-err');
+
+  function reset(){
+    fId.classList.remove('err');
+    fPw.classList.remove('err');
+    fErr.classList.remove('on');
+  }
+
+  function show(v){
+    reset();
+    vLogin.hidden = (v === 'lock');
+    vLock.hidden  = (v !== 'lock');
+    if (v === 'empty'){ fId.classList.add('err'); fPw.classList.add('err'); }
+    if (v === 'fail'){ fErr.classList.add('on'); }
+    document.querySelectorAll('.demo button').forEach(function(b){
+      b.classList.toggle('on', b.getAttribute('data-v') === v);
+    });
+  }
+
+  document.querySelectorAll('.demo button').forEach(function(b){
+    b.addEventListener('click', function(){ show(b.getAttribute('data-v')); });
+  });
+
+  document.getElementById('go-lock').addEventListener('click', function(){ show('lock'); });
+  document.getElementById('go-login').addEventListener('click', function(){ show('login'); });
+
+  /* 실제로는 서버가 판정합니다. 시안에서는 빈 칸만 확인합니다 */
+  document.getElementById('btn-login').addEventListener('click', function(){
+    reset();
+    var id = document.getElementById('i-id').value.trim(),
+        pw = document.getElementById('i-pw').value;
+    if (!id) fId.classList.add('err');
+    if (!pw) fPw.classList.add('err');
+    if (id && pw) fErr.classList.add('on');
+  });
+})();
+</script>
+
+</body>
+</html>
