@@ -261,6 +261,8 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
   border:1px solid #F0F0EC; margin-bottom:18px;
 }
 .reqnote b{color:#B04A3A}
+.pwf{display:flex; flex-direction:column; gap:14px}
+.pwf .lk{color:var(--muted)}
 .ocard{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:12px}
 .ohead{display:flex; align-items:center; gap:8px; margin-bottom:12px}
 .ohead b{font-size:13.5px}
@@ -396,7 +398,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
       <div class="who" id="whoBtn" data-act="dd">안녕하세요, <b>장은수</b> 심사원님 <span class="cv">▾</span></div>
       <div class="dd" id="userDD" hidden>
         <a><svg viewBox="0 0 16 16"><circle cx="8" cy="5.6" r="2.6"/><path d="M3 13.4c0-2.3 2.2-3.6 5-3.6s5 1.3 5 3.6"/></svg>마이페이지</a>
-        <a><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.2" rx="1.2"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/></svg>비밀번호 변경</a>
+        <a data-act="pw"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.2" rx="1.2"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/></svg>비밀번호 변경</a>
         <hr>
         <a class="out"><svg viewBox="0 0 16 16"><path d="M6.4 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.4"/><path d="M10 5.6L12.6 8 10 10.4M12.6 8H6.6"/></svg>로그아웃</a>
       </div>
@@ -481,7 +483,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
         <header>
           <span class="n">1</span><h2>기본 정보</h2>
           <div class="acts">
-            <button class="btn">비밀번호 변경</button>
+            <button class="btn" data-act="pw">비밀번호 변경</button>
             <button class="btn" data-act="edit1"><svg class="pen" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.2a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 2.6 13.4l.5-3z"/><path d="M10.4 3.1l2.5 2.5"/></svg>수정</button>
           </div>
         </header>
@@ -764,6 +766,29 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
   </div>
 </div>
 
+<!-- ───────── 비밀번호 변경 ───────── -->
+<div class="ov" id="ovPw" hidden>
+  <div class="mo" style="max-width:460px !important">
+    <header><span class="std">비밀번호 변경</span></header>
+    <div class="sc" style="padding:18px 22px 20px">
+      <div class="pwf">
+        <div class="f"><label>현재 비밀번호<span class="req">*</span></label><input type="password" placeholder="현재 비밀번호"></div>
+        <div class="f">
+          <label>새 비밀번호<span class="req">*</span></label>
+          <input type="password" placeholder="새 비밀번호">
+          <span class="lk">영문 · 숫자 · 특수문자를 모두 포함한 8자 이상</span>
+        </div>
+        <div class="f"><label>새 비밀번호 확인<span class="req">*</span></label><input type="password" placeholder="한 번 더 입력"></div>
+      </div>
+      <div class="reqnote" style="margin:16px 0 0">비밀번호를 변경하면 <b>다시 로그인</b>해야 합니다.</div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">변경</button>
+    </footer>
+  </div>
+</div>
+
 <!-- ───────── 소속 정보 수정 ───────── -->
 <div class="ov" id="ovOrg" hidden>
   <div class="mo" style="max-width:820px !important">
@@ -830,7 +855,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
-    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 05:56</span>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 06:07</span>
 </div>
 
 
@@ -838,7 +863,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
 <script>
 (function(){
   'use strict';
-  var OVS=['ovQual','ovCode','ovEdit1','ovOrg','ovHist'];
+  var OVS=['ovQual','ovCode','ovEdit1','ovOrg','ovHist','ovPw'];
   var VIEW=['ovQual','ovCode'];
   function $(id){ return document.getElementById(id); }
   function hideAll(list){ for(var i=0;i<list.length;i++){ var el=$(list[i]); if(el) el.hidden=true; } }
@@ -914,7 +939,8 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     if(!t) return;
 
     var a=t.getAttribute('data-act'), k=t.getAttribute('data-k');
-    if(a==='org'){ hideAll(OVS); $('ovOrg').hidden=false; }
+    if(a==='pw'){ hideAll(OVS); $('ovPw').hidden=false; }
+    else if(a==='org'){ hideAll(OVS); $('ovOrg').hidden=false; }
     else if(a==='edit1'){ hideAll(OVS); $('ovEdit1').hidden=false; }
     else if(a==='hist'){ openHist(k); }
     else if(a==='qual'){ openQual(k); }
