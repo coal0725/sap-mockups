@@ -491,7 +491,7 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
       <section class="blk new">
         <header>
           <span class="n">3</span><h2>학력 · 경력 · 자격증</h2>
-          <div class="acts"><button class="fold" onclick="fold('b3',event)">학력 2 · 경력 2 · 자격증 1<i class="cv2">▾</i></button><button class="btn"><svg class="pen" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.2a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 2.6 13.4l.5-3z"/><path d="M10.4 3.1l2.5 2.5"/></svg>수정</button></div>
+          <div class="acts"><button class="fold" onclick="fold('b3',event)">학력 2 · 근무 2 · 심사 3 · 자문 0 · 자격증 1<i class="cv2">▾</i></button><button class="btn"><svg class="pen" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.2a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 2.6 13.4l.5-3z"/><path d="M10.4 3.1l2.5 2.5"/></svg>수정</button></div>
         </header>
 
         <div id="b3" hidden>
@@ -504,12 +504,30 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
           </tbody>
         </table>
 
-        <div class="sublbl">경력</div>
+        <div class="sublbl">근무경력</div>
         <table>
-          <thead><tr><th style="width:32%">기관</th><th style="width:26%">부서 · 직위</th><th style="width:20%">담당 업무</th><th style="width:22%">기간</th></tr></thead>
+          <thead><tr><th style="width:30%">기관</th><th style="width:26%">부서 · 직위</th><th style="width:20%">담당 업무</th><th style="width:24%">기간</th></tr></thead>
           <tbody>
             <tr><td>○○기업</td><td>품질보증팀 · 대리</td><td>품질관리</td><td>2019-03 ~ 2024-08</td></tr>
             <tr><td>삼성표준인증원</td><td>인증사업부 · 책임연구원</td><td>인증심사</td><td>2024-09 ~ 재직중</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sublbl">심사경력</div>
+        <table>
+          <thead><tr><th style="width:30%">기업</th><th style="width:16%">표준</th><th style="width:14%">역할</th><th style="width:14%" class="num">심사일수</th><th style="width:26%">심사일자</th></tr></thead>
+          <tbody>
+            <tr><td>○○산업</td><td>ISO 9001</td><td>팀원</td><td class="num">2.0</td><td>2026-05-12 ~ 05-13</td></tr>
+            <tr><td>△△정밀</td><td>ISO 9001</td><td>팀원</td><td class="num">1.5</td><td>2026-07-08</td></tr>
+            <tr><td>□□소재</td><td>ISO 14001</td><td>팀원</td><td class="num">2.0</td><td>2026-08-20 ~ 08-21</td></tr>
+          </tbody>
+        </table>
+
+        <div class="sublbl">자문경력</div>
+        <table>
+          <thead><tr><th style="width:30%">기업</th><th style="width:20%">표준</th><th style="width:26%">자문 내용</th><th style="width:24%">기간</th></tr></thead>
+          <tbody>
+            <tr><td colspan="4" class="na" style="text-align:center; padding:16px">등록된 자문경력이 없습니다</td></tr>
           </tbody>
         </table>
 
@@ -626,6 +644,7 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
         <dt>표준</dt><dd>ISO 9001</dd>
         <dt>코드</dt><dd>24A</dd>
         <dt>인증수행범위</dt><dd style="grid-column:2/5">1차 금속 제조업</dd>
+        <dt>증빙 유형</dt><dd>근무경력</dd>
         <dt>제출일</dt><dd>2026-09-14</dd>
         <dt>승인일</dt><dd>2026-09-20</dd>
       </dl>
