@@ -179,9 +179,10 @@ dl.kv .lun{display:inline-block; margin-left:6px; padding:1px 6px; border-radius
   background:#F0F1EE; color:#6C6E68; font-size:11px; vertical-align:1px}
 
 table.t{width:100%; border-collapse:collapse; font-size:13px}
-table.t th{background:#FAFAF8; border-bottom:1px solid var(--line); padding:10px 11px;
+table.t th{background:#F4F5F2; border-bottom:1px solid #DCDDD8; padding:10px 11px;
   text-align:left; font-size:12px; color:var(--muted); font-weight:600; white-space:nowrap}
-table.t td{border-bottom:1px solid #EFEFEC; padding:11px; vertical-align:middle}
+table.t td{border-bottom:1px solid #ECEDE8; padding:11px; vertical-align:middle}
+table.t tbody tr:hover{background:#FCFCFA}
 table.t tr:last-child td{border-bottom:0}
 table.t .ta{text-align:right; white-space:nowrap}
 table.t .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; white-space:nowrap}
@@ -278,6 +279,31 @@ dl.kv dd.wide{grid-column:2 / 5}
   font-weight:600; padding:16px 18px 7px; letter-spacing:.2px}
 .sublbl .btn{margin-left:auto; font-weight:500}
 .hd2{display:flex; gap:7px}
+.tbox{border:1px solid #DCDDD8; border-radius:5px; overflow:hidden; background:#fff}
+.t.edit{font-size:13px}
+.t.edit th{background:#F4F5F2; padding:9px 12px; font-size:11.5px; letter-spacing:.2px}
+.t.edit th:first-child,.t.edit td:first-child{text-align:center; padding-left:0; padding-right:0}
+.t.edit td{padding:9px 12px; vertical-align:middle; border-bottom:1px solid #ECEDE8}
+.t.edit tbody tr:last-child td{border-bottom:0}
+.t.edit tbody tr:hover{background:#FCFCFA}
+.t.edit tbody tr:nth-child(even){background:#FBFBF9}
+.t.edit tbody tr:nth-child(even):hover{background:#F7F7F4}
+.t.edit input,.t.edit select{width:100%; height:36px; padding:0 11px;
+  border:1px solid #CFD2CB; border-radius:4px; font:inherit; font-size:13px;
+  background:#fff; color:var(--ink)}
+.t.edit select{appearance:none; padding-right:28px;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%236B706C' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 11px center}
+.t.edit input:focus,.t.edit select:focus{outline:none; border-color:var(--navy);
+  box-shadow:0 0 0 3px var(--navy-soft)}
+.t.edit .no{color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums}
+.t.edit .ta{text-align:center; padding-left:0; padding-right:0}
+.t.edit .fileline{flex-wrap:nowrap; gap:7px}
+.t.edit .fchip{max-width:none; flex:1; min-width:0; height:36px; justify-content:flex-start}
+.t.edit .btn.sm{height:36px; flex:none}
+.rmx{width:30px; height:30px; border:1px solid #E3C3BC; border-radius:4px; background:#fff;
+  color:#B04A3A; font:inherit; font-size:16px; line-height:1; cursor:pointer}
+.rmx:hover{background:#FBF3F1; border-color:#C0392B}
 .btn.sm{height:28px; padding:0 11px; font-size:12px}
 
 /* ───── 증빙 파일 칩 · 더보기 ───── */
@@ -737,22 +763,25 @@ input[type=checkbox]{accent-color:var(--navy)}
       <!-- 6 첨부 서류 -->
       <div class="card">
         <h3>
-          <span class="lf"><span class="num">6</span>첨부 서류 <span class="cnt">3건</span></span>
+          <span class="lf"><span class="num">6</span>첨부 서류 <span class="cnt">4건</span></span>
           <button class="btn sm" data-act="docs">✎ 수정</button>
         </h3>
         <div style="overflow-x:auto">
           <table class="t">
             <thead>
-              <tr><th style="width:132px">구분</th><th>파일</th>
+              <tr><th style="width:44px">No.</th><th style="width:140px">규격</th>
+                  <th style="width:220px">서류명</th><th>서류첨부</th>
                   <th style="width:96px">올린 사람</th><th style="width:104px">올린 날짜</th></tr>
             </thead>
             <tbody>
-              <tr><td>입회평가서</td><td><button class="fchip" title="입회평가서_2022-03.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>입회평가서_2022-03.pdf</span></button></td>
-                  <td>장은수</td><td>2022-03-14</td></tr>
-              <tr><td>자격부여서</td><td><button class="fchip" title="자격부여서_선임심사원.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>자격부여서_선임심사원.pdf</span></button></td>
-                  <td>오관리</td><td>2026-09-02</td></tr>
-              <tr><td>기타</td><td><button class="fchip" title="경력기술서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>경력기술서.pdf</span></button></td>
-                  <td>김선임</td><td>2022-03-10</td></tr>
+              <tr><td>1</td><td class="na">해당없음</td><td>입회평가서</td>
+                  <td><button class="fchip" title="입회평가서_2022-03.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>입회평가서_2022-03.pdf</span></button></td><td>장은수</td><td>2022-03-14</td></tr>
+              <tr><td>2</td><td><b>ISO 9001:2015</b></td><td>자격부여서</td>
+                  <td><button class="fchip" title="자격부여서_9001_선임.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>자격부여서_9001_선임.pdf</span></button></td><td>오관리</td><td>2026-09-02</td></tr>
+              <tr><td>3</td><td><b>ISO 14001:2015</b></td><td>적격성 재평가 결과</td>
+                  <td><button class="fchip" title="재평가결과_14001.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>재평가결과_14001.pdf</span></button></td><td>김진숙</td><td>2026-07-20</td></tr>
+              <tr><td>4</td><td class="na">해당없음</td><td>경력기술서</td>
+                  <td><button class="fchip" title="경력기술서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>경력기술서.pdf</span></button></td><td>김선임</td><td>2022-03-10</td></tr>
             </tbody>
           </table>
         </div>
@@ -876,16 +905,34 @@ input[type=checkbox]{accent-color:var(--navy)}
 </div>
 
 <div class="ov" id="ovDoc" hidden>
-  <div class="mo" style="max-width:700px">
-    <header>
-      <b>첨부 서류 수정</b>
-    </header>
+  <div class="mo" style="max-width:900px">
+    <header><b>첨부 서류 수정</b></header>
     <div class="sc">
-      <p class="ecnt">현재 <b id="dCnt">3</b>건</p>
-      <div id="dList"></div>
-      <button class="addrow" data-act="dadd">＋ 파일 추가</button>
-      <div class="fd" style="margin-top:16px"><label>비고</label>
-        <input placeholder="예: 2026년 적격성 재평가 자료 일괄 등록"></div>
+      <div class="tbox" style="overflow-x:auto">
+        <table class="t edit">
+          <thead>
+            <tr><th style="width:42px">No.</th><th style="width:168px">규격</th>
+                <th style="width:240px">서류명</th><th>서류첨부</th><th style="width:44px"></th></tr>
+          </thead>
+          <tbody id="dList"></tbody>
+        </table>
+      </div>
+      <button class="addrow" data-act="dadd" style="margin-top:12px">＋ 서류 추가</button>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">저장</button>
+    </footer>
+  </div>
+</div>
+
+<div class="ov" id="ovOrg" hidden>
+  <div class="mo" style="max-width:780px">
+    <header><b>소속 정보 수정</b></header>
+    <div class="sc">
+      <p class="ecnt">현재 <b id="oCnt">3</b>곳</p>
+      <div id="oList"></div>
+      <button class="addrow" data-act="oadd">＋ 소속 추가</button>
     </div>
     <footer>
       <button class="btn" data-act="close">취소</button>
@@ -936,13 +983,13 @@ input[type=checkbox]{accent-color:var(--navy)}
             <th style="width:92px">신청일</th><th style="width:92px">처리일</th>
             <th style="width:76px">처리자</th><th style="width:76px">결과</th><th>사유</th></tr></thead>
           <tbody>
-            <tr><td>신규</td><td><b>ISO 14001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td class="na">—</td>
+            <tr><td>신규</td><td><b>ISO 14001</b></td><td class="mono">17</td><td class="na">—</td>
                 <td>2025-11-02</td><td class="na">—</td><td class="na">—</td>
                 <td><span class="st" data-state="wait">검토</span></td><td class="muted">—</td></tr>
-            <tr><td>신규</td><td><b>ISO 9001</b></td><td><b class="cd">24</b><span class="cn">재생업</span></td><td><b class="cd">24A</b><span class="cn">재생용 가공원료 생산업</span></td>
+            <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">24</td><td class="mono">24A</td>
                 <td>2025-11-02</td><td class="na">—</td><td class="na">—</td>
                 <td><span class="st" data-state="wait">접수</span></td><td class="muted">—</td></tr>
-            <tr><td>신규</td><td><b>ISO 9001</b></td><td><b class="cd">07</b><span class="cn">펄프, 종이 및 종이제품제조업</span></td><td><b class="cd">07A</b><span class="cn">펄프, 종이 및 종이제품 제조업</span></td>
+            <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">07</td><td class="mono">07A</td>
                 <td>2022-10-05</td><td>2022-10-14</td><td>오관리</td>
                 <td><span class="st" data-state="valid">승인</span></td><td class="muted">심사경력 3회 5일 확인</td></tr>
             <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">28</td><td class="mono">28B</td>
@@ -953,21 +1000,6 @@ input[type=checkbox]{accent-color:var(--navy)}
       </div>
     </div>
     <footer><button class="btn" data-act="close">닫기</button></footer>
-  </div>
-</div>
-
-<div class="ov" id="ovOrg" hidden>
-  <div class="mo" style="max-width:780px">
-    <header><b>소속 정보 수정</b></header>
-    <div class="sc">
-      <p class="ecnt">현재 <b id="oCnt">3</b>곳</p>
-      <div id="oList"></div>
-      <button class="addrow" data-act="oadd">＋ 소속 추가</button>
-    </div>
-    <footer>
-      <button class="btn" data-act="close">취소</button>
-      <button class="btn pri" data-act="close">저장</button>
-    </footer>
   </div>
 </div>
 
@@ -1449,43 +1481,45 @@ input[type=checkbox]{accent-color:var(--navy)}
 
   /* ── 첨부 서류 ── */
   (function(){
-    var KIND = ['입회평가서','자격부여서','서약서','이력서','기타'];
+    /* 표준 마스터에서 파생 · 해당없음 포함 */
+    /* 표준 마스터와 같은 목록 · 판까지 표기 */
+    var STD = ['해당없음','ISO 9001:2026','ISO 9001:2015','ISO 14001:2015',
+               'ISO 45001:2018','ISO 27001:2022','ISO 37001:2016','ISO 22716:2007'];
     var CLIP = '<svg viewBox="0 0 16 16" aria-hidden="true">'
       + '<path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg>';
     var DD = [
-      {k:'입회평가서', fn:'입회평가서_2022-03.pdf', by:'장은수', dt:'2022-03-14'},
-      {k:'자격부여서', fn:'자격부여서_선임심사원.pdf', by:'오관리', dt:'2026-09-02'},
-      {k:'기타', fn:'경력기술서.pdf', by:'김선임', dt:'2022-03-10'}
+      {std:'해당없음', nm:'입회평가서', fn:'입회평가서_2022-03.pdf'},
+      {std:'ISO 9001:2015', nm:'자격부여서', fn:'자격부여서_9001_선임.pdf'},
+      {std:'ISO 14001:2015', nm:'적격성 재평가 결과', fn:'재평가결과_14001.pdf'},
+      {std:'해당없음', nm:'경력기술서', fn:'경력기술서.pdf'}
     ];
-    function sel(cur){
+    function sel3(cur){
       var h = '<select>';
-      for (var i=0;i<KIND.length;i++) h += '<option'+(KIND[i]===cur?' selected':'')+'>'+KIND[i]+'</option>';
+      for (var i=0;i<STD.length;i++) h += '<option'+(STD[i]===cur?' selected':'')+'>'+STD[i]+'</option>';
       return h + '</select>';
     }
     function row(d, i){
-      return '<div class="erow" data-i="'+i+'">'
-        + '<div class="eh"><b>'+(d.k||'새 서류')+'<span class="tag">'+(d.fn||'파일 없음')+'</span></b>'
-        + '<button class="rmrow" data-act="ddel" data-i="'+i+'">삭제</button></div>'
-        + '<div class="eb"><div class="grid3">'
-        + '<div class="fd"><label>구분 <em>*</em></label>'+sel(d.k)+'</div>'
-        + '<div class="fd full"><label>파일 <em>*</em></label><div class="fileline">'
+      return '<tr data-i="'+i+'">'
+        + '<td class="no">'+(i+1)+'</td>'
+        + '<td>'+sel3(d.std)+'</td>'
+        + '<td><input value="'+(d.nm||'')+'" placeholder="예: 입회평가서"></td>'
+        + '<td><div class="fileline">'
         + (d.fn ? '<button class="fchip" type="button">'+CLIP+'<span>'+d.fn+'</span></button>' : '')
-        + '<button class="btn sm" type="button">'+(d.fn?'다시 올리기':'파일 선택')+'</button>'
-        + '<span class="fn">PDF · JPG · PNG 10MB 이하</span></div></div>'
-        + '</div></div></div>';
+        + '<button class="btn sm" type="button">'+(d.fn?'변경':'파일 선택')+'</button></div></td>'
+        + '<td class="ta"><button class="rmx" data-act="ddel" data-i="'+i+'" title="삭제">−</button></td>'
+        + '</tr>';
     }
     function draw(){
       var l = $('dList');
       if (!l) return;
       l.innerHTML = DD.map(row).join('');
-      $('dCnt').textContent = DD.length;
     }
     document.addEventListener('click', function(e){
       var t = e.target.closest ? e.target.closest('[data-act]') : null;
       if (!t) return;
       var a = t.getAttribute('data-act'), i = +t.getAttribute('data-i');
       if (a === 'ddel'){ DD.splice(i,1); draw(); }
-      else if (a === 'dadd'){ DD.push({k:'기타', fn:'', by:'장은수', dt:''}); draw(); }
+      else if (a === 'dadd'){ DD.push({std:'해당없음', nm:'', fn:''}); draw(); }
     });
     draw();
   })();

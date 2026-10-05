@@ -172,14 +172,15 @@ table{width:100%; border-collapse:collapse}
 .cn{display:block; font-size:11.5px; color:var(--muted); margin-top:1px; line-height:1.4; white-space:normal}
 table th,table td{white-space:nowrap}
 table td.sub{white-space:normal}
-th,td{text-align:left; font-size:13px; padding:12px 12px; border-bottom:1px solid #F0F0EC;
+th,td{text-align:left; font-size:13px; padding:12px 12px; border-bottom:1px solid #ECEDE8;
       font-variant-numeric:tabular-nums}
 th:first-child, td:first-child{padding-left:18px}
 th:last-child,  td:last-child{padding-right:18px}
 th{padding-top:9px; padding-bottom:9px}
 tbody tr:last-child td{border-bottom:0; padding-bottom:16px}
 .blk > table:last-child tbody tr:last-child td{padding-bottom:18px}
-th{font-size:11.5px; color:var(--muted); font-weight:600; background:#FAFAF8; border-bottom:1px solid var(--line)}
+th{font-size:11.5px; color:var(--muted); font-weight:600; background:#F4F5F2; border-bottom:1px solid #DCDDD8}
+tbody tr:hover{background:#FCFCFA}
 td.na{color:#A8ACA6}
 td.num{text-align:right; font-variant-numeric:tabular-nums}
 .pill{font-size:11px; padding:2px 8px; border-radius:11px; display:inline-block; white-space:nowrap}
@@ -264,7 +265,7 @@ td.num{text-align:right; font-variant-numeric:tabular-nums}
 .reqnote b{color:#B04A3A}
 .pwf{display:flex; flex-direction:column; gap:14px}
 .pwf .lk{color:var(--muted)}
-.ocard{border:1px solid var(--line); border-radius:8px; padding:14px 16px; margin-bottom:12px}
+.ocard{border:1px solid #DCDDD8; border-radius:8px; padding:14px 16px; margin-bottom:12px; background:#FCFCFA}
 .ohead{display:flex; align-items:center; gap:8px; margin-bottom:12px}
 .ohead b{font-size:13.5px}
 .ohead .del{margin-left:auto; color:#B04A3A; border-color:#F2D4CE}
@@ -1004,6 +1005,33 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
       bar.innerHTML = open ? '접기 <i>\u25b4</i>' : '<b>2건</b> 더보기 <i>\u25be</i>';
     });
   })();
+
+  /* 날짜는 0000-00-00 수기 입력 */
+  document.addEventListener('input', function(e){
+    if(!e.target.classList || !e.target.classList.contains('dt')) return;
+    var v=e.target.value.replace(/[^0-9]/g,'').slice(0,8), o=v.slice(0,4);
+    if(v.length>4) o+='-'+v.slice(4,6);
+    if(v.length>6) o+='-'+v.slice(6,8);
+    e.target.value=o;
+  });
+
+  /* 날짜는 0000-00-00 수기 입력 */
+  document.addEventListener('input', function(e){
+    if(!e.target.classList || !e.target.classList.contains('dt')) return;
+    var v=e.target.value.replace(/[^0-9]/g,'').slice(0,8), o=v.slice(0,4);
+    if(v.length>4) o+='-'+v.slice(4,6);
+    if(v.length>6) o+='-'+v.slice(6,8);
+    e.target.value=o;
+  });
+
+  /* 날짜는 0000-00-00 수기 입력 */
+  document.addEventListener('input', function(e){
+    if(!e.target.classList || !e.target.classList.contains('dt')) return;
+    var v=e.target.value.replace(/[^0-9]/g,'').slice(0,8), o=v.slice(0,4);
+    if(v.length>4) o+='-'+v.slice(4,6);
+    if(v.length>6) o+='-'+v.slice(6,8);
+    e.target.value=o;
+  });
 })();
 </script>
 
