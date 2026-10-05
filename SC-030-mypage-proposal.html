@@ -108,7 +108,7 @@ body{
 .top .me{margin-left:auto; display:flex; align-items:center; gap:8px; font-size:13px}
 .top .me .av{width:27px;height:27px;border-radius:50%;background:var(--navy-soft);color:var(--navy);display:grid;place-items:center;font-size:11px;font-weight:700}
 .body{padding:26px 28px 40px}
-.wrap{max-width:980px; margin:0 auto; width:100%}
+.wrap{max-width:1240px; margin:0 auto; width:100%}
 .ph{margin-bottom:16px}
 .ph h1{font-size:20px; letter-spacing:-.4px; font-weight:700}
 .ph p{font-size:13px; color:var(--muted); margin-top:5px}
@@ -168,6 +168,8 @@ body{
 
 /* ── 목록 테이블 ── */
 table{width:100%; border-collapse:collapse}
+table th,table td{white-space:nowrap}
+table td.sub{white-space:normal}
 th,td{text-align:left; font-size:13px; padding:12px 12px; border-bottom:1px solid #F0F0EC;
       font-variant-numeric:tabular-nums}
 th:first-child, td:first-child{padding-left:18px}
@@ -606,27 +608,41 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
             <button class="btn pri">신규 신청</button>
           </div>
         </header>
+        <div style="overflow-x:auto">
         <table>
           <thead>
             <tr>
-              <th style="width:16%">표준</th><th style="width:16%">자격등급</th>
-              <th style="width:27%">유효기간</th><th style="width:16%">갱신일자</th>
-              <th style="width:11%" class="num">갱신잔여</th><th style="width:10%">상태</th><th style="width:4%"></th>
+              <th style="width:124px">자격표준</th>
+              <th style="width:84px">자격등급</th>
+              <th style="width:96px">자격인증기관</th>
+              <th style="width:136px">자격증번호</th>
+              <th style="width:96px">발행일</th>
+              <th style="width:96px">만료일</th>
+              <th style="width:84px" class="num">만료잔여</th>
+              <th style="width:96px">갱신일</th>
+              <th style="width:76px">처리현황</th>
+              <th style="width:76px">관리상태</th>
+              <th style="width:24px"></th>
             </tr>
           </thead>
           <tbody>
             <tr class="row" data-act="qual" data-k="9001">
-              <td><b>ISO 9001</b></td><td>심사원</td>
-              <td>2024-05-20 ~ 2027-05-19</td><td>2027-05-20</td>
-              <td class="num">591일</td><td><span class="pill ok">유효</span></td><td>›</td>
+              <td><b>ISO 9001:2015</b></td><td>심사원</td><td>MCL</td>
+              <td class="docn">MCL-QMS-A-2022</td>
+              <td>2025-02-13</td><td>2028-02-20</td>
+              <td class="num">865일</td><td>2028-02-20</td>
+              <td><span class="pill ok">승인</span></td><td><span class="pill ok">유지</span></td><td>›</td>
             </tr>
             <tr class="row" data-act="qual" data-k="14001">
-              <td><b>ISO 14001</b></td><td>심사원보</td>
-              <td>2023-11-02 ~ 2026-11-01</td><td>2026-01-15</td>
-              <td class="num">27일</td><td><span class="pill warn">갱신 필요</span></td><td>›</td>
+              <td><b>ISO 14001:2015</b></td><td>심사원보</td><td>PCAA</td>
+              <td class="docn">PC1699</td>
+              <td>2023-11-02</td><td>2026-11-01</td>
+              <td class="num docn bad">27일</td><td>2026-01-15</td>
+              <td><span class="pill ok">승인</span></td><td><span class="pill warn">갱신 필요</span></td><td>›</td>
             </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       <!-- 5 코드 등록 -->
@@ -637,14 +653,51 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
             <button class="btn pri">신규 신청</button>
           </div>
         </header>
+        <div style="overflow-x:auto">
         <table>
-          <thead><tr><th style="width:18%">표준</th><th style="width:12%">코드</th><th style="width:36%">인증수행범위</th><th style="width:15%">제출일</th><th style="width:15%">승인일</th><th style="width:4%"></th></tr></thead>
+          <thead>
+            <tr>
+              <th style="width:44px">No.</th>
+              <th style="width:92px">표준</th>
+              <th style="width:70px">대분류</th>
+              <th style="width:70px">세분류</th>
+              <th style="width:104px">코드부여근거</th>
+              <th>증빙자료</th>
+              <th style="width:92px">접수일</th>
+              <th style="width:92px">검토일</th>
+              <th style="width:92px">승인일</th>
+              <th style="width:76px">처리현황</th>
+              <th style="width:24px"></th>
+            </tr>
+          </thead>
           <tbody>
-            <tr class="row" data-act="code"><td>ISO 9001</td><td>24A</td><td>1차 금속 제조업</td><td>2026-09-14</td><td>2026-09-20</td><td>›</td></tr>
-            <tr class="row" data-act="code"><td>ISO 9001</td><td>25A</td><td>금속가공제품 제조업</td><td>2026-09-14</td><td>2026-09-20</td><td>›</td></tr>
-            <tr class="row" data-act="code"><td>ISO 14001</td><td>24</td><td>1차 금속 및 금속가공제품 제조업</td><td>2026-09-22</td><td>2026-09-28</td><td>›</td></tr>
+            <tr class="row" data-act="code">
+              <td>1</td><td><b>ISO 9001</b></td><td class="docn">24</td><td class="docn">24A</td>
+              <td>근무경력</td><td class="sub">8년 8개월 (세일메탈㈜)</td>
+              <td>2026-09-14</td><td>2026-09-18</td><td>2026-09-20</td>
+              <td><span class="pill ok">승인</span></td><td>›</td>
+            </tr>
+            <tr class="row" data-act="code">
+              <td>2</td><td><b>ISO 9001</b></td><td class="docn">25</td><td class="docn">25A</td>
+              <td>근무경력</td><td class="sub">8년 8개월 (세일메탈㈜)</td>
+              <td>2026-09-14</td><td>2026-09-18</td><td>2026-09-20</td>
+              <td><span class="pill ok">승인</span></td><td>›</td>
+            </tr>
+            <tr class="row" data-act="code">
+              <td>3</td><td><b>ISO 14001</b></td><td class="docn">24</td><td class="na">—</td>
+              <td>근무경력</td><td class="sub">8년 8개월 (세일메탈㈜) · 환경측면 파악</td>
+              <td>2026-09-22</td><td>2026-09-26</td><td>2026-09-28</td>
+              <td><span class="pill ok">승인</span></td><td>›</td>
+            </tr>
+            <tr class="row" data-act="code">
+              <td>4</td><td><b>ISO 45001</b></td><td class="docn">24</td><td class="na">—</td>
+              <td>근무경력</td><td class="sub">8년 8개월 (세일메탈㈜) · 위험성 평가</td>
+              <td>2026-10-02</td><td class="na">—</td><td class="na">—</td>
+              <td><span class="pill wait">접수</span></td><td>›</td>
+            </tr>
           </tbody>
         </table>
+        </div>
       </section>
 
       </div>
@@ -860,7 +913,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
-    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 18:30</span>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 19:45</span>
 </div>
 
 

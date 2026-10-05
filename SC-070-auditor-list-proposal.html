@@ -108,6 +108,8 @@ button{font-family:inherit}
   .body{max-width:none; padding:0}
 }
 
+input[type=checkbox]{accent-color:var(--navy)}
+
 /* ───── 레이아웃 ───── */
 .app{display:grid; grid-template-columns:232px 1fr; align-items:stretch; min-height:calc(100vh - 52px - 86px)}
 .nav{background:var(--navy-deep); color:#CFD6E4; padding:18px 0 40px}
@@ -121,6 +123,22 @@ button{font-family:inherit}
   text-decoration:none; cursor:default}
 .nav a.on{background:rgba(255,255,255,.1); color:#fff; font-weight:600;
   box-shadow:inset 3px 0 0 #C8A24A}
+
+/* 사이드네비 — 대메뉴를 눌러 하위를 여닫습니다 */
+.nav .gt{cursor:pointer; user-select:none}
+.nav .gt:hover{background:rgba(255,255,255,.05)}
+.nav .gt .pm{margin-left:auto; width:14px; height:14px; flex:none; position:relative; opacity:.55}
+.nav .gt .pm::before,.nav .gt .pm::after{
+  content:''; position:absolute; background:currentColor; border-radius:1px;
+  transition:transform .16s, opacity .16s}
+.nav .gt .pm::before{left:0; right:0; top:6px; height:2px}
+.nav .gt .pm::after{top:0; bottom:0; left:6px; width:2px}
+.nav .g.on .gt .pm::after{transform:scaleY(0)}
+.nav .g.on .gt{color:#fff}
+.nav .g:not(.on) .sub{display:none}
+.nav .gt.nokid{cursor:default}
+.nav .gt.nokid:hover{background:transparent}
+
 .nav .ms{margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1)}
 
 .main{flex:1; min-width:0; display:flex; flex-direction:column; align-items:stretch}
@@ -354,64 +372,58 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
     <h2>관리자 업무</h2>
 
     <div class="g">
-      <div class="gt">
+      <div class="gt nokid">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
-        마이페이지
+        마이페이지</div>
       </div>
-    </div>
 
-    <div class="g">
+    <div class="g on">
       <div class="gt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11h4M19 9v4"/></svg>
-        심사원 관리
-      </div>
-      <a class="on">심사원 계정</a>
+        심사원 관리<span class="pm"></span></div>
+       <div class="sub"><a class="on">심사원 계정</a>
       <a>자격 승인</a>
-      <a>코드 승인</a>
+      <a>코드 승인</a></div>
     </div>
 
     <div class="g">
       <div class="gt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M3 21h18"/></svg>
-        인증 관리
-      </div>
-      <a>기업 정보</a>
+        인증 관리<span class="pm"></span></div>
+       <div class="sub"><a>기업 정보</a>
       <a>인증 신청</a>
       <a>계약 · 비용</a>
       <a>인증서 · 현황</a>
-      <a>인증 변경</a>
+      <a>인증 변경</a></div>
     </div>
 
     <div class="g">
       <div class="gt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-        심사 관리
-      </div>
-      <a>심사 일정</a>
+        심사 관리<span class="pm"></span></div>
+       <div class="sub"><a>심사 일정</a>
       <a>심사팀 배정</a>
-      <a>보고서 검증</a>
+      <a>보고서 검증</a></div>
     </div>
 
     <div class="g">
       <div class="gt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 12v6"/></svg>
-        게시판 관리
-      </div>
-      <a>공지사항</a>
-      <a>절차 및 서식</a>
+        게시판 관리<span class="pm"></span></div>
+       <div class="sub"><a>공지사항</a>
+      <a>절차 및 서식</a></div>
     </div>
 
     <div class="g ms">
       <div class="gt">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
-        시스템
-      </div>
-      <a>시스템 설정</a>
+        시스템<span class="pm"></span></div>
+       <div class="sub"><a>시스템 설정</a>
       <a>문서번호 · 버전 관리</a>
       <a>인장 · 로고</a>
       
       <a>감사 모드</a>
-      <a>이메일 발송 로그</a>
+      <a>이메일 발송 로그</a></div>
     </div>
   </nav>
 
@@ -426,7 +438,7 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
         <div class="sbar">
           <div class="seg">
             <select class="sel">
-              <option>권한 전체</option>
+              <option>권한등급 전체</option>
               <option>심사원보</option><option>심사원</option><option>선임심사원</option>
               <option>검증심사원</option><option>관리자</option><option>마스터관리자</option>
             </select>
@@ -470,7 +482,7 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
                 <th style="width:112px">로그인 ID</th>
                 <th style="width:86px">이름</th>
                 <th style="width:150px">영문명</th>
-                <th style="width:104px">권한</th>
+                <th style="width:104px">권한등급</th>
                 <th>보유 자격</th>
                 <th style="width:128px">휴대전화</th>
                 <th style="width:180px">이메일</th>
@@ -590,7 +602,7 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
     <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
-    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 18:30</span>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 19:45</span>
 </div>
 
 <button class="totop" id="totop" data-act="totop" aria-label="맨 위로">
@@ -760,6 +772,17 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
       tt.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
       window.addEventListener('scroll', function(){
         tt.classList.toggle('on', window.scrollY > 240);
+      });
+    }
+  })();
+
+  /* ── 사이드네비 여닫기 ── */
+  (function(){
+    var gts = document.querySelectorAll('.nav .gt');
+    for (var i=0;i<gts.length;i++){
+      if (gts[i].classList.contains('nokid')) continue;
+      gts[i].addEventListener('click', function(){
+        this.parentNode.classList.toggle('on');
       });
     }
   })();

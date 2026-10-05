@@ -1,0 +1,1488 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>심사원 상세 | 삼성표준인증원</title>
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<style>
+:root{
+  --navy:#1A2A4F; --navy-deep:#142139; --navy-soft:#E9ECF3;
+  --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE; --bg:#F7F7F4;
+  --warn:#FFF4E5; --warn-ink:#9C4221; --ok:#E8F3EC; --ok-ink:#2F6B45;
+  --wait:#EEF1F6; --wait-ink:#4A5A78; --rej:#FBE9E6; --rej-ink:#B04A3A;
+}
+*{box-sizing:border-box}
+html,body{margin:0; padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; padding-bottom:58px;
+}
+[hidden]{display:none !important}
+button{font-family:inherit}
+
+/* ───── ㄷ자 공통 프레임 · CM-001 — SC-030과 동일 ───── */
+/* 헤더 — 전체 폭 고정 */
+.gnb{
+  height:52px;
+  display:flex; align-items:center; gap:12px; padding:0 18px;
+  background:#fff; border-bottom:1px solid var(--line);
+}
+.gnb .logo{height:22px; width:auto; display:block; flex:none}
+.gnb .nm{font-size:14.5px; font-weight:700; letter-spacing:-.3px}
+.gnb .rt{margin-left:auto; display:flex; align-items:center; gap:10px}
+.gnb .sw{
+  font:inherit; font-size:12px; padding:5px 11px; border-radius:5px; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--muted);
+}
+.gnb .sw:hover{background:#FAFAF8; color:var(--ink)}
+.gnb .bell{position:relative; width:30px; height:30px; border:0; background:transparent; cursor:pointer; border-radius:6px}
+.gnb .bell:hover{background:#F4F4F1}
+.gnb .bell svg{width:16px; height:16px; fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.gnb .bell b{
+  position:absolute; top:3px; right:3px; min-width:15px; height:15px; padding:0 4px;
+  border-radius:8px; background:#B04A3A; color:#fff;
+  font-size:9.5px; font-weight:700; display:grid; place-items:center;
+}
+.gnb .who{display:flex; align-items:center; gap:5px; padding:5px 9px; border-radius:6px; cursor:pointer; font-size:13px; color:var(--muted)}
+.gnb .who:hover{background:#F4F4F1}
+.gnb .who b{color:var(--ink); font-weight:700}
+.gnb .who .cv{font-size:9px; color:#B4B8B2; margin-left:2px}
+.udd{position:relative}
+.dd{
+  position:absolute; top:calc(100% + 7px); right:0; min-width:168px; z-index:40;
+  background:#fff; border:1px solid var(--line); border-radius:8px; padding:5px;
+  box-shadow:0 6px 20px rgba(20,33,57,.14);
+}
+.dd[hidden]{display:none}
+.dd a{
+  display:flex; align-items:center; gap:9px;
+  padding:9px 11px; border-radius:5px; font-size:13px; color:var(--ink); cursor:pointer;
+}
+.dd a svg{
+  width:14px; height:14px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; opacity:.65;
+}
+.dd a.out svg{opacity:.8}
+.dd a:hover{background:#F4F4F1}
+.dd a.out{color:#B04A3A}
+.dd hr{border:0; border-top:1px solid #F0F0EC; margin:5px 3px}
+.foot{
+  min-height:28px;
+  display:flex; align-items:center; gap:14px; padding:7px 18px;
+  background:#fff; border-top:1px solid var(--line);
+  font-size:11px; color:#A8ACA6; flex-wrap:wrap;
+}
+.foot .l{display:flex; align-items:center}
+.foot .l i{font-style:normal; opacity:.35; margin:0 7px}
+.foot .l a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .l a:hover{color:var(--navy); text-decoration:underline}
+.foot .l a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .c{margin:0 auto; text-align:center}
+.foot .c i{font-style:normal; opacity:.4; margin:0 7px}
+.foot .r{margin-left:auto; display:flex; align-items:center; gap:0; font-variant-numeric:tabular-nums}
+.foot .r a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .r a:hover{color:var(--navy); text-decoration:underline}
+.foot .r a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .r i{font-style:normal; opacity:.3; margin:0 8px}
+@media (max-width:760px){ .foot .c{display:none} }
+
+.totop{
+  position:fixed; right:24px; bottom:24px; z-index:35;
+  display:inline-flex; align-items:center; gap:6px;
+  font:inherit; font-size:12px; padding:9px 14px; border-radius:20px;
+  border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;
+  box-shadow:0 3px 12px rgba(20,33,57,.12);
+  opacity:0; pointer-events:none; transform:translateY(6px);
+  transition:opacity .18s, transform .18s;
+}
+.totop.on{opacity:1; pointer-events:auto; transform:none}
+.totop:hover{background:#FAFAF8}
+.totop svg{width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+
+.totop{bottom:70px}
+@media print{
+  .app{display:block}
+  .nav, .gnb, .foot, .totop, .demo{display:none !important}
+  .body{max-width:none; padding:0}
+}
+
+.app{display:grid; grid-template-columns:232px 1fr; align-items:stretch; min-height:calc(100vh - 52px - 86px)}
+.nav{background:var(--navy-deep); color:#CFD6E4; padding:18px 0 40px}
+.nav h2{margin:0 0 14px; padding:0 18px; font-size:12px; font-weight:700; color:#8F9CB5; letter-spacing:.4px}
+.nav .g{margin-bottom:4px}
+.nav .gt{display:flex; align-items:center; gap:9px; padding:9px 18px; font-size:13.5px; font-weight:600; color:#E8EDF5}
+.nav .gt svg{width:15px; height:15px; flex:none; opacity:.8}
+.nav a{display:block; padding:7px 18px 7px 42px; font-size:13px; color:#A9B4C8; text-decoration:none; cursor:default}
+.nav a.on{background:rgba(255,255,255,.1); color:#fff; font-weight:600; box-shadow:inset 3px 0 0 #C8A24A}
+
+/* 사이드네비 — 대메뉴를 눌러 하위를 여닫습니다 */
+.nav .gt{cursor:pointer; user-select:none}
+.nav .gt:hover{background:rgba(255,255,255,.05)}
+.nav .gt .pm{margin-left:auto; width:14px; height:14px; flex:none; position:relative; opacity:.55}
+.nav .gt .pm::before,.nav .gt .pm::after{
+  content:''; position:absolute; background:currentColor; border-radius:1px;
+  transition:transform .16s, opacity .16s}
+.nav .gt .pm::before{left:0; right:0; top:6px; height:2px}
+.nav .gt .pm::after{top:0; bottom:0; left:6px; width:2px}
+.nav .g.on .gt .pm::after{transform:scaleY(0)}
+.nav .g.on .gt{color:#fff}
+.nav .g:not(.on) .sub{display:none}
+.nav .gt.nokid{cursor:default}
+.nav .gt.nokid:hover{background:transparent}
+
+.nav .ms{margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1)}
+
+.main{flex:1; min-width:0; display:flex; flex-direction:column; align-items:stretch}
+.top{display:none}
+.top .lg{display:flex; align-items:baseline; gap:10px}
+.top .lg b{font-size:15px; color:var(--navy); letter-spacing:-.3px}
+.top .lg span{font-size:12px; color:var(--muted)}
+.who{display:flex; align-items:center; gap:8px; font-size:13px}
+.who .rb{padding:2px 8px; border-radius:3px; background:var(--navy-soft); color:var(--navy); font-size:11.5px; font-weight:600}
+.who .cv{color:var(--muted); font-size:11px}
+
+.body{padding:26px 32px 48px; max-width:1240px; margin:0 auto; width:100%}
+.bc{font-size:12px; color:var(--muted); margin-bottom:5px}
+.hd{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:20px; flex-wrap:wrap}
+.hd h1{margin:0 0 6px; font-size:23px; letter-spacing:-.5px; display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.hd h1 .lid{font-size:14px; color:var(--muted); font-weight:400;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.hd .sub{margin:0; font-size:13px; color:var(--muted)}
+.acts{display:flex; gap:7px; flex-wrap:wrap}
+
+.chip{display:inline-block; padding:2px 9px; border-radius:3px; font-size:12px;
+  background:var(--navy-soft); color:var(--navy); font-weight:600}
+.st{display:inline-block; padding:2px 10px; border-radius:11px; font-size:12px; font-weight:600; white-space:nowrap}
+.st[data-state="active"]{background:var(--ok); color:var(--ok-ink)}
+.st[data-state="inactive"]{background:#F0F0ED; color:#80837C}
+.st[data-state="valid"]{background:var(--ok); color:var(--ok-ink)}
+.st[data-state="rej"]{background:var(--rej); color:var(--rej-ink)}
+.st[data-state="wait"]{background:var(--wait); color:var(--wait-ink)}
+.st[data-state="expire"]{background:var(--rej); color:var(--rej-ink)}
+
+.card{background:#fff; border:1px solid var(--line); border-radius:5px; margin-bottom:16px}
+.card > h3{margin:0; padding:14px 18px; font-size:14.5px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.card > h3 .lf{display:flex; align-items:center; gap:9px}
+.card > h3 .num{width:20px; height:20px; border-radius:3px; background:var(--navy); color:#fff;
+  font-size:11.5px; display:flex; align-items:center; justify-content:center; font-weight:700}
+.card > h3 .cnt{font-size:12px; color:var(--muted); font-weight:400}
+.card .in{padding:18px}
+
+dl.kv{margin:0; display:grid; grid-template-columns:98px 1fr 98px 1fr; gap:0 18px}
+dl.kv dt{padding:10px 0; font-size:13px; color:var(--muted); border-bottom:1px solid #F0F0ED}
+dl.kv dd{margin:0; padding:10px 0; font-size:13.5px; border-bottom:1px solid #F0F0ED}
+dl.kv .na{color:#A9ABA5}
+dl.kv .lun{display:inline-block; margin-left:6px; padding:1px 6px; border-radius:3px;
+  background:#F0F1EE; color:#6C6E68; font-size:11px; vertical-align:1px}
+
+table.t{width:100%; border-collapse:collapse; font-size:13px}
+table.t th{background:#FAFAF8; border-bottom:1px solid var(--line); padding:10px 11px;
+  text-align:left; font-size:12px; color:var(--muted); font-weight:600; white-space:nowrap}
+table.t td{border-bottom:1px solid #EFEFEC; padding:11px; vertical-align:middle}
+table.t tr:last-child td{border-bottom:0}
+table.t .ta{text-align:right; white-space:nowrap}
+table.t .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; white-space:nowrap}
+.rowbtn{height:27px; padding:0 10px; border:1px solid #D6D7D2; border-radius:3px;
+  background:#fff; font-size:12px; cursor:pointer; margin-left:4px}
+.rowbtn:hover{border-color:var(--navy); color:var(--navy)}
+.rowbtn.del:hover{border-color:#C0392B; color:#C0392B}
+.empty{padding:34px 0; text-align:center; color:#9A9C96; font-size:13px}
+
+.btn{height:34px; padding:0 14px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font-size:13px; cursor:pointer; display:inline-flex; align-items:center; gap:6px}
+.btn:hover{border-color:#A8ABA4}
+.btn svg{width:13px; height:13px}
+.btn.pri{background:var(--navy); border-color:var(--navy); color:#fff; font-weight:600}
+.btn.pri:hover{background:var(--navy-deep)}
+.btn.dgr{color:#B04A3A; border-color:#E3C3BC}
+.btn.dgr:hover{background:#FBF3F1; border-color:#C0392B}
+.btn.sm{height:30px; padding:0 12px; font-size:12.5px}
+
+.note{margin:14px 0 0; padding:11px 13px; background:#FAFAF8; border:1px solid var(--line);
+  border-radius:4px; font-size:12.5px; color:var(--muted); line-height:1.75}
+.note b{color:var(--ink)}
+.warnbox{margin:0 0 16px; padding:11px 14px; background:var(--warn); color:var(--warn-ink);
+  border-radius:4px; font-size:12.5px; line-height:1.7}
+
+
+/* ───── 계정 삭제 (마스터관리자 전용) ───── */
+.btn.del{color:#fff; background:#B04A3A; border-color:#B04A3A; font-weight:600}
+.btn.del:hover{background:#963C2E; border-color:#963C2E}
+.btn.del:disabled{background:#F2F2EF; color:#A8ACA6; border-color:var(--line); cursor:not-allowed}
+/* 마스터관리자 전용 — 관리자(MN)에게는 렌더하지 않습니다 */
+body[data-role="MN"] .msonly{display:none !important}
+.actbox{display:flex; flex-direction:column; align-items:flex-end; gap:0}
+.delwhy{margin:9px 0 0; font-size:12px; color:var(--muted)}
+
+.delbox{margin:0 0 16px; padding:13px 15px; background:#FBF3F1; border:1px solid #EBD3CD;
+  border-radius:4px; font-size:12.5px; line-height:1.75; color:#8A3A2C}
+.delbox b{color:#8A3A2C}
+.delchk{margin:0 0 16px; border:1px solid var(--line); border-radius:4px; overflow:hidden}
+.delchk div{display:flex; align-items:center; justify-content:space-between;
+  padding:9px 14px; font-size:12.5px; border-bottom:1px solid var(--line)}
+.delchk div:last-child{border-bottom:0}
+.delchk span{color:var(--muted)}
+.delchk b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px}
+.delchk b.z{color:#2F6B45}
+.delchk b.n{color:#B04A3A}
+.delcf{font-size:12.5px; color:var(--muted); margin-bottom:7px; line-height:1.7}
+.delcf code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px;
+  background:#F2F2EF; padding:1px 6px; border-radius:3px; color:var(--ink); font-weight:700}
+
+
+.t thead th.tc{text-align:center}
+.t th.tr,.t td.tr{text-align:right; font-variant-numeric:tabular-nums}
+.t td.tr.warn{color:var(--warn-ink); font-weight:600}
+.t thead th.sub2{font-weight:600; font-size:11.5px; background:#F2F2EF}
+
+
+
+.addr{display:grid; grid-template-columns:1fr auto; gap:8px}
+.fd input[readonly]{background:#F7F7F4; color:var(--muted)}
+dl.kv dd.wide{grid-column:2 / 5}
+
+/* ───── 기본 정보 2단: 좌 이미지 / 우 정보 ───── */
+.prof{display:grid; grid-template-columns:148px 1fr; gap:26px; align-items:start}
+.imgs{display:flex; flex-direction:column; gap:18px}
+.imgbox .lbl{font-size:12px; color:var(--muted); margin-bottom:7px}
+.ph3x4{width:148px; height:197px; border:1px dashed var(--line); border-radius:5px;
+  background:#FAFAF8; display:grid; place-items:center;
+  font-size:12px; color:#C4C8C2; letter-spacing:.5px}
+.sig{width:148px; height:74px; border:1px dashed var(--line); border-radius:5px;
+  background:#FAFAF8; display:grid; place-items:center; font-size:12px; color:#C4C8C2}
+.imgnote{margin-top:6px; font-size:11.5px; color:#A9ABA5}
+@media (max-width:1100px){ dl.kv{grid-template-columns:98px 1fr} }
+@media (max-width:900px){
+  .prof{grid-template-columns:1fr}
+  .imgs{flex-direction:row; gap:20px}
+}
+
+
+/* ───── 소속 카드 · 소제목 ───── */
+.org{border:1px solid var(--line); border-radius:5px; padding:12px 14px; margin-bottom:8px}
+.org:last-child{margin-bottom:0}
+.org .o-top{display:flex; align-items:center; gap:8px}
+.org .o-top b{font-size:14px}
+.org .o-mid{font-size:13px; margin-top:4px}
+.org .o-bot{font-size:12.5px; color:var(--muted); margin-top:2px}
+.pill{font-size:11px; padding:2px 8px; border-radius:11px; display:inline-block; white-space:nowrap}
+.pill.ok{background:var(--ok); color:var(--ok-ink)}
+.pill.off{background:#F0F0EC; color:#8E948C}
+.pill.warn{background:var(--warn); color:var(--warn-ink)}
+.sublbl{display:flex; align-items:center; gap:10px; font-size:12px; color:var(--muted);
+  font-weight:600; padding:16px 18px 7px; letter-spacing:.2px}
+.sublbl .btn{margin-left:auto; font-weight:500}
+.hd2{display:flex; gap:7px}
+.btn.sm{height:28px; padding:0 11px; font-size:12px}
+
+/* ───── 증빙 파일 칩 · 더보기 ───── */
+.fchip{display:inline-flex; align-items:center; gap:5px; max-width:230px;
+  padding:3px 9px; border:1px solid var(--line); border-radius:3px; background:#fff;
+  font-size:11.5px; font-family:inherit; color:var(--navy); cursor:pointer;
+  vertical-align:middle}
+.fchip:hover{border-color:var(--navy); background:#F7F8FA}
+.fchip svg{width:11px; height:11px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+.fchip span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.ev2{display:inline-block; margin-left:11px; vertical-align:middle}
+.ev2 .fchip + .fchip{margin-left:6px}
+.miss{display:inline-flex; align-items:center; margin-left:6px; padding:3px 9px;
+  border:1px dashed #E3C3BC; border-radius:3px; background:#FDF7F6;
+  font-size:11.5px; color:#B04A3A}
+.morebar{display:flex; align-items:center; justify-content:center; gap:7px;
+  padding:11px; border-top:1px solid var(--line); background:#FCFCFA;
+  font:inherit; font-size:12.5px; color:var(--muted); width:100%; cursor:pointer;
+  border-left:0; border-right:0; border-bottom:0}
+.morebar:hover{background:#F7F7F4; color:var(--ink)}
+.morebar b{color:var(--navy); font-weight:700}
+.morebar i{font-style:normal; font-size:9px; opacity:.6}
+tr.hid{display:none}
+
+/* ───── 블록 단위 수정 모달 ───── */
+input[type=checkbox]{accent-color:var(--navy)}
+.fileline .btn{flex:none; white-space:nowrap}
+.erow{border:1px solid var(--line); border-radius:5px; padding:0 0 14px; margin-bottom:12px;
+  background:#FCFCFA}
+.eh{display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:10px 14px; border-bottom:1px solid var(--line); background:#F7F7F4;
+  border-radius:5px 5px 0 0}
+.eh b{font-size:13px; letter-spacing:-.2px}
+.eh .tag{font-size:11px; font-weight:400; color:var(--muted); margin-left:6px}
+.eb{padding:14px 14px 0}
+.rmrow{height:26px; padding:0 10px; border:1px solid #E3C3BC; border-radius:3px;
+  background:#fff; color:#B04A3A; font-size:12px; font-family:inherit; cursor:pointer}
+.rmrow:hover{background:#FBF3F1; border-color:#C0392B}
+.addrow{width:100%; font:inherit; font-size:12.5px; padding:11px; cursor:pointer;
+  border:1px dashed #D6D7D2; border-radius:5px; background:transparent; color:var(--muted)}
+.addrow:hover{background:#FAFAF8; color:var(--ink); border-color:#A8ABA4}
+.grid3{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px 14px}
+.grid3 .full{grid-column:1 / -1}
+.ecnt{font-size:12.5px; color:var(--muted); margin:0 0 10px}
+
+/* 모달 */
+.ov{position:fixed; inset:0; background:rgba(16,22,34,.5); z-index:50;
+  display:flex; align-items:center; justify-content:center; padding:24px}
+.mo{width:100%; max-width:600px; max-height:88vh; background:#fff; border-radius:5px;
+  box-shadow:0 12px 44px rgba(10,14,22,.3); display:flex; flex-direction:column}
+.mo header{padding:20px 24px 0}
+.mo header b{font-size:17px; letter-spacing:-.3px}
+.mo header p{margin:6px 0 0; font-size:13px; color:var(--muted); line-height:1.65}
+.mo .sc{padding:16px 24px 6px; overflow:auto}
+.mo footer{display:flex; align-items:center; justify-content:flex-end; gap:8px;
+  padding:16px 24px 20px; border-top:1px solid var(--line); margin-top:12px}
+.mo footer .btn{height:38px; padding:0 18px; font-size:13.5px}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px 16px}
+.fd{display:flex; flex-direction:column; gap:6px}
+.fd.full{grid-column:1 / -1}
+.fd label{font-size:13px; font-weight:600}
+.fd label em{color:#C0392B; font-style:normal}
+.fd input, .fd select{height:40px; padding:0 12px; border:1px solid #C9CCC6;
+  border-radius:4px; font-size:13.5px; font-family:inherit; background:#fff}
+.fd input:focus, .fd select:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.fd input[disabled], .fd select[disabled]{background:#F3F3F0; color:#9A9C96}
+.fd .h{font-size:12px; color:var(--muted); line-height:1.6}
+.fileline{display:flex; align-items:center; gap:9px; flex-wrap:wrap}
+.fileline .fn{font-size:12.5px; color:var(--muted)}
+.lockmsg{margin:0 0 16px; padding:10px 13px; background:#F3F4F1; border-radius:4px;
+  font-size:12.5px; color:var(--muted)}
+
+.demo .sep{color:#4A4D4A; margin:0 2px}
+.demo{position:fixed; left:0; right:0; bottom:0; z-index:90; background:#1C1F22;
+  padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:7px; flex-wrap:wrap}
+.demo span{color:#8B8F93; font-size:12px; margin-right:6px}
+.demo button{padding:7px 14px; border:1px solid #3A3E42; border-radius:4px;
+  background:#2A2E32; color:#D7DADD; font-size:12.5px; cursor:pointer}
+.demo button.on{background:#fff; color:#1C1F22; border-color:#fff; font-weight:600}
+
+@media print{ .demo{display:none} }
+
+/* ───── 임시 비밀번호 결과 모달 ───── */
+.pwmo{max-width:430px !important}
+.pwmo header{padding:26px 26px 0; text-align:center}
+.pwkey{width:46px; height:46px; margin:0 auto 14px; border-radius:50%;
+  background:var(--navy-soft); display:grid; place-items:center}
+.pwkey svg{width:21px; height:21px; fill:none; stroke:var(--navy); stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.pwmo header b{display:block; font-size:16.5px; letter-spacing:-.3px}
+.pwmo header p{margin:7px 0 0; font-size:13px; color:var(--muted); line-height:1.6}
+.pwmo .sc{padding:20px 26px 4px}
+
+.pwid{display:flex; align-items:center; justify-content:space-between;
+  padding:0 2px 14px; font-size:13px}
+.pwid span{color:var(--muted)}
+.pwid b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-weight:600;
+  font-size:13.5px; letter-spacing:.3px}
+
+.pwlb{font-size:12px; color:var(--muted); margin-bottom:7px; letter-spacing:.2px}
+.pwrow{display:flex; align-items:stretch; border-radius:6px; overflow:hidden;
+  background:var(--navy); box-shadow:0 2px 10px rgba(26,42,79,.22)}
+.pwval{flex:1; min-width:0; display:flex; align-items:center; justify-content:center;
+  padding:17px 14px; color:#fff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:22px; font-weight:700;
+  letter-spacing:2px; word-break:break-all; line-height:1.3; user-select:all}
+.cpbtn{flex:none; width:58px; border:0; cursor:pointer; background:rgba(255,255,255,.1);
+  color:#fff; display:grid; place-items:center; border-left:1px solid rgba(255,255,255,.16);
+  transition:background .15s}
+.cpbtn:hover{background:rgba(255,255,255,.2)}
+.cpbtn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.cpbtn .ok{display:none}
+.cpbtn.done .cp{display:none}
+.cpbtn.done .ok{display:block}
+
+.cpmsg{height:17px; margin-top:9px; text-align:center; font-size:12px;
+  color:var(--ok-ink); opacity:0; transition:opacity .18s}
+.cpmsg.on{opacity:1}
+
+.pwmo footer{justify-content:center; border-top:0; margin-top:4px; padding:14px 26px 24px}
+.pwmo footer .btn{min-width:120px; height:40px; background:var(--navy); border-color:var(--navy);
+  color:#fff; font-weight:600}
+.pwmo footer .btn:hover{background:var(--navy-deep); border-color:var(--navy-deep)}
+
+
+</style>
+</head>
+<body data-role="MS">
+
+<header class="gnb">
+  <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원">
+  <span class="nm">SAP 심사원 플랫폼</span>
+  <div class="rt">
+    <div class="udd">
+      <div class="who" id="whoBtn" data-act="dd">안녕하세요, <b>장은수</b> <span id="roleNm">마스터관리자</span>님 <span class="cv">▾</span></div>
+      <div class="dd" id="userDD" hidden>
+        <a><svg viewBox="0 0 16 16"><circle cx="8" cy="5.6" r="2.6"/><path d="M3 13.4c0-2.3 2.2-3.6 5-3.6s5 1.3 5 3.6"/></svg>마이페이지</a>
+        <a data-act="pw"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.2" rx="1.2"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/></svg>비밀번호 변경</a>
+        <hr>
+        <a class="out"><svg viewBox="0 0 16 16"><path d="M6.4 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.4"/><path d="M10 5.6L12.6 8 10 10.4M12.6 8H6.6"/></svg>로그아웃</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="nav">
+    <h2>관리자 업무</h2>
+    <div class="g"><div class="gt nokid">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+      마이페이지</div>
+      </div>
+    <div class="g on">
+      <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11h4M19 9v4"/></svg>
+        심사원 관리<span class="pm"></span></div>
+       <div class="sub"><a class="on">심사원 계정</a><a>자격 승인</a><a>코드 승인</a></div>
+    </div>
+    <div class="g">
+      <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M3 21h18"/></svg>
+        인증 관리<span class="pm"></span></div>
+       <div class="sub"><a>기업 정보</a><a>인증 신청</a><a>계약 · 비용</a><a>인증서 · 현황</a><a>인증 변경</a></div>
+    </div>
+    <div class="g">
+      <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        심사 관리<span class="pm"></span></div>
+       <div class="sub"><a>심사 일정</a><a>심사팀 배정</a><a>보고서 검증</a></div>
+    </div>
+    <div class="g">
+      <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 12v6"/></svg>
+        게시판 관리<span class="pm"></span></div>
+       <div class="sub"><a>공지사항</a><a>절차 및 서식</a></div>
+    </div>
+    <div class="g ms">
+      <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        시스템<span class="pm"></span></div>
+       <div class="sub"><a>시스템 설정</a><a>문서번호 · 버전 관리</a><a>인장 · 로고</a><a>감사 모드</a><a>이메일 발송 로그</a></div>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <div class="body">
+
+      <div class="hd">
+        <div>
+          <h1>김선임 상세정보 <span class="lid">(LA2024-003)</span></h1>
+          <p class="bc">심사원 관리 › 심사원 계정 › 상세</p>
+        </div>
+        <div class="actbox">
+          <div class="acts">
+            <button class="btn" data-act="pwreset">비밀번호 재발급</button>
+            <button class="btn dgr" data-act="deact">비활성화</button>
+            <button class="btn msonly" data-act="del" disabled
+              title="심사 참여 이력이 있어 삭제할 수 없습니다">계정 삭제</button>
+            <button class="btn" data-act="back">목록으로</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1 기본 정보 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">1</span>기본 정보</span>
+          <button class="btn sm" data-act="edit">✎ 수정</button>
+        </h3>
+        <div class="in prof">
+          <div class="imgs">
+            <div class="imgbox">
+              <div class="lbl">증명사진</div>
+              <div class="ph3x4">3 : 4</div>
+            </div>
+            <div class="imgbox">
+              <div class="lbl">서명 이미지</div>
+              <div class="sig">미등록</div>
+            </div>
+          </div>
+          <dl class="kv">
+            <dt>로그인 ID</dt><dd>LA2024-003</dd>
+            <dt>권한등급</dt><dd>선임심사원</dd>
+            <dt>계정 상태</dt><dd><span class="st" data-state="valid">활성</span></dd>
+            <dt>가입일</dt><dd>2024-03-11</dd>
+            <dt>이름 (국문)</dt><dd>김선임</dd>
+            <dt>이름 (영문)</dt><dd>KIM SEONIM</dd>
+            <dt>생년월일</dt><dd>1978-00-00 <span class="lun">음력</span></dd>
+            <dt>고용형태</dt><dd>비상근</dd>
+            <dt>휴대전화</dt><dd>010-1234-5678</dd>
+            <dt>자택전화</dt><dd class="na">미등록</dd>
+            <dt>이메일</dt><dd>auditor@example.com</dd>
+            <dt>팩스</dt><dd class="na">미등록</dd>
+            <dt>소속</dt><dd class="wide">○○경영컨설팅 · 책임</dd>
+            <dt>주소</dt><dd class="wide">(04524) 서울특별시 중구 세종대로 110, 1203호</dd>
+          </dl>
+        </div>
+      </div>
+
+      <!-- 2 소속 정보 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">2</span>소속 정보 <span class="cnt">3곳 · 재직 2곳</span></span>
+          <button class="btn sm" data-act="org">✎ 수정</button>
+        </h3>
+        <div class="in">
+          <div class="org">
+            <div class="o-top"><b>삼성표준인증원</b><span class="pill ok">재직</span></div>
+            <div class="o-mid">인증사업부 · 책임연구원</div>
+            <div class="o-bot">2024-09-01 ~ 재직중 · 상근</div>
+          </div>
+          <div class="org">
+            <div class="o-top"><b>○○기술사무소</b><span class="pill ok">재직</span></div>
+            <div class="o-mid">기술자문부 · 자문위원</div>
+            <div class="o-bot">2025-03-01 ~ 재직중 · 비상근</div>
+          </div>
+          <div class="org">
+            <div class="o-top"><b>○○기업</b><span class="pill off">퇴사</span></div>
+            <div class="o-mid">품질보증팀 · 대리</div>
+            <div class="o-bot">2019-03-01 ~ 2024-08-31 · 상근</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 학력 · 경력 · 자격증 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">3</span>학력 · 경력 · 자격증 <span class="cnt">학력 2 · 경력 2 · 자격증 1</span></span>
+        </h3>
+
+        <div class="sublbl">학력<button class="btn sm" data-act="hist" data-k="edu">수정</button></div>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead><tr><th style="width:200px">학교</th><th style="width:160px">전공</th>
+              <th style="width:90px">학위</th><th style="width:110px">졸업일</th><th>증빙</th></tr></thead>
+            <tbody>
+              <tr><td>○○대학교</td><td>환경공학</td><td>학사</td><td>2019-02</td>
+                  <td><button class="fchip" title="졸업증명서_학사.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>졸업증명서_학사.pdf</span></button></td></tr>
+              <tr><td>○○대학원</td><td>품질경영</td><td>석사</td><td>2021-08</td>
+                  <td><span class="pill warn">미첨부</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sublbl">근무경력<button class="btn sm" data-act="hist" data-k="work">수정</button></div>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead><tr><th style="width:160px">회사명</th><th style="width:110px">업종</th>
+              <th style="width:200px">부서 · 직책</th><th style="width:170px">근무기간</th><th>증빙</th></tr></thead>
+            <tbody>
+              <tr><td>○○기업</td><td>금속가공</td><td>품질보증팀 · 대리</td><td>2019-03 ~ 2024-08</td>
+                  <td><button class="fchip" title="경력증명서_○○기업.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>경력증명서_○○기업.pdf</span></button></td></tr>
+              <tr><td>삼성표준인증원</td><td>인증서비스</td><td>인증사업부 · 책임연구원</td><td>2024-09 ~ 재직중</td>
+                  <td><button class="fchip" title="재직증명서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>재직증명서.pdf</span></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="sublbl">자격증<button class="btn sm" data-act="hist" data-k="cert">수정</button></div>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead><tr><th style="width:180px">자격증명</th><th style="width:180px">발급기관</th>
+              <th style="width:140px">자격번호</th><th style="width:110px">취득일</th><th>증빙</th></tr></thead>
+            <tbody>
+              <tr><td>품질경영기사</td><td>한국산업인력공단</td><td class="mono">20-0000000</td><td>2020-11</td>
+                  <td><button class="fchip" title="자격증_사본.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>자격증_사본.pdf</span></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 4 보유 자격 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">4</span>보유 자격 <span class="cnt">3건</span></span>
+          <span class="hd2">
+            <button class="btn sm" data-act="aq">신청 내역</button>
+            <button class="btn sm" data-act="editq">✎ 수정</button>
+          </span>
+        </h3>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead>
+              <tr>
+                <th style="width:124px">자격표준</th>
+                <th style="width:84px">자격등급</th>
+                <th style="width:96px">자격인증기관</th>
+                <th style="width:136px">자격증번호</th>
+                <th style="width:96px">발행일</th>
+                <th style="width:96px">만료일</th>
+                <th style="width:84px" class="tr">만료잔여</th>
+                <th style="width:96px">갱신일</th>
+                <th>자격증</th>
+                <th style="width:80px">처리현황</th>
+                <th style="width:80px">관리상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>ISO 9001:2015</b></td><td>심사원</td><td>MCL</td>
+                <td class="mono">MCL-QMS-A-2022</td>
+                <td>2025-02-13</td><td>2028-02-20</td><td class="tr">865일</td><td>2028-02-20</td>
+                <td><button class="fchip" title="MCL_9001_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>MCL_9001_자격증.pdf</span></button></td>
+                <td><span class="st" data-state="valid">승인</span></td>
+                <td><span class="st" data-state="valid">유지</span></td>
+              </tr>
+              <tr>
+                <td><b>ISO 14001:2015</b></td><td>심사원</td><td>PCAA</td>
+                <td class="mono">PC1699</td>
+                <td>2022-03-04</td><td>2028-02-20</td><td class="tr">865일</td><td>2027-02-20</td>
+                <td><button class="fchip" title="PCAA_14001_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>PCAA_14001_자격증.pdf</span></button></td>
+                <td><span class="st" data-state="valid">승인</span></td>
+                <td><span class="st" data-state="valid">유지</span></td>
+              </tr>
+              <tr>
+                <td><b>ISO 45001:2018</b></td><td>심사원보</td><td>IQCS</td>
+                <td class="mono">KR100781</td>
+                <td>2022-03-04</td><td>2027-02-04</td><td class="tr warn">484일</td><td class="na">—</td>
+                <td><button class="fchip" title="IQCS_45001_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>IQCS_45001_자격증.pdf</span></button></td>
+                <td><span class="st" data-state="wait">검토</span></td>
+                <td class="na">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 5 보유 코드 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">5</span>보유 코드 <span class="cnt">9건</span></span>
+          <span class="hd2">
+            <button class="btn sm" data-act="ac">신청 내역</button>
+            <button class="btn sm" data-act="editc">✎ 수정</button>
+          </span>
+        </h3>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead>
+              <tr>
+                <th rowspan="2" style="width:44px">No.</th>
+                <th rowspan="2" style="width:92px">표준</th>
+                <th colspan="2" class="tc">신청코드</th>
+                <th rowspan="2" style="width:104px">코드부여근거</th>
+                <th rowspan="2">증빙자료</th>
+                <th rowspan="2" style="width:92px">접수일</th>
+                <th rowspan="2" style="width:92px">검토일</th>
+                <th rowspan="2" style="width:92px">승인일</th>
+                <th rowspan="2" style="width:80px">처리현황</th>
+              </tr>
+              <tr>
+                <th class="sub2" style="width:68px">대분류</th>
+                <th class="sub2" style="width:68px">세분류</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-row="1">
+                <td>1</td><td><b>ISO 9001</b></td><td class="mono">18</td><td class="mono">18B</td>
+                <td>근무경력</td>
+                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18B_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18B_근무경력_증빙.pdf</span></button></span></td>
+                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr data-row="2">
+                <td>2</td><td><b>ISO 14001</b></td><td class="mono">18</td><td class="na">—</td>
+                <td>근무경력</td>
+                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_근무경력_증빙.pdf</span></button><button class="fchip" title="18_환경측면_파악.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_환경측면_파악.pdf</span></button></span></td>
+                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr data-row="3">
+                <td>3</td><td><b>ISO 45001</b></td><td class="mono">18</td><td class="na">—</td>
+                <td>근무경력</td>
+                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_근무경력_증빙.pdf</span></button><button class="fchip" title="18_위험성평가.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_위험성평가.pdf</span></button></span></td>
+                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr data-row="4">
+                <td>4</td><td><b>ISO 9001</b></td><td class="mono">17</td><td class="mono">17A</td>
+                <td>자문경력</td>
+                <td class="muted">2회 30일 이상 (선경인더스트리 외)<span class="ev2"><button class="fchip" title="17A_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17A_자문계약서.pdf</span></button></span></td>
+                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr data-row="5">
+                <td>5</td><td><b>ISO 9001</b></td><td class="mono">17</td><td class="mono">17B</td>
+                <td>자문경력</td>
+                <td class="muted">2회 30일 이상 (에스엠와이 외)<span class="ev2"><button class="fchip" title="17B_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17B_자문계약서.pdf</span></button></span></td>
+                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr class="hid" data-row="6">
+                <td>6</td><td><b>ISO 9001</b></td><td class="mono">18</td><td class="mono">18A</td>
+                <td>심사경력</td>
+                <td class="muted">3회 3일 이상 (우성에이스 외)<span class="ev2"><button class="fchip" title="18A_심사경력_총괄표.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18A_심사경력_총괄표.pdf</span></button></span></td>
+                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr class="hid" data-row="7">
+                <td>7</td><td><b>ISO 9001</b></td><td class="mono">07</td><td class="mono">07A</td>
+                <td>심사경력</td>
+                <td class="muted">3회 5일 이상 (에스엔팩 외)<span class="ev2"><button class="fchip" title="07A_심사경력_총괄표.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>07A_심사경력_총괄표.pdf</span></button></span></td>
+                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
+              </tr>
+              <tr class="hid" data-row="8">
+                <td>8</td><td><b>ISO 14001</b></td><td class="mono">17</td><td class="na">—</td>
+                <td>자문경력</td>
+                <td class="muted">2회 30일 이상 (선경인더스트리 외)<span class="ev2"><button class="fchip" title="17_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17_자문계약서.pdf</span></button><span class="miss">환경측면 파악 자료 없음</span></span></td>
+                <td>2025-11-02</td><td>2025-11-05</td><td class="na">—</td><td><span class="st" data-state="wait">검토</span></td>
+              </tr>
+              <tr class="hid" data-row="9">
+                <td>9</td><td><b>ISO 9001</b></td><td class="mono">24</td><td class="mono">24A</td>
+                <td>학력</td>
+                <td class="muted">화학공학 학사 (○○대)<span class="ev2"><button class="fchip" title="24A_학위증명서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>24A_학위증명서.pdf</span></button></span></td>
+                <td>2025-11-02</td><td class="na">—</td><td class="na">—</td><td><span class="st" data-state="wait">접수</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+        <button class="morebar" id="moreC" data-act="morec"><b>4건</b> 더보기 <i>▾</i></button>
+        </div>
+      </div>
+
+      <!-- 6 첨부 서류 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">6</span>첨부 서류 <span class="cnt">3건</span></span>
+          <button class="btn sm" data-act="docs">✎ 수정</button>
+        </h3>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead>
+              <tr><th style="width:132px">구분</th><th>파일</th>
+                  <th style="width:96px">올린 사람</th><th style="width:104px">올린 날짜</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>입회평가서</td><td><button class="fchip" title="입회평가서_2022-03.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>입회평가서_2022-03.pdf</span></button></td>
+                  <td>장은수</td><td>2022-03-14</td></tr>
+              <tr><td>자격부여서</td><td><button class="fchip" title="자격부여서_선임심사원.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>자격부여서_선임심사원.pdf</span></button></td>
+                  <td>오관리</td><td>2026-09-02</td></tr>
+              <tr><td>기타</td><td><button class="fchip" title="경력기술서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>경력기술서.pdf</span></button></td>
+                  <td>김선임</td><td>2022-03-10</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 7 변경 이력 -->
+      <div class="card">
+        <h3>
+          <span class="lf"><span class="num">7</span>변경 이력 <span class="cnt">최근 10건</span></span>
+        </h3>
+        <div style="overflow-x:auto">
+          <table class="t">
+            <thead>
+              <tr><th style="width:144px">일시</th><th style="width:88px">수정자</th>
+                  <th style="width:132px">항목</th>
+                  <th style="width:104px">수정 전</th><th style="width:104px">수정 후</th><th>사유</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">2026-09-02 10:14</td><td>오관리</td><td>권한등급</td>
+                  <td>심사원</td><td>선임심사원</td><td class="muted">입회평가 합격</td></tr>
+              <tr><td class="mono">2026-06-18 15:02</td><td>장은수</td><td>비밀번호</td>
+                  <td class="na">—</td><td>재발급</td><td class="muted">본인 분실 요청</td></tr>
+              <tr><td class="mono">2025-11-20 09:30</td><td>오관리</td><td>계정 상태</td>
+                  <td>비활성</td><td>활성</td><td class="muted">휴직 복귀</td></tr>
+              <tr><td class="mono">2025-05-02 13:40</td><td>김진숙</td><td>계정 상태</td>
+                  <td>활성</td><td>비활성</td><td class="muted">육아휴직</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───── 기본 정보 수정 ───── -->
+<div class="ov" id="ovEdit" hidden>
+  <div class="mo">
+    <header><b>기본 정보 수정</b></header>
+    <div class="sc">
+      <p class="lockmsg">로그인 ID 는 변경할 수 없습니다.</p>
+      <div class="grid2">
+        <div class="fd"><label>로그인 ID</label><input value="LA2024-003" disabled></div>
+        <div class="fd"><label>권한등급</label>
+          <select>
+            <option>심사원보</option><option>심사원</option><option selected>선임심사원</option>
+            <option disabled>검증심사원 — 마스터관리자 전용</option>
+            <option disabled>관리자 — 마스터관리자 전용</option>
+          </select>
+        </div>
+        <div class="fd"><label>이름 (국문) <em>*</em></label><input value="김선임"></div>
+        <div class="fd"><label>이름 (영문)</label><input value="KIM SEONIM"></div>
+        <div class="fd"><label>생년월일</label><input value="1978-00-00"></div>
+        <div class="fd"><label>양력 · 음력</label>
+          <select><option>양력</option><option selected>음력</option></select></div>
+        <div class="fd"><label>고용형태</label>
+          <select><option>상근</option><option selected>비상근</option></select></div>
+        <div class="fd"><label>휴대전화 <em>*</em></label><input value="010-1234-5678"></div>
+        <div class="fd"><label>자택전화</label><input placeholder="02-0000-0000"></div>
+        <div class="fd"><label>이메일 <em>*</em></label><input value="auditor@example.com"></div>
+        <div class="fd"><label>팩스</label><input placeholder="02-0000-0000"></div>
+        <div class="fd full"><label>소속</label><input value="○○경영컨설팅 · 책임"></div>
+
+        <div class="fd full"><label>주소</label>
+          <div class="addr">
+            <input value="04524" placeholder="우편번호" readonly>
+            <button type="button" class="btn" style="white-space:nowrap">주소 검색</button>
+          </div>
+        </div>
+        <div class="fd full">
+          <input value="서울특별시 중구 세종대로 110" placeholder="도로명 주소 — 검색으로 입력됩니다" readonly>
+        </div>
+        <div class="fd full">
+          <input value="1203호" placeholder="상세주소 — 동 · 호수 등을 입력해 주십시오">
+        </div>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">저장</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ───── 자격 추가 ───── -->
+<div class="ov" id="ovQ" hidden>
+  <div class="mo" style="max-width:780px">
+    <header>
+      <b>보유 자격 수정</b>
+    </header>
+    <div class="sc">
+      <p class="ecnt">현재 <b id="qCnt">3</b>건</p>
+      <div id="qList"></div>
+      <button class="addrow" data-act="qadd">＋ 자격 추가</button>
+      <div class="fd" style="margin-top:16px"><label>비고</label>
+        <input placeholder="예: 입회평가 합격 · 자격부여서 2026-09-01"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">저장</button>
+    </footer>
+  </div>
+</div>
+
+<div class="ov" id="ovC" hidden>
+  <div class="mo" style="max-width:780px">
+    <header>
+      <b>보유 코드 수정</b>
+    </header>
+    <div class="sc">
+      <p class="ecnt">현재 <b id="cCnt">5</b>건</p>
+      <div id="cList"></div>
+      <button class="addrow" data-act="cadd">＋ 코드 추가</button>
+      <div class="fd" style="margin-top:16px"><label>비고</label>
+        <input placeholder="예: 기존 보유 코드 이관"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">저장</button>
+    </footer>
+  </div>
+</div>
+
+<div class="ov" id="ovDoc" hidden>
+  <div class="mo" style="max-width:700px">
+    <header>
+      <b>첨부 서류 수정</b>
+    </header>
+    <div class="sc">
+      <p class="ecnt">현재 <b id="dCnt">3</b>건</p>
+      <div id="dList"></div>
+      <button class="addrow" data-act="dadd">＋ 파일 추가</button>
+      <div class="fd" style="margin-top:16px"><label>비고</label>
+        <input placeholder="예: 2026년 적격성 재평가 자료 일괄 등록"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="close">저장</button>
+    </footer>
+  </div>
+</div>
+
+<div class="ov" id="ovAq" hidden>
+  <div class="mo" style="max-width:860px">
+    <header><b>자격 신청 내역</b></header>
+    <div class="sc">
+      <div style="overflow-x:auto">
+        <table class="t">
+          <thead><tr><th style="width:76px">유형</th><th style="width:124px">자격표준</th>
+            <th style="width:84px">자격등급</th><th style="width:92px">신청일</th>
+            <th style="width:92px">처리일</th><th style="width:76px">처리자</th>
+            <th style="width:76px">결과</th><th>사유</th></tr></thead>
+          <tbody>
+            <tr><td>신규</td><td><b>ISO 45001:2018</b></td><td>심사원보</td>
+                <td>2026-09-01</td><td class="na">—</td><td class="na">—</td>
+                <td><span class="st" data-state="wait">검토</span></td><td class="muted">—</td></tr>
+            <tr><td>갱신</td><td><b>ISO 9001:2015</b></td><td>심사원</td>
+                <td>2025-02-01</td><td>2025-02-13</td><td>오관리</td>
+                <td><span class="st" data-state="valid">승인</span></td><td class="muted">CPD 18시간 확인</td></tr>
+            <tr><td>신규</td><td><b>ISO 14001:2015</b></td><td>심사원</td>
+                <td>2022-02-20</td><td>2022-03-04</td><td>김진숙</td>
+                <td><span class="st" data-state="valid">승인</span></td><td class="muted">입회평가 합격</td></tr>
+            <tr><td>신규</td><td><b>ISO 27001:2022</b></td><td>심사원보</td>
+                <td>2024-07-11</td><td>2024-07-19</td><td>오관리</td>
+                <td><span class="st" data-state="rej">반려</span></td><td class="muted">근무경력 증빙 부족 — 2년 미만</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer><button class="btn" data-act="close">닫기</button></footer>
+  </div>
+</div>
+
+<div class="ov" id="ovAc" hidden>
+  <div class="mo" style="max-width:900px">
+    <header><b>코드 신청 내역</b></header>
+    <div class="sc">
+      <div style="overflow-x:auto">
+        <table class="t">
+          <thead><tr><th style="width:76px">유형</th><th style="width:92px">표준</th>
+            <th style="width:64px">대분류</th><th style="width:64px">세분류</th>
+            <th style="width:92px">신청일</th><th style="width:92px">처리일</th>
+            <th style="width:76px">처리자</th><th style="width:76px">결과</th><th>사유</th></tr></thead>
+          <tbody>
+            <tr><td>신규</td><td><b>ISO 14001</b></td><td class="mono">17</td><td class="na">—</td>
+                <td>2025-11-02</td><td class="na">—</td><td class="na">—</td>
+                <td><span class="st" data-state="wait">검토</span></td><td class="muted">—</td></tr>
+            <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">24</td><td class="mono">24A</td>
+                <td>2025-11-02</td><td class="na">—</td><td class="na">—</td>
+                <td><span class="st" data-state="wait">접수</span></td><td class="muted">—</td></tr>
+            <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">07</td><td class="mono">07A</td>
+                <td>2022-10-05</td><td>2022-10-14</td><td>오관리</td>
+                <td><span class="st" data-state="valid">승인</span></td><td class="muted">심사경력 3회 5일 확인</td></tr>
+            <tr><td>신규</td><td><b>ISO 9001</b></td><td class="mono">28</td><td class="mono">28B</td>
+                <td>2023-04-02</td><td>2023-04-10</td><td>김진숙</td>
+                <td><span class="st" data-state="rej">반려</span></td><td class="muted">심사경력 3회 미달 — 2회</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <footer><button class="btn" data-act="close">닫기</button></footer>
+  </div>
+</div>
+
+<div class="ov" id="ovDe" hidden>
+  <div class="mo" style="max-width:420px">
+    <header><b>계정을 비활성화합니다</b></header>
+    <div class="sc">
+      <p class="warnbox" style="margin-bottom:12px">
+        <b>김선임 (LA2024-003)</b> 님의 계정을 비활성화합니다.
+        로그인과 심사팀 배정에서 제외됩니다.
+      </p>
+      <div class="fd"><label>사유 <em>*</em></label>
+        <input placeholder="예: 퇴사 · 자격 만료"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn dgr" data-act="close" style="height:38px; padding:0 18px">비활성화</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ───── 비밀번호 재발급 확인 ───── -->
+<div class="ov" id="ovPw" hidden>
+  <div class="mo" style="max-width:420px">
+    <header><b>비밀번호를 재발급합니다</b></header>
+    <div class="sc">
+      <p class="warnbox" style="margin-bottom:0">
+        <b>김선임 (LA2024-003)</b> 님의 비밀번호를 임시 비밀번호로 바꿉니다.
+        기존 비밀번호는 즉시 사용할 수 없습니다.
+      </p>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="pwdone">재발급</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ───────── 임시 비밀번호 발급 완료 모달 ───────── -->
+<div class="ov" id="ovPwD" hidden>
+  <div class="mo pwmo">
+    <header>
+      <div class="pwkey">
+        <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3.5M15.5 12v2.5"/></svg>
+      </div>
+      <b>임시 비밀번호가 발급되었습니다</b>
+      <p>복사하여 안전한 경로로 전달해 주세요.</p>
+    </header>
+
+    <div class="sc">
+      <div class="pwid"><span>로그인 ID</span><b>LA2024-003</b></div>
+      <div class="pwlb">임시 비밀번호</div>
+      <div class="pwrow">
+        <div class="pwval" id="pwv">P%rL_=4a_RQf</div>
+        <button class="cpbtn" id="cpb" data-act="copy" aria-label="비밀번호 복사" title="복사">
+          <svg class="cp" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          <svg class="ok" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>
+        </button>
+      </div>
+      <div class="cpmsg" id="cpm">복사했습니다</div>
+    </div>
+
+    <footer>
+      <button class="btn" data-act="close">확인</button>
+    </footer>
+  </div>
+</div>
+
+
+
+<!-- ───── 계정 완전삭제 (마스터관리자 전용) ───── -->
+<div class="ov" id="ovDel" hidden>
+  <div class="mo" style="max-width:470px">
+    <header><b>계정을 완전히 삭제합니다</b>
+      <p style="margin:6px 0 0; font-size:13px; color:var(--muted)">되돌릴 수 없습니다.</p>
+    </header>
+    <div class="sc">
+      <div class="delbox">
+        <b>박보조 (PA2026-012)</b> 님의 계정과 함께 지워집니다.<br>
+        자격 · 코드 · 소속 · 학력 · 경력 · 첨부 서류
+      </div>
+
+      <div class="delchk">
+        <div><span>심사팀 배정 이력</span><b class="z">0건</b></div>
+        <div><span>검증위원 배정 이력</span><b class="z">0건</b></div>
+        <div><span>보고서 서명 이력</span><b class="z">0건</b></div>
+      </div>
+
+      <div class="fd" style="margin-bottom:14px"><label>삭제 사유 <em>*</em></label>
+        <input placeholder="예: 테스트 계정 · 중복 등록 · 오입력"></div>
+
+      <p class="delcf">확인을 위해 로그인 ID <code>PA2026-012</code> 를 입력해 주세요.</p>
+      <div class="fd"><input id="delIn" placeholder="로그인 ID 입력" autocomplete="off"></div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn del" id="delGo" data-act="close" disabled
+        style="height:38px; padding:0 18px">완전삭제</button>
+    </footer>
+  </div>
+</div>
+
+<div class="foot">
+  <span class="l">© 2026 삼성표준인증원<i>·</i>
+    <a href="https://ssr1.co.kr" target="_blank" rel="noopener">홈페이지
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
+    </a>
+  </span>
+  <span class="c">02-6951-2009<i>·</i>팩스 070-4032-2006<i>·</i>ssr@ssr1.co.kr<i>·</i>평일 09:00 – 18:00<i>·</i>점심 12:30 – 13:30<i>·</i>주말 · 공휴일 휴무</span>
+  <span class="r">
+    <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
+    </a>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 19:45</span>
+</div>
+
+<button class="totop" id="totop" data-act="totop" aria-label="맨 위로">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V4M4 7.5L8 3.5l4 4"/></svg>
+  <span>맨 위로</span>
+</button>
+
+
+<div class="demo">
+  <span>시안 확인용</span>
+  <button data-role="MS" class="on">마스터관리자</button>
+  <button data-role="MN">관리자</button>
+  <span class="sep">│</span>
+  <button data-v="view" class="on">SC-072 심사원 상세</button>
+  <button data-v="edit">기본 정보 수정</button>
+  <button data-v="q">보유 자격 수정</button>
+  <button data-v="c">보유 코드 수정</button>
+  <button data-v="doc">첨부 서류 수정</button>
+  <button data-v="aq">자격 신청 내역</button>
+  <button data-v="ac">코드 신청 내역</button>
+  <button data-v="de">비활성화 확인</button>
+  <button data-v="pw">PW 재발급 확인</button>
+  <button data-v="pwd">임시 비밀번호 발급</button>
+  <button data-v="del">계정 완전삭제 · MS</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+  var OVS = {edit:'ovEdit', q:'ovQ', c:'ovC', de:'ovDe', pw:'ovPw', pwd:'ovPwD', del:'ovDel', doc:'ovDoc', aq:'ovAq', ac:'ovAc'};
+
+  function show(v){
+    for (var k in OVS) $(OVS[k]).hidden = (k !== v);
+    if (v !== 'pwd'){ $('cpb').classList.remove('done'); $('cpm').classList.remove('on'); }
+    if (v !== 'del' && $('delIn')){ $('delIn').value=''; $('delGo').disabled=true; }
+    var bs = document.querySelectorAll('.demo button');
+    for (var i=0;i<bs.length;i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-v')===v);
+  }
+
+  function up(el, attr){
+    while (el && el !== document){
+      if (el.getAttribute && el.getAttribute(attr) !== null) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  document.addEventListener('click', function(e){
+    var t = up(e.target, 'data-act');
+    if (t){
+      var a = t.getAttribute('data-act');
+      if (a==='edit') show('edit');
+      else if (a==='editq') show('q');
+      else if (a==='editc') show('c');
+      else if (a==='docs') show('doc');
+      else if (a==='aq') show('aq');
+      else if (a==='ac') show('ac');
+      else if (a==='deact') show('de');
+      else if (a==='del') show('del');
+      else if (a==='pwreset') show('pw');
+      else if (a==='pwdone') show('pwd');
+      else if (a==='copy'){ $('cpb').classList.add('done'); $('cpm').classList.add('on'); }
+      else if (a==='close') show('view');
+      return;
+    }
+    var d = up(e.target, 'data-v');
+    if (d) show(d.getAttribute('data-v'));
+  });
+
+  /* ── 공통 프레임 · 사용자 드롭다운 · 맨 위로 ── */
+  (function(){
+    var dd = $('userDD'), tt = $('totop');
+    document.addEventListener('click', function(e){
+      var w = e.target.closest ? e.target.closest('[data-act="dd"]') : null;
+      if (w){ e.stopPropagation(); if (dd) dd.hidden = !dd.hidden; return; }
+      if (dd && !(e.target.closest && e.target.closest('.dd'))) dd.hidden = true;
+    });
+    if (tt){
+      tt.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+      window.addEventListener('scroll', function(){
+        tt.classList.toggle('on', window.scrollY > 240);
+      });
+    }
+  })();
+
+  /* ── 계정 완전삭제 — 로그인 ID 확인 입력 ── */
+  (function(){
+    var inp = $('delIn'), go = $('delGo');
+    if (!inp || !go) return;
+    inp.addEventListener('input', function(){
+      go.disabled = (this.value.trim() !== 'PA2026-012');
+    });
+  })();
+
+  /* ── 보유 자격 · 보유 코드 : 블록 단위 수정 ── */
+  (function(){
+    /* ───── 표준 마스터 ─────
+       시스템 설정에서 관리하며 화면의 드롭다운은 여기서 파생됩니다.
+       판이 바뀌면 이 표에 행을 더하고 이전 판을 전환기간 → 폐지로 내립니다. */
+    var STDM = [
+      {cd:'ISO 9001',  ver:'2026', nm:'품질경영시스템',     code:true,  sub:true,  acc:'KAB', st:'유효'},
+      {cd:'ISO 9001',  ver:'2015', nm:'품질경영시스템',     code:true,  sub:true,  acc:'KAB', st:'전환기간'},
+      {cd:'ISO 14001', ver:'2015', nm:'환경경영시스템',     code:true,  sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 45001', ver:'2018', nm:'안전보건경영시스템', code:true,  sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 27001', ver:'2022', nm:'정보보호경영시스템', code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 37001', ver:'2016', nm:'부패방지경영시스템', code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 22716', ver:'2007', nm:'화장품 GMP',         code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 22000', ver:'2018', nm:'식품안전경영시스템', code:false, sub:false, acc:'KAB', st:'미운영'}
+    ];
+    function stdLive(){ return STDM.filter(function(m){ return m.st !== '미운영' && m.st !== '폐지'; }); }
+    /* 자격은 판까지 구분합니다 */
+    var QSTD = stdLive().map(function(m){ return m.cd + ':' + m.ver; });
+    /* 코드는 판과 무관하므로 표준 단위로만 봅니다 */
+    var CSTD = stdLive().filter(function(m){ return m.code; })
+                        .map(function(m){ return m.cd; })
+                        .filter(function(v,i,a){ return a.indexOf(v) === i; });
+    function hasSub(cd){
+      for (var i=0;i<STDM.length;i++) if (STDM[i].cd === cd) return STDM[i].sub;
+      return false;
+    }
+    var LV   = ['심사원보','심사원','선임심사원','검증심사원'];
+    var MST  = ['유지','정지','만료','해지'];
+    var BASIS= ['학력','근무경력','심사경력','자문경력','자격증'];
+    /* SSR-P-902 인증수행범위 · 세분류 (대분류 35 · 세분류 74) */
+    var CODES = {
+      '03':{nm:'음식료 및 담배 제조업',sub:[['03A','음식료품 제조업'],['03B','담배 제조업']]},
+      '04':{nm:'섬유 및 섬유제품 제조업',sub:[['04A','섬유제품제조업'],['04B','섬유염색 및 가공업'],['04C','봉제의복 및 모피제품제조업']]},
+      '05':{nm:'가죽 및 가죽제품 제조업',sub:[['05A','가죽제조업'],['05B','가방,핸드백 및기타 가죽제품 제조업'],['05C','신발제조업']]},
+      '06':{nm:'목재 및 목재제품 제조업',sub:[['06A','목재'],['06B','목재제품']]},
+      '07':{nm:'펄프, 종이 및 종이제품제조업',sub:[['07A','펄프, 종이 및 종이제품 제조업'],['07B','(11)1710(펄프제조,원지)']]},
+      '09':{nm:'인쇄업',sub:[['09A','인쇄업 및 기록매체 복제업']]},
+      '10':{nm:'코크스, 연탄 및 석유정제품 제조업',sub:[['10A','코크스제조 및 석유 정제품']]},
+      '12':{nm:'화학물질, 화학제품 및 화학섬유 제조업',sub:[['12A','화학물질 제조업'],['12B','화학제품 제조업']]},
+      '13':{nm:'의료용 물질 및 의약품 제조업',sub:[['13A','의약품 제조업'],['13B','의료용품 제조업']]},
+      '14':{nm:'고무제품 및 플라스틱제품 제조업',sub:[['14A','고무제품 제조업'],['14B','플라스틱제품 제조업']]},
+      '15':{nm:'비금속 광물제품 제조업',sub:[['15A','유리, 요업, 기타 비금속광물 제품 제조업']]},
+      '16':{nm:'콘크리트, 시멘트, 석회및 플라스터 등 제조업',sub:[['16A','시멘트, 석회, 플라스터 제품 제조업']]},
+      '17':{nm:'1차 금속 및 금속가공제품 제조업',sub:[['17A','제1차 금속제조업'],['17B','조립금속제품 제조업']]},
+      '18':{nm:'기계 및 장비 제조업',sub:[['18A','기계 제조업'],['18B','자동차 부품 제조업']]},
+      '19':{nm:'전기기기 및 광학기기 제조업',sub:[['19A','컴퓨터 및 가정용 기기제조업'],['19B','전자부품, 영상, 음향,통신 장비제조업'],['19C','의료용 기기 제조업'],['19D','안경, 및 안경렌즈, 광학요소 제조업'],['19E','수리업(전기,전자,정밀 기기,통신장비)']]},
+      '20':{nm:'조선업',sub:[['20A','선박 및 보트 건조업']]},
+      '21':{nm:'항공기 제조업',sub:[['21A','항공기 제조업']]},
+      '22':{nm:'기타 운송장비 제조업',sub:[['22A','자동차 및 트레일러 제조업'],['22B','철도장비 제조업'],['22C','그외 기타 운송장비']]},
+      '23':{nm:'기타 제조업',sub:[['23A','가구 제조업'],['23B','악기 제조업'],['23C','운동 및 경기용구 제조업'],['23D','기타 제조업']]},
+      '24':{nm:'재생업',sub:[['24A','재생용 가공원료 생산업']]},
+      '25':{nm:'전기공급업',sub:[['25A','전기업']]},
+      '26':{nm:'연료용 가스 공급업',sub:[['26A','연료용 가스 공급업']]},
+      '27':{nm:'수도 및 증기 공급업',sub:[['27A','증기 및 온수 공급업'],['27B','수도사업']]},
+      '28':{nm:'건설업',sub:[['28A','건물 건설업'],['28B','토목건설업, 토목시설물 건설관련 전문공사업'],['28C','건축물 축조, 전기 및 통신, 마무리 공사업'],['28D','건물설치 공사업'],['28E','건설장비 운영,시설물 유지관리업']]},
+      '29':{nm:'도소매업, 자동차, 오토바이 수리, 개인 및가정용품 수리',sub:[['29A','도소매업'],['29B','수리업(가정용품)']]},
+      '30':{nm:'숙박업, 음식점업 및 주점업',sub:[['30A','숙박업'],['30B','음식점업']]},
+      '31':{nm:'운송업, 창고업 및 통신업',sub:[['31A','육상, 수상, 항공운송 및 파이프라인 운송업'],['31B','여행알선,창고 및 운송관련 서비스업'],['31C','통신업']]},
+      '32':{nm:'금융업, 보험업, 부동산업 및 임대업',sub:[['32A','금융 및 보험업'],['32B','부동산'],['32C','임대업']]},
+      '33':{nm:'정보기술업',sub:[['33A','컴퓨터시스템 설계 및운영관련업'],['33B','소프트웨어 개발, 프로그래밍, 자료처리, 온라인 정보제공업']]},
+      '34':{nm:'전문, 과학 및 기술 서비스업',sub:[['34A','자연과학 연구개발, 건축기술 및 엔지니어링 서비스업'],['34B','인문 및 사회과학 연구개발']]},
+      '35':{nm:'기타 서비스업',sub:[['35A','법무 및 경영상담업 관련 서비스업'],['35C','광고업 및 기타 서비스업']]},
+      '36':{nm:'공공행정',sub:[['36A','공공행정']]},
+      '37':{nm:'교육서비스업',sub:[['37A','교육서비스업']]},
+      '38':{nm:'보건업 및 사회복지서비스업',sub:[['38A','병원, 의원, 공중보건의료업'],['38B','수의업'],['38C','사회복지서비스업']]},
+      '39':{nm:'기타 사회 서비스업',sub:[['39A','오락, 문화 및 운동관련서비스업'],['39B','폐기물 처리업'],['39C','개인 서비스업 및 국제외국기관']]}
+    };
+    var PROC = ['접수','검토','승인','반려'];
+    /* 표준별로 따로 받는 추가 서류 */
+    var REQDOC = {
+      'ISO 14001': '환경 주요공정 · 환경측면 파악 자료',
+      'ISO 45001': '위험성 평가 자료'
+    };
+    var CLIP = '<svg viewBox="0 0 16 16" aria-hidden="true">'
+      + '<path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg>';
+
+    var QD = [
+      {std:'ISO 9001:2015',  lv:'심사원', org:'MCL',  no:'MCL-QMS-A-2022',
+       iss:'2025-02-13', exp:'2028-02-20', rnw:'2028-02-20',
+       pr:'승인', mst:'유지', fn:'MCL_9001_자격증.pdf'},
+      {std:'ISO 14001:2015', lv:'심사원', org:'PCAA', no:'PC1699',
+       iss:'2022-03-04', exp:'2028-02-20', rnw:'2027-02-20',
+       pr:'승인', mst:'유지', fn:'PCAA_14001_자격증.pdf'},
+      {std:'ISO 45001:2018', lv:'심사원보', org:'IQCS', no:'KR100781',
+       iss:'2022-03-04', exp:'2027-02-04', rnw:'',
+       pr:'검토', mst:'', fn:'IQCS_45001_자격증.pdf'}
+    ];
+    var CD = [
+      {std:'ISO 9001',  big:'18', sub:'18B', by:'근무경력', ev:'8년 8개월 (세일메탈㈜)',
+       fn:'18B_근무경력_증빙.pdf', rc:'2022-03-14', rv:'2022-03-14', ap:'2022-03-14', pr:'승인'},
+      {std:'ISO 14001', big:'18', sub:'',    by:'근무경력', ev:'8년 8개월 (세일메탈㈜) · 환경측면 파악',
+       fn:'18_근무경력_증빙.pdf', fn2:'18_환경측면_파악.pdf', rc:'2022-03-14', rv:'2022-03-14', ap:'2022-03-14', pr:'승인'},
+      {std:'ISO 45001', big:'18', sub:'',    by:'근무경력', ev:'8년 8개월 (세일메탈㈜) · 위험성 평가',
+       fn:'18_근무경력_증빙.pdf', fn2:'18_위험성평가.pdf', rc:'2022-03-14', rv:'2022-03-14', ap:'2022-03-14', pr:'승인'},
+      {std:'ISO 9001',  big:'17', sub:'17A', by:'자문경력', ev:'2회 30일 이상 (선경인더스트리 외)',
+       fn:'17A_자문계약서.pdf', rc:'2022-10-14', rv:'2022-10-14', ap:'2022-10-14', pr:'승인'},
+      {std:'ISO 9001',  big:'17', sub:'17B', by:'자문경력', ev:'2회 30일 이상 (에스엠와이 외)',
+       fn:'17B_자문계약서.pdf', rc:'2022-10-14', rv:'2022-10-14', ap:'2022-10-14', pr:'승인'},
+      {std:'ISO 9001',  big:'18', sub:'18A', by:'심사경력', ev:'3회 3일 이상 (우성에이스 외)',
+       fn:'18A_심사경력_총괄표.pdf', rc:'2022-10-14', rv:'2022-10-14', ap:'2022-10-14', pr:'승인'},
+      {std:'ISO 9001',  big:'07', sub:'07A', by:'심사경력', ev:'3회 5일 이상 (에스엔팩 외)',
+       fn:'07A_심사경력_총괄표.pdf', rc:'2022-10-14', rv:'2022-10-14', ap:'2022-10-14', pr:'승인'},
+      {std:'ISO 14001', big:'17', sub:'',    by:'자문경력', ev:'2회 30일 이상 (선경인더스트리 외) · 환경측면 파악',
+       fn:'17_자문계약서.pdf', fn2:'', rc:'2025-11-02', rv:'2025-11-05', ap:'', pr:'검토'},
+      {std:'ISO 9001',  big:'24', sub:'24A', by:'학력', ev:'화학공학 학사 (○○대)',
+       fn:'24A_학위증명서.pdf', rc:'2025-11-02', rv:'', ap:'', pr:'접수'}
+    ];
+
+    function sel(list, cur, cls){
+      var h = '<select' + (cls ? ' class="'+cls+'"' : '') + '>';
+      for (var i=0;i<list.length;i++)
+        h += '<option'+(list[i]===cur?' selected':'')+'>'+list[i]+'</option>';
+      return h + '</select>';
+    }
+    function fd(lb, inner, full, hint){
+      return '<div class="fd'+(full?' full':'')+'"><label>'+lb+'</label>'+inner
+           + (hint ? '<span class="h">'+hint+'</span>' : '') + '</div>';
+    }
+    function inp(v, ph, cls){
+      return '<input'+(cls?' class="'+cls+'"':'')+' value="'+(v||'')
+           + '" placeholder="'+(ph||'')+'">';
+    }
+    function fileFd(lb, fn, req){
+      return fd(lb + (req ? ' <em>*</em>' : ''), '<div class="fileline">'
+        + (fn ? '<button class="fchip" type="button">'+CLIP+'<span>'+fn+'</span></button>' : '')
+        + '<button class="btn sm" type="button">'+(fn?'다시 올리기':'파일 선택')+'</button>'
+        + '<span class="fn">PDF · 30MB 이하</span></div>', true);
+    }
+    function dt(v){ return '<input class="dt" value="'+(v||'')+'" placeholder="0000-00-00" maxlength="10">'; }
+
+    function qRow(d, i){
+      return '<div class="erow" data-i="'+i+'">'
+        + '<div class="eh"><b>'+(d.std||'새 자격')+'<span class="tag">'+(d.lv||'')+'</span></b>'
+        + '<button class="rmrow" data-act="qdel" data-i="'+i+'">삭제</button></div>'
+        + '<div class="eb"><div class="grid3">'
+        + fd('자격표준 <em>*</em>', sel(QSTD, d.std))
+        + fd('자격등급 <em>*</em>', sel(LV, d.lv))
+        + fd('자격인증기관 <em>*</em>', inp(d.org, '예: MCL · PCAA · IQCS'))
+        + fd('자격증번호', inp(d.no, '예: MCL-QMS-A-2022'))
+        + fd('발행일 <em>*</em>', dt(d.iss))
+        + fd('만료일', dt(d.exp))
+        + fd('갱신일', dt(d.rnw))
+        + fd('처리현황', sel(PROC, d.pr))
+        + fd('관리상태', sel([''].concat(MST), d.mst))
+        + fileFd('자격증 업로드', d.fn, false)
+        + '</div></div></div>';
+    }
+
+    function bigSel(cur){
+      var h = '<select class="cbig"><option value="">선택</option>';
+      for (var k in CODES)
+        h += '<option value="'+k+'"'+(k===cur?' selected':'')+'>'+k+' '+CODES[k].nm+'</option>';
+      return h + '</select>';
+    }
+    function subSel(big, cur, on){
+      var h = '<select class="csub"'+(on?'':' disabled')+'><option value="">'
+            + (on ? (big ? '선택' : '대분류 먼저') : '해당 없음') + '</option>';
+      if (on && big && CODES[big])
+        for (var i=0;i<CODES[big].sub.length;i++){
+          var c = CODES[big].sub[i];
+          h += '<option value="'+c[0]+'"'+(c[0]===cur?' selected':'')+'>'+c[0]+' '+c[1]+'</option>';
+        }
+      return h + '</select>';
+    }
+
+    function cRow(d, i){
+      var nine = hasSub(d.std);
+      var bnm = (d.big && CODES[d.big]) ? d.big+' '+CODES[d.big].nm : '';
+      return '<div class="erow" data-i="'+i+'">'
+        + '<div class="eh"><b>'+(d.std||'새 코드')+'<span class="tag">'+bnm+(d.sub?' · '+d.sub:'')+'</span></b>'
+        + '<button class="rmrow" data-act="cdel" data-i="'+i+'">삭제</button></div>'
+        + '<div class="eb"><div class="grid3">'
+        + fd('표준 <em>*</em>', sel(CSTD, d.std, 'cstd'))
+        + fd('신청코드 · 대분류 <em>*</em>', bigSel(d.big), true)
+        + fd('신청코드 · 세분류'+(nine?' <em>*</em>':''), subSel(d.big, d.sub, nine), true,
+             nine ? '' : '이 표준은 대분류까지만 운영합니다')
+        + fd('코드부여근거 <em>*</em>', sel(BASIS, d.by))
+        + fd('접수일 <em>*</em>', dt(d.rc))
+        + fd('검토일', dt(d.rv))
+        + fd('승인일', dt(d.ap))
+        + fd('처리현황', sel(PROC, d.pr))
+        + fd('증빙자료', inp(d.ev, '예: 8년 8개월 (세일메탈㈜)'), true)
+        + fileFd('증빙서류', d.fn, true)
+        + (REQDOC[d.std] ? fileFd(REQDOC[d.std], d.fn2, true) : '')
+        + '</div></div></div>';
+    }
+
+    function draw(){
+      var ql = $('qList'), cl = $('cList');
+      if (ql){ ql.innerHTML = QD.map(qRow).join(''); $('qCnt').textContent = QD.length; }
+      if (cl){ cl.innerHTML = CD.map(cRow).join(''); $('cCnt').textContent = CD.length; }
+    }
+
+    document.addEventListener('click', function(e){
+      var t = e.target.closest ? e.target.closest('[data-act]') : null;
+      if (!t) return;
+      var a = t.getAttribute('data-act'), i = +t.getAttribute('data-i');
+      if (a === 'qdel'){ QD.splice(i,1); draw(); }
+      else if (a === 'cdel'){ CD.splice(i,1); draw(); }
+      else if (a === 'qadd'){ QD.push({std:'ISO 9001:2015', lv:'심사원보', org:'', no:'',
+        iss:'', exp:'', rnw:'', pr:'접수', mst:''}); draw(); }
+      else if (a === 'cadd'){ CD.push({std:'ISO 9001', big:'', sub:'', by:'근무경력',
+        ev:'', fn:'', rc:'', rv:'', ap:'', pr:'접수'}); draw(); }
+    });
+
+    /* 표준 · 대분류를 바꾸면 아래 선택지가 따라 바뀝니다 */
+    document.addEventListener('change', function(e){
+      var t = e.target;
+      if (!t.classList) return;
+      var row = t.closest ? t.closest('.erow') : null;
+      if (!row || !row.closest('#cList')) return;
+      var idx = +row.getAttribute('data-i');
+      var d = CD[idx];
+      if (!d) return;
+
+      if (t.classList.contains('cstd')){
+        d.std = t.value; d.big = ''; d.sub = '';
+        draw();
+      } else if (t.classList.contains('cbig')){
+        d.big = t.value; d.sub = '';
+        draw();
+      } else if (t.classList.contains('csub')){
+        d.sub = t.value;
+      }
+    });
+
+    /* 날짜는 0000-00-00 수기 입력 — 숫자만 받아 하이픈을 끼웁니다 */
+    document.addEventListener('input', function(e){
+      if (!e.target.classList || !e.target.classList.contains('dt')) return;
+      var v = e.target.value.replace(/[^0-9]/g,'').slice(0,8), o = v.slice(0,4);
+      if (v.length > 4) o += '-' + v.slice(4,6);
+      if (v.length > 6) o += '-' + v.slice(6,8);
+      e.target.value = o;
+    });
+
+    draw();
+  })();
+
+
+  /* ── 역할 전환 (시안 확인용) ── */
+  (function(){
+    var bs = document.querySelectorAll('.demo button[data-role]');
+    for (var i=0;i<bs.length;i++){
+      bs[i].addEventListener('click', function(){
+        var r = this.getAttribute('data-role');
+        document.body.setAttribute('data-role', r);
+        $('roleNm').textContent = (r === 'MS') ? '마스터관리자' : '관리자';
+        for (var j=0;j<bs.length;j++)
+          bs[j].classList.toggle('on', bs[j].getAttribute('data-role') === r);
+      });
+    }
+  })();
+
+  /* ── 보유 코드 더보기 ── */
+  (function(){
+    var bar = $('moreC');
+    if (!bar) return;
+    var open = false;
+    bar.addEventListener('click', function(){
+      open = !open;
+      var rs = document.querySelectorAll('tr[data-row]');
+      for (var i=0;i<rs.length;i++){
+        if (+rs[i].getAttribute('data-row') > 5) rs[i].classList.toggle('hid', !open);
+      }
+      bar.innerHTML = open ? '접기 <i>\u25b4</i>' : '<b>4건</b> 더보기 <i>\u25be</i>';
+    });
+  })();
+
+  /* ── 첨부 서류 ── */
+  (function(){
+    var KIND = ['입회평가서','자격부여서','서약서','이력서','기타'];
+    var CLIP = '<svg viewBox="0 0 16 16" aria-hidden="true">'
+      + '<path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg>';
+    var DD = [
+      {k:'입회평가서', fn:'입회평가서_2022-03.pdf', by:'장은수', dt:'2022-03-14'},
+      {k:'자격부여서', fn:'자격부여서_선임심사원.pdf', by:'오관리', dt:'2026-09-02'},
+      {k:'기타', fn:'경력기술서.pdf', by:'김선임', dt:'2022-03-10'}
+    ];
+    function sel(cur){
+      var h = '<select>';
+      for (var i=0;i<KIND.length;i++) h += '<option'+(KIND[i]===cur?' selected':'')+'>'+KIND[i]+'</option>';
+      return h + '</select>';
+    }
+    function row(d, i){
+      return '<div class="erow" data-i="'+i+'">'
+        + '<div class="eh"><b>'+(d.k||'새 서류')+'<span class="tag">'+(d.fn||'파일 없음')+'</span></b>'
+        + '<button class="rmrow" data-act="ddel" data-i="'+i+'">삭제</button></div>'
+        + '<div class="eb"><div class="grid3">'
+        + '<div class="fd"><label>구분 <em>*</em></label>'+sel(d.k)+'</div>'
+        + '<div class="fd full"><label>파일 <em>*</em></label><div class="fileline">'
+        + (d.fn ? '<button class="fchip" type="button">'+CLIP+'<span>'+d.fn+'</span></button>' : '')
+        + '<button class="btn sm" type="button">'+(d.fn?'다시 올리기':'파일 선택')+'</button>'
+        + '<span class="fn">PDF · JPG · PNG 10MB 이하</span></div></div>'
+        + '</div></div></div>';
+    }
+    function draw(){
+      var l = $('dList');
+      if (!l) return;
+      l.innerHTML = DD.map(row).join('');
+      $('dCnt').textContent = DD.length;
+    }
+    document.addEventListener('click', function(e){
+      var t = e.target.closest ? e.target.closest('[data-act]') : null;
+      if (!t) return;
+      var a = t.getAttribute('data-act'), i = +t.getAttribute('data-i');
+      if (a === 'ddel'){ DD.splice(i,1); draw(); }
+      else if (a === 'dadd'){ DD.push({k:'기타', fn:'', by:'장은수', dt:''}); draw(); }
+    });
+    draw();
+  })();
+
+  /* ── 사이드네비 여닫기 ── */
+  (function(){
+    var gts = document.querySelectorAll('.nav .gt');
+    for (var i=0;i<gts.length;i++){
+      if (gts[i].classList.contains('nokid')) continue;
+      gts[i].addEventListener('click', function(){
+        this.parentNode.classList.toggle('on');
+      });
+    }
+  })();
+
+})();
+</script>
+</body>
+</html>
