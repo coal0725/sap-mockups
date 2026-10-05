@@ -1,0 +1,1102 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자격 · 코드 신청 | 삼성표준인증원</title>
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<style>
+:root{
+  --navy:#1A2A4F; --navy-deep:#142139; --navy-soft:#E9ECF3;
+  --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE; --bg:#F7F7F4;
+  --warn:#FFF4E5; --warn-ink:#9C4221; --ok:#E8F3EC; --ok-ink:#2F6B45;
+  --wait:#EEF1F6; --wait-ink:#4A5A78; --rej:#FBE9E6; --rej-ink:#B04A3A;
+}
+*{box-sizing:border-box}
+html,body{margin:0; padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; padding-bottom:58px;
+}
+[hidden]{display:none !important}
+button{font-family:inherit}
+
+/* ───── ㄷ자 공통 프레임 · CM-001 — SC-030과 동일 ───── */
+/* 헤더 — 전체 폭 고정 */
+.gnb{
+  height:52px;
+  display:flex; align-items:center; gap:12px; padding:0 18px;
+  background:#fff; border-bottom:1px solid var(--line);
+}
+.gnb .logo{height:22px; width:auto; display:block; flex:none}
+.gnb .nm{font-size:14.5px; font-weight:700; letter-spacing:-.3px}
+.gnb .rt{margin-left:auto; display:flex; align-items:center; gap:10px}
+.gnb .sw{
+  font:inherit; font-size:12px; padding:5px 11px; border-radius:5px; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--muted);
+}
+.gnb .sw:hover{background:#FAFAF8; color:var(--ink)}
+.gnb .bell{position:relative; width:30px; height:30px; border:0; background:transparent; cursor:pointer; border-radius:6px}
+.gnb .bell:hover{background:#F4F4F1}
+.gnb .bell svg{width:16px; height:16px; fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.gnb .bell b{
+  position:absolute; top:3px; right:3px; min-width:15px; height:15px; padding:0 4px;
+  border-radius:8px; background:#B04A3A; color:#fff;
+  font-size:9.5px; font-weight:700; display:grid; place-items:center;
+}
+.gnb .who{display:flex; align-items:center; gap:5px; padding:5px 9px; border-radius:6px; cursor:pointer; font-size:13px; color:var(--muted)}
+.gnb .who:hover{background:#F4F4F1}
+.gnb .who b{color:var(--ink); font-weight:700}
+.gnb .who .cv{font-size:9px; color:#B4B8B2; margin-left:2px}
+.udd{position:relative}
+.dd{
+  position:absolute; top:calc(100% + 7px); right:0; min-width:168px; z-index:40;
+  background:#fff; border:1px solid var(--line); border-radius:8px; padding:5px;
+  box-shadow:0 6px 20px rgba(20,33,57,.14);
+}
+.dd[hidden]{display:none}
+.dd a{
+  display:flex; align-items:center; gap:9px;
+  padding:9px 11px; border-radius:5px; font-size:13px; color:var(--ink); cursor:pointer;
+}
+.dd a svg{
+  width:14px; height:14px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; opacity:.65;
+}
+.dd a.out svg{opacity:.8}
+.dd a:hover{background:#F4F4F1}
+.dd a.out{color:#B04A3A}
+.dd hr{border:0; border-top:1px solid #F0F0EC; margin:5px 3px}
+.foot{
+  min-height:28px;
+  display:flex; align-items:center; gap:14px; padding:7px 18px;
+  background:#fff; border-top:1px solid var(--line);
+  font-size:11px; color:#A8ACA6; flex-wrap:wrap;
+}
+.foot .l{display:flex; align-items:center}
+.foot .l i{font-style:normal; opacity:.35; margin:0 7px}
+.foot .l a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .l a:hover{color:var(--navy); text-decoration:underline}
+.foot .l a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .c{margin:0 auto; text-align:center}
+.foot .c i{font-style:normal; opacity:.4; margin:0 7px}
+.foot .r{margin-left:auto; display:flex; align-items:center; gap:0; font-variant-numeric:tabular-nums}
+.foot .r a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .r a:hover{color:var(--navy); text-decoration:underline}
+.foot .r a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .r i{font-style:normal; opacity:.3; margin:0 8px}
+@media (max-width:760px){ .foot .c{display:none} }
+
+.totop{
+  position:fixed; right:24px; bottom:24px; z-index:35;
+  display:inline-flex; align-items:center; gap:6px;
+  font:inherit; font-size:12px; padding:9px 14px; border-radius:20px;
+  border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;
+  box-shadow:0 3px 12px rgba(20,33,57,.12);
+  opacity:0; pointer-events:none; transform:translateY(6px);
+  transition:opacity .18s, transform .18s;
+}
+.totop.on{opacity:1; pointer-events:auto; transform:none}
+.totop:hover{background:#FAFAF8}
+.totop svg{width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+
+.totop{bottom:70px}
+@media print{
+  .app{display:block}
+  .nav, .gnb, .foot, .totop, .demo{display:none !important}
+  .body{max-width:none; padding:0}
+}
+
+input[type=checkbox]{accent-color:var(--navy)}
+
+/* ───── 레이아웃 ───── */
+.app{display:grid; grid-template-columns:232px 1fr; align-items:stretch; min-height:calc(100vh - 52px - 86px)}
+.nav{background:var(--navy-deep); color:#CFD6E4; padding:18px 0 40px}
+.nav h2{margin:0 0 14px; padding:0 18px; font-size:12px; font-weight:700;
+  color:#8F9CB5; letter-spacing:.4px}
+.nav .g{margin-bottom:4px}
+.nav .gt{display:flex; align-items:center; gap:9px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; color:#E8EDF5}
+.nav .gt svg{width:15px; height:15px; flex:none; opacity:.8}
+.nav a{display:block; padding:7px 18px 7px 42px; font-size:13px; color:#A9B4C8;
+  text-decoration:none; cursor:default}
+.nav a.on{background:rgba(255,255,255,.1); color:#fff; font-weight:600;
+  box-shadow:inset 3px 0 0 #C8A24A}
+
+/* 사이드네비 — 대메뉴를 눌러 하위를 여닫습니다 */
+.nav .gt{cursor:pointer; user-select:none}
+.nav .gt:hover{background:rgba(255,255,255,.05)}
+.nav .gt .pm{margin-left:auto; width:14px; height:14px; flex:none; position:relative; opacity:.55}
+.nav .gt .pm::before,.nav .gt .pm::after{
+  content:''; position:absolute; background:currentColor; border-radius:1px;
+  transition:transform .16s, opacity .16s}
+.nav .gt .pm::before{left:0; right:0; top:6px; height:2px}
+.nav .gt .pm::after{top:0; bottom:0; left:6px; width:2px}
+.nav .g.on .gt .pm::after{transform:scaleY(0)}
+.nav .g.on .gt{color:#fff}
+.nav .g:not(.on) .sub{display:none}
+.nav .gt.nokid{cursor:default}
+.nav .gt.nokid:hover{background:transparent}
+
+.nav .ms{margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1)}
+
+.main{flex:1; min-width:0; display:flex; flex-direction:column; align-items:stretch}
+.top{display:none}
+.top .lg{display:flex; align-items:baseline; gap:10px}
+.top .lg b{font-size:15px; color:var(--navy); letter-spacing:-.3px}
+.top .lg span{font-size:12px; color:var(--muted)}
+.who{display:flex; align-items:center; gap:8px; font-size:13px}
+.who .rb{padding:2px 8px; border-radius:3px; background:var(--navy-soft);
+  color:var(--navy); font-size:11.5px; font-weight:600}
+.who .cv{color:var(--muted); font-size:11px}
+
+.body{padding:26px 32px 48px; max-width:1320px; margin:0 auto; width:100%}
+.bc{font-size:12.5px; color:var(--muted); margin:4px 0 0}
+h1{margin:0; font-size:22px; letter-spacing:-.5px}
+.lead{margin:0 0 20px; font-size:13.5px; color:var(--muted)}
+
+.card{background:#fff; border:1px solid var(--line); border-radius:5px; margin-bottom:16px}
+.card > h3{margin:0; padding:14px 18px; font-size:14px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.card .in{padding:16px 18px}
+
+/* ───── 검색 바 · 공용 컴포넌트 ───── */
+.sbox{background:#EDF0F5; border:1px solid #DBE0E9; border-radius:6px;
+  padding:15px 16px; margin:18px 0 16px}
+.sbar{display:flex; align-items:center; gap:10px}
+.seg{flex:1; min-width:0; display:flex; align-items:stretch; height:44px;
+  border:1px solid #CBD2DE; border-radius:5px; background:#fff; overflow:hidden;
+  transition:border-color .12s, box-shadow .12s}
+.seg:focus-within{border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.seg .sel{border:0; background:transparent; font-family:inherit; font-size:13.5px;
+  padding:0 30px 0 14px; color:var(--ink); cursor:pointer; flex:none;
+  appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%236B706C' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 12px center}
+.seg .sel:focus{outline:none}
+.seg .dv{width:1px; background:#E3E7EE; flex:none; margin:8px 0}
+.seg .ip{flex:1; min-width:0; display:flex; align-items:center; gap:9px; padding:0 14px}
+.seg .ip svg{width:15px; height:15px; flex:none; color:#9A9C96}
+.seg .ip input{flex:1; min-width:0; border:0; outline:none; font-family:inherit;
+  font-size:13.5px; background:transparent; color:var(--ink)}
+.seg .ip input::placeholder{color:#A3A69F}
+.go{height:44px; padding:0 28px; border:0; border-radius:5px; background:var(--navy);
+  color:#fff; font-size:14px; font-weight:600; cursor:pointer; flex:none;
+  display:flex; align-items:center; gap:7px}
+.go:hover{background:var(--navy-deep)}
+.go svg{width:15px; height:15px}
+
+.sbar2{display:flex; align-items:center; justify-content:space-between;
+  margin-top:12px; padding-top:12px; border-top:1px solid #DDE2EA}
+.tgl{display:flex; align-items:center; gap:9px; cursor:pointer; user-select:none}
+.tgl .sw{width:38px; height:21px; border-radius:11px; background:var(--navy);
+  position:relative; transition:background .15s; flex:none}
+.tgl .sw::after{content:''; position:absolute; top:2px; left:19px; width:17px; height:17px;
+  border-radius:50%; background:#fff; transition:left .15s}
+.tgl.off .sw{background:#B7BECB}
+.tgl.off .sw::after{left:2px}
+.tgl span{font-size:13px; white-space:nowrap}
+.rt{display:flex; align-items:center; gap:14px}
+.per{height:32px; padding:0 28px 0 11px; border:1px solid #CBD2DE; border-radius:4px;
+  background:#fff; font-family:inherit; font-size:12.5px; color:var(--ink); cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%236B706C' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 10px center}
+.per:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.rst{font-size:12.5px; color:#5D6472; text-decoration:underline;
+  text-underline-offset:3px; cursor:pointer}
+.rst:hover{color:var(--navy)}
+
+/* ───── 표 ───── */
+table.ls{width:100%; border-collapse:collapse; font-size:13.5px}
+table.ls th{background:#FAFAF8; border-bottom:1px solid var(--line); padding:11px 12px;
+  text-align:left; font-size:12.5px; color:var(--muted); font-weight:600; white-space:nowrap}
+table.ls td{border-bottom:1px solid #EFEFEC; padding:12px; vertical-align:middle}
+table.ls tbody tr{cursor:pointer}
+table.ls tbody tr:hover{background:#FBFBF9}
+table.ls .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px}
+table.ls .nm{font-weight:600}
+table.ls .en{white-space:nowrap; letter-spacing:.2px}
+table.ls .ta{text-align:right; white-space:nowrap}
+.chip{display:inline-block; padding:2px 8px; border-radius:3px; font-size:11.5px;
+  background:var(--navy-soft); color:var(--navy); font-weight:600; white-space:nowrap}
+.st{display:inline-block; padding:2px 9px; border-radius:11px; font-size:11.5px; font-weight:600; white-space:nowrap}
+.st[data-state="active"]{background:var(--ok); color:var(--ok-ink)}
+.st[data-state="inactive"]{background:#F0F0ED; color:#80837C}
+.qc{color:var(--muted); font-size:12.5px}
+.qc b{color:var(--ink); font-weight:600}
+.na{color:#A9ABA5}
+.ql{display:inline-grid; grid-template-columns:max-content max-content; gap:3px 14px;
+  font-size:12.5px; line-height:1.5; justify-items:start}
+.ql .s{color:var(--ink); font-weight:600; white-space:nowrap}
+.ql .v{color:var(--muted); white-space:nowrap}
+.xls{height:34px; padding:0 13px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:6px}
+.xls:hover{border-color:var(--navy); color:var(--navy)}
+.xls svg{width:14px; height:14px}
+table.ls .no{color:#9A9C96; font-size:12.5px}
+table.ls .em{font-size:12.5px; color:var(--muted)}
+.cnt{font-size:13px; color:var(--muted); font-weight:400}
+.cnt b{color:var(--ink); font-weight:700}
+.new{height:34px; padding:0 15px; border:0; border-radius:4px; background:var(--navy);
+  color:#fff; font-size:13px; font-weight:600; cursor:pointer; display:flex;
+  align-items:center; gap:6px}
+.new:hover{background:var(--navy-deep)}
+.new svg{width:14px; height:14px}
+
+.pgbar2{display:flex; align-items:center; justify-content:center; padding:14px 18px}
+.xls2{height:32px; padding:0 13px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font:inherit; font-size:12.5px; cursor:pointer;
+  display:inline-flex; align-items:center; gap:6px; color:var(--ink)}
+.xls2:hover{border-color:var(--navy); color:var(--navy)}
+.xls2 svg{width:13px; height:13px}
+table.ls td.go2{color:#B4B8B2; font-size:15px; text-align:right; padding-right:14px}
+table.ls tbody tr:hover td.go2{color:var(--navy)}
+.pgbar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:16px 18px 14px; gap:12px}
+.pgbar .xls{justify-self:end}
+.pg{display:flex; align-items:center; justify-content:center; gap:5px}
+.pg button{min-width:34px; height:34px; padding:0 11px; border:1px solid var(--line);
+  border-radius:4px; background:#fff; font-size:13px; cursor:pointer; color:var(--ink)}
+.pg button:hover:not([disabled]){border-color:#A8ABA4}
+.pg button.on{background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700}
+.pg .nav2{color:var(--muted)}
+.pg button[disabled]{opacity:.35; cursor:default}
+.pg .gap{margin:0 3px}
+
+.note{margin:14px 0 0; padding:11px 13px; background:#FAFAF8; border:1px solid var(--line);
+  border-radius:4px; font-size:12.5px; color:var(--muted); line-height:1.75}
+.note b{color:var(--ink)}
+
+/* ───── 모달 ───── */
+.ov{position:fixed; inset:0; background:rgba(16,22,34,.5); z-index:50;
+  display:flex; align-items:center; justify-content:center; padding:24px}
+.mo{width:100%; max-width:560px; max-height:88vh; background:#fff; border-radius:5px;
+  box-shadow:0 12px 44px rgba(10,14,22,.3); display:flex; flex-direction:column}
+.mo header{padding:20px 24px 2px}
+.mo header b{font-size:17px; letter-spacing:-.3px}
+.mo header p{margin:6px 0 0; font-size:13px; color:var(--muted); line-height:1.65}
+.mo .sc{padding:16px 24px 6px; overflow:auto}
+.mo footer{display:flex; align-items:center; justify-content:flex-end; gap:8px;
+  padding:16px 24px 20px; border-top:1px solid var(--line); margin-top:12px}
+.btn{height:38px; padding:0 18px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font-size:13.5px; cursor:pointer}
+.btn:hover{border-color:#A8ABA4}
+.btn.pri{background:var(--navy); border-color:var(--navy); color:#fff; font-weight:600}
+.btn.pri:hover{background:var(--navy-deep)}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px 16px}
+.fd{display:flex; flex-direction:column; gap:6px}
+.fd.full{grid-column:1 / -1}
+.fd label{font-size:13px; font-weight:600}
+.fd label em{color:#C0392B; font-style:normal}
+.fd input, .fd select{height:40px; padding:0 12px; border:1px solid #C9CCC6;
+  border-radius:4px; font-size:13.5px; font-family:inherit; background:#fff}
+.fd input:focus, .fd select:focus{outline:none; border-color:var(--navy);
+  box-shadow:0 0 0 3px var(--navy-soft)}
+.fd input[readonly]{background:#F7F7F4; color:var(--muted)}
+.fd .h{font-size:12px; color:var(--muted)}
+.ck{display:flex; align-items:flex-start; gap:9px; margin-top:16px; font-size:13.5px}
+.fd .sub{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:400;
+  color:var(--muted); cursor:pointer}
+.ck input{margin-top:3px}
+
+.pwmo{max-width:430px !important}
+.pwmo header{padding:26px 26px 0; text-align:center}
+.pwkey{width:46px; height:46px; margin:0 auto 14px; border-radius:50%;
+  background:var(--navy-soft); display:grid; place-items:center}
+.pwkey svg{width:21px; height:21px; fill:none; stroke:var(--navy); stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.pwmo header b{display:block; font-size:16.5px; letter-spacing:-.3px}
+.pwmo header p{margin:7px 0 0; font-size:13px; color:var(--muted); line-height:1.6}
+.pwmo .sc{padding:20px 26px 4px}
+
+.pwid{display:flex; align-items:center; justify-content:space-between;
+  padding:0 2px 14px; font-size:13px}
+.pwid span{color:var(--muted)}
+.pwid b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-weight:600;
+  font-size:13.5px; letter-spacing:.3px}
+
+.pwlb{font-size:12px; color:var(--muted); margin-bottom:7px; letter-spacing:.2px}
+.pwrow{display:flex; align-items:stretch; border-radius:6px; overflow:hidden;
+  background:var(--navy); box-shadow:0 2px 10px rgba(26,42,79,.22)}
+.pwval{flex:1; min-width:0; display:flex; align-items:center; justify-content:center;
+  padding:17px 14px; color:#fff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:22px; font-weight:700;
+  letter-spacing:2px; word-break:break-all; line-height:1.3; user-select:all}
+.cpbtn{flex:none; width:58px; border:0; cursor:pointer; background:rgba(255,255,255,.1);
+  color:#fff; display:grid; place-items:center; border-left:1px solid rgba(255,255,255,.16);
+  transition:background .15s}
+.cpbtn:hover{background:rgba(255,255,255,.2)}
+.cpbtn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.cpbtn .ok{display:none}
+.cpbtn.done .cp{display:none}
+.cpbtn.done .ok{display:block}
+
+.cpmsg{height:17px; margin-top:9px; text-align:center; font-size:12px;
+  color:var(--ok-ink); opacity:0; transition:opacity .18s}
+.cpmsg.on{opacity:1}
+
+.pwmo footer{justify-content:center; border-top:0; margin-top:4px; padding:14px 26px 24px}
+.pwmo footer .btn{min-width:120px; height:40px; background:var(--navy); border-color:var(--navy);
+  color:#fff; font-weight:600}
+.pwmo footer .btn:hover{background:var(--navy-deep); border-color:var(--navy-deep)}
+
+
+/* ───── 하단 막대 ───── */
+.demo{position:fixed; left:0; right:0; bottom:0; z-index:90; background:#1C1F22;
+  padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:7px;
+  flex-wrap:wrap}
+.demo span{color:#8B8F93; font-size:12px; margin-right:6px}
+.demo button{padding:7px 14px; border:1px solid #3A3E42; border-radius:4px;
+  background:#2A2E32; color:#D7DADD; font-size:12.5px; cursor:pointer}
+.demo button.on{background:#fff; color:#1C1F22; border-color:#fff; font-weight:600}
+
+@media print{ .demo{display:none} }
+
+/* ───── SC-081 상세 ───── */
+.dhead{display:flex; align-items:flex-start; gap:14px; margin-bottom:4px}
+.dhead .bk{height:30px; padding:0 12px; border:1px solid var(--line); border-radius:4px;
+  background:#fff; font:inherit; font-size:12.5px; color:var(--muted); cursor:pointer;
+  display:inline-flex; align-items:center; gap:6px; flex:none; margin-top:3px}
+.dhead .bk:hover{border-color:#A8ABA4; color:var(--ink)}
+.dhead .bk svg{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.dhead .ti{flex:1; min-width:0}
+.dhead .rtz{margin-left:auto; display:flex; align-items:center; gap:8px; flex:none; margin-top:2px}
+.acc{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px;
+  color:var(--muted); letter-spacing:.2px}
+
+.pst{display:inline-block; padding:3px 11px; border-radius:12px; font-size:12px; font-weight:600; white-space:nowrap}
+.pst[data-p="접수"]{background:var(--wait); color:var(--wait-ink)}
+.pst[data-p="검토"]{background:#FFF4E5; color:#9C4221}
+.pst[data-p="승인"]{background:var(--ok); color:var(--ok-ink)}
+.pst[data-p="반려"]{background:var(--rej); color:var(--rej-ink)}
+.mst{display:inline-block; padding:2px 9px; border-radius:11px; font-size:11.5px; font-weight:600}
+.mst[data-m="유지"]{background:var(--ok); color:var(--ok-ink)}
+.mst[data-m="—"]{background:#F2F2EF; color:#9A9C96}
+
+/* 정의 목록 */
+.dl{display:grid; grid-template-columns:132px 1fr 132px 1fr; gap:0; font-size:13.5px}
+.dl dt{padding:10px 14px; background:#FAFAF8; border-bottom:1px solid #EFEFEC;
+  border-right:1px solid #EFEFEC; font-size:12.5px; color:var(--muted); font-weight:600}
+.dl dd{padding:10px 14px; margin:0; border-bottom:1px solid #EFEFEC; border-right:1px solid #EFEFEC}
+.dl dd:nth-of-type(2n){border-right:0}
+.dl .wide{grid-column:span 3; border-right:0}
+.dl b{font-weight:600}
+@media (max-width:900px){ .dl{grid-template-columns:120px 1fr} .dl .wide{grid-column:span 1} }
+
+/* 갱신 — 변경 전후 */
+.cmp{display:grid; grid-template-columns:1fr 36px 1fr; align-items:stretch; gap:0}
+.cmp .side{border:1px solid var(--line); border-radius:5px; overflow:hidden}
+.cmp .side > b{display:block; padding:9px 13px; font-size:12.5px; background:#FAFAF8;
+  border-bottom:1px solid var(--line); color:var(--muted)}
+.cmp .side.now > b{background:var(--navy-soft); color:var(--navy)}
+.cmp .side .rowz{display:flex; justify-content:space-between; gap:12px;
+  padding:9px 13px; font-size:13px; border-bottom:1px solid #F2F2EF}
+.cmp .side .rowz:last-child{border-bottom:0}
+.cmp .side .rowz span{color:var(--muted); flex:none}
+.cmp .side .rowz em{font-style:normal; text-align:right; word-break:break-all}
+.cmp .side .rowz.chg em{font-weight:700; color:var(--navy)}
+.cmp .ar{display:grid; place-items:center; color:#B4B8B2}
+.cmp .ar svg{width:16px; height:16px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+@media (max-width:860px){ .cmp{grid-template-columns:1fr} .cmp .ar{transform:rotate(90deg); padding:6px 0} }
+
+/* 증빙 */
+.fl{display:flex; align-items:center; gap:11px; padding:11px 13px;
+  border:1px solid var(--line); border-radius:4px; margin-bottom:8px; background:#fff}
+.fl:last-child{margin-bottom:0}
+.fl .ic{width:30px; height:30px; border-radius:4px; background:var(--navy-soft);
+  display:grid; place-items:center; flex:none}
+.fl .ic svg{width:14px; height:14px; fill:none; stroke:var(--navy); stroke-width:1.6;
+  stroke-linecap:round; stroke-linejoin:round}
+.fl .me{flex:1; min-width:0}
+.fl .me b{display:block; font-size:13px; font-weight:600; word-break:break-all}
+.fl .me span{font-size:12px; color:var(--muted)}
+.fl .dn{height:30px; padding:0 12px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font:inherit; font-size:12.5px; cursor:pointer; flex:none;
+  display:inline-flex; align-items:center; gap:6px}
+.fl .dn:hover{border-color:var(--navy); color:var(--navy)}
+.fl .dn svg{width:12px; height:12px; fill:none; stroke:currentColor; stroke-width:1.7;
+  stroke-linecap:round; stroke-linejoin:round}
+
+.warn{display:flex; gap:10px; padding:12px 14px; border-radius:4px;
+  background:var(--warn); border:1px solid #F3DCC0; font-size:13px; color:var(--warn-ink); line-height:1.65}
+.warn svg{width:15px; height:15px; flex:none; margin-top:2px; fill:none; stroke:currentColor;
+  stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+.warn b{font-weight:700}
+
+/* 결정 */
+.dec, .dec3{display:flex; gap:10px; margin-bottom:14px}
+.dec3 label{flex:1; display:flex; align-items:center; gap:9px; padding:13px 15px;
+  border:1px solid #C9CCC6; border-radius:5px; cursor:pointer; font-size:13.5px; background:#fff}
+.dec3 label:hover{border-color:#A8ABA4}
+.dec3 input{accent-color:var(--navy); width:16px; height:16px}
+.dec3 label b{font-weight:600}
+.dec3 label .sm{display:block; font-size:12px; color:var(--muted); font-weight:400; margin-top:1px}
+.dec3 label.on{border-color:var(--navy); background:var(--navy-soft); box-shadow:0 0 0 2px var(--navy-soft)}
+.dec3 label.on.hold{border-color:#9C4221; background:var(--warn); box-shadow:0 0 0 2px var(--warn)}
+.dec3 label.on.no{border-color:#B04A3A; background:var(--rej); box-shadow:0 0 0 2px var(--rej)}
+.dec3 label.dis{opacity:.45; cursor:not-allowed; background:#FAFAF8}
+.btn.hold{background:#9C4221; border-color:#9C4221; color:#fff; font-weight:600}
+.btn.hold:hover{background:#85381C; border-color:#85381C}
+.pst[data-p="보완요청"]{background:var(--warn); color:var(--warn-ink)}
+.dec label{flex:1; display:flex; align-items:center; gap:9px; padding:13px 15px;
+  border:1px solid #C9CCC6; border-radius:5px; cursor:pointer; font-size:13.5px; background:#fff}
+.dec label:hover{border-color:#A8ABA4}
+.dec label.on{border-color:var(--navy); background:var(--navy-soft); box-shadow:0 0 0 2px var(--navy-soft)}
+.dec label.dis{opacity:.45; cursor:not-allowed; background:#FAFAF8}
+.dec label.dis:hover{border-color:#C9CCC6}
+.dec label.on.no{border-color:#B04A3A; background:var(--rej); box-shadow:0 0 0 2px var(--rej)}
+.dec input{accent-color:var(--navy); width:16px; height:16px}
+.dec label b{font-weight:600}
+.dec label .sm{display:block; font-size:12px; color:var(--muted); font-weight:400; margin-top:1px}
+
+.ta2{width:100%; min-height:96px; padding:11px 13px; border:1px solid #C9CCC6;
+  border-radius:4px; font-family:inherit; font-size:13.5px; resize:vertical; line-height:1.65}
+.ta2:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.cz{display:flex; justify-content:space-between; align-items:center; margin-top:7px;
+  font-size:12px; color:var(--muted)}
+
+.d3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+@media (max-width:760px){ .d3{grid-template-columns:1fr} }
+
+.actbar{display:flex; align-items:center; gap:9px; padding:16px 18px;
+  border-top:1px solid var(--line)}
+.actbar .sp{margin-left:auto}
+.btn.no{background:#B04A3A; border-color:#B04A3A; color:#fff; font-weight:600}
+.btn.no:hover{background:#9A4133; border-color:#9A4133}
+.btn[disabled]{opacity:.4; cursor:default}
+.btn[disabled]:hover{border-color:#C9CCC6; background:#fff}
+.btn.pri[disabled]:hover{background:var(--navy)}
+
+.sumbox{display:flex; align-items:center; gap:10px; padding:13px 15px;
+  border:1px solid var(--line); border-radius:5px; background:#FAFAF8}
+.sm1{display:flex; align-items:baseline; gap:6px; padding:5px 13px; border-radius:4px;
+  background:#fff; border:1px solid var(--line)}
+.sm1 b{font-size:17px; font-weight:700; color:var(--ok-ink)}
+.sm1 span{font-size:12.5px; color:var(--muted)}
+.sm1.no b{color:var(--rej-ink)}
+.sm1.wt b{color:var(--muted)}
+table.ls .ccd{height:30px; padding:0 8px; border:1px solid #C9CCC6; border-radius:4px;
+  font:inherit; font-size:12.5px; background:#fff; width:100%}
+table.ls .ccd:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+table.ls .ccd.y{border-color:#2F6B45; background:var(--ok); color:var(--ok-ink); font-weight:600}
+table.ls .ccd.n{border-color:#B04A3A; background:var(--rej); color:var(--rej-ink); font-weight:600}
+table.ls .ccr{height:30px; padding:0 9px; border:1px solid #C9CCC6; border-radius:4px;
+  font:inherit; font-size:12.5px; width:100%}
+table.ls .ccr:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+table.ls .ccr[disabled]{background:#F4F4F1; border-color:var(--line)}
+.kv{font-size:12.5px; color:var(--muted); margin:10px 0 0; line-height:1.7}
+.kv b{color:var(--ink)}
+.ev0{color:#B04A3A; font-weight:600}
+.cbadge{display:inline-flex; align-items:center; gap:5px}
+.ttl{display:flex; align-items:center; gap:9px}
+.ttl .pst{margin-left:2px}
+table.ls td .sub2{display:block; font-size:12px; color:var(--muted); margin-top:1px}
+table.ls .kind{display:inline-block; padding:2px 9px; border-radius:3px; font-size:11.5px;
+  font-weight:600; white-space:nowrap; background:#F0F2F6; color:#4A5A78}
+table.ls .kind[data-k="자격 갱신"]{background:#FFF4E5; color:#9C4221}
+table.ls .kind[data-k="코드 신규"]{background:#EAF1EC; color:#2F6B45}
+.wait{display:inline-flex; align-items:center; gap:6px; margin-left:10px; padding:3px 11px; border-radius:12px;
+  background:var(--warn); color:var(--warn-ink); font-size:12px; font-weight:600}
+/* ───── ⓘ 도움말 ───── */
+.ih{display:inline-flex; width:15px; height:15px; border-radius:50%;
+  border:1px solid #C3C6C0; color:#8E928B; font-size:9.5px; font-weight:700; font-style:normal;
+  align-items:center; justify-content:center; cursor:help; position:relative;
+  vertical-align:middle; margin-left:5px; letter-spacing:0; flex:none}
+.ih:hover{border-color:#1A2A4F; color:#1A2A4F; background:#EEF1F6}
+.ih > span{display:none}
+.tipbox{position:fixed; z-index:9999; padding:12px 14px; border-radius:7px;
+  background:#1C1F22; color:#E4E7EA; font-size:12.5px; font-weight:400; line-height:1.72;
+  letter-spacing:-.1px; text-align:left; pointer-events:none;
+  box-shadow:0 10px 32px rgba(10,14,22,.38); word-break:keep-all}
+.tipbox b{color:#fff; font-weight:700}
+.tipbox[hidden]{display:none}
+</style>
+</head>
+
+<body>
+
+<header class="gnb">
+  <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원">
+  <span class="nm">SAP 심사원 플랫폼</span>
+  <div class="rt">
+    <div class="udd">
+      <div class="who" id="whoBtn" data-act="dd">안녕하세요, <b>장은수</b> 마스터관리자님 <span class="cv">▾</span></div>
+      <div class="dd" id="userDD" hidden>
+        <a><svg viewBox="0 0 16 16"><circle cx="8" cy="5.6" r="2.6"/><path d="M3 13.4c0-2.3 2.2-3.6 5-3.6s5 1.3 5 3.6"/></svg>마이페이지</a>
+        <a><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.2" rx="1.2"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/></svg>비밀번호 변경</a>
+        <hr>
+        <a class="out"><svg viewBox="0 0 16 16"><path d="M6.4 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.4"/><path d="M10 5.6L12.6 8 10 10.4M12.6 8H6.6"/></svg>로그아웃</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <nav class="nav">
+    <h2>관리자 업무</h2>
+
+    <div class="g">
+      <div class="gt nokid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        마이페이지</div>
+    </div>
+
+    <div class="g on">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11h4M19 9v4"/></svg>
+        심사원 관리<span class="pm"></span></div>
+      <div class="sub">
+        <a>심사원 계정</a>
+        <a class="on">자격 · 코드 신청</a>
+      </div>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M3 21h18"/></svg>
+        인증 관리<span class="pm"></span></div>
+      <div class="sub"><a>기업 정보</a><a>인증 신청</a><a>계약 · 비용</a><a>인증서 · 현황</a><a>인증 변경</a></div>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        심사 관리<span class="pm"></span></div>
+      <div class="sub"><a>심사 일정</a><a>심사팀 배정</a><a>보고서 검증</a></div>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 12v6"/></svg>
+        게시판 관리<span class="pm"></span></div>
+      <div class="sub"><a>공지사항</a><a>절차 및 서식</a></div>
+    </div>
+
+    <div class="g ms">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        시스템<span class="pm"></span></div>
+      <div class="sub"><a>시스템 설정</a><a>문서번호 · 버전 관리</a><a>인장 · 로고</a><a>감사 모드</a><a>이메일 발송 로그</a></div>
+    </div>
+  </nav>
+
+  <div class="main">
+  <div class="body">
+
+  <!-- ══════════ SC-080 목록 ══════════ -->
+  <section id="vList">
+    <h1>자격 · 코드 신청</h1>
+    <p class="bc">심사원 관리 › 자격 · 코드 신청</p>
+
+    <div class="sbox">
+      <div class="sbar">
+        <div class="seg">
+          <select class="sel" id="fKind">
+            <option value="">신청유형 전체</option>
+            <option>자격 신규</option>
+            <option>자격 갱신</option>
+            <option>코드 신규</option>
+          </select>
+          <span class="dv"></span>
+          <label class="ip">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="fQ" placeholder="신청자 이름 또는 로그인 ID 로 찾습니다">
+          </label>
+        </div>
+        <button class="go" data-act="find">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+          검색</button>
+      </div>
+      <div class="sbar2">
+        <div style="display:flex; align-items:center; gap:9px">
+          <select class="per" id="fSt" style="height:34px">
+            <option value="">처리현황 전체</option>
+            <option>접수</option><option>검토</option><option>승인</option><option>반려</option>
+          </select>
+          <select class="per" id="fStd" style="height:34px">
+            <option value="">표준 전체</option>
+            <option>ISO 9001</option><option>ISO 14001</option><option>ISO 45001</option>
+            <option>ISO 27001</option><option>ISO 37001</option><option>ISO 22716</option>
+          </select>
+        </div>
+        <div class="rt">
+          <select class="per" id="fPer"><option>25개</option><option>50개</option><option>100개</option></select>
+          <span class="rst" data-act="reset">초기화</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><span>전체 목록 <span class="cnt">총 <b id="cnt">5</b>건</span><span class="wait" id="waitBadge">처리 대기 2건</span></span>
+        <button class="xls2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 19h16"/></svg>
+          엑셀 내보내기</button></h3>
+      <table class="ls">
+        <thead><tr>
+          <th style="width:44px">No.</th>
+          <th style="width:112px">로그인 ID</th>
+          <th style="width:86px">신청자</th>
+          <th style="width:92px">신청유형</th>
+          <th style="width:134px">표준</th>
+          <th>신청 내용</th>
+          <th style="width:70px">증빙</th>
+          <th style="width:86px">처리현황</th>
+          <th style="width:98px">신청일</th>
+          <th style="width:98px">승인일</th>
+          <th style="width:34px"></th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+      <div class="pgbar2">
+        <div class="pg">
+          <button class="nav2" disabled>‹</button>
+          <button class="on">1</button>
+          <button class="nav2" disabled>›</button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ══════════ SC-081 상세 ══════════ -->
+  <section id="vDet" hidden>
+    <div class="dhead">
+      <button class="bk" data-act="back">
+        <svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>목록으로</button>
+      <div class="ti">
+        <h1 id="dTitle">자격 신규 신청</h1>
+        <p class="bc">심사원 관리 › 자격 · 코드 신청 › 상세</p>
+      </div>
+      <div class="rtz">
+        <span class="acc" id="dAcc">QA-20261005-0001</span>
+        <span class="pst" id="dPst" data-p="접수">접수</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>신청자</h3>
+      <dl class="dl">
+        <dt>이름</dt><dd id="uNm">장은수</dd>
+        <dt>로그인 ID</dt><dd id="uId" class="id">test_A</dd>
+        <dt>권한등급</dt><dd><span class="chip" id="uRole">심사원</span></dd>
+        <dt>소속</dt><dd id="uOrg">삼성표준인증원 · 인증심사팀</dd>
+        <dt>이메일</dt><dd id="uMail">cys8883@gmail.com</dd>
+        <dt>연락처</dt><dd id="uTel">010-0000-0000</dd>
+        <dt>신청일</dt><dd class="wide" id="uWhen">2026-10-05 21:40</dd>
+      </dl>
+    </div>
+
+    <div class="card" id="cNew">
+      <h3>신청 내용</h3>
+      <dl class="dl">
+        <dt>신청유형</dt><dd>자격 신규</dd>
+        <dt>자격표준</dt><dd><b>ISO 9001:2026</b> 품질경영시스템</dd>
+        <dt>자격증</dt><dd class="wide">아래 증빙 서류</dd>
+      </dl>
+    </div>
+
+    <div class="card" id="cRen" hidden>
+      <h3>신청 내용</h3>
+      <dl class="dl">
+        <dt>신청유형</dt><dd>자격 갱신</dd>
+        <dt>자격표준</dt><dd><b>ISO 9001:2015</b> 품질경영시스템</dd>
+        <dt>자격등급</dt><dd>선임심사원</dd>
+        <dt>자격인증기관</dt><dd>MCL</dd>
+        <dt>자격증번호</dt><dd class="id">Q-2021-0418</dd>
+        <dt>발행일</dt><dd>2021-04-18</dd>
+        <dt>현재 만료일</dt><dd>2026-12-31</dd>
+        <dt>현재 갱신일</dt><dd>2026-12-31</dd>
+      </dl>
+    </div>
+
+    <div class="card" id="cCode" hidden>
+      <h3>신청 내용</h3>
+      <dl class="dl">
+        <dt>표준</dt><dd><b>ISO 9001</b> 품질경영시스템</dd>
+        <dt>코드부여근거</dt><dd><b>근무경력</b></dd>
+        <dt>신청코드 대분류</dt><dd><b>28</b> 건설업</dd>
+        <dt>신청코드 세분류</dt><dd><b>28A</b> 건물 건설업</dd>
+        <dt>증빙자료</dt><dd class="wide">8년 8개월 · 세일메탈㈜ 품질관리팀</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>증빙 서류 <span class="cnt">총 <b id="evN">2</b>건</span></h3>
+      <div class="in" id="evWrap">
+        <div class="fl">
+          <div class="ic"><svg viewBox="0 0 16 16"><path d="M9 1.5H4.4A1.4 1.4 0 0 0 3 2.9v10.2a1.4 1.4 0 0 0 1.4 1.4h7.2a1.4 1.4 0 0 0 1.4-1.4V5.5z"/><path d="M9 1.5v4h4"/></svg></div>
+          <div class="me"><b>ISO9001_심사원_자격증_장은수.pdf</b><span>1.2MB · 2026-10-05 21:40</span></div>
+          <button class="dn"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7.5L8 10.5l3-3"/><path d="M3 13h10"/></svg>내려받기</button>
+        </div>
+        <div class="fl" id="ev2">
+          <div class="ic"><svg viewBox="0 0 16 16"><path d="M9 1.5H4.4A1.4 1.4 0 0 0 3 2.9v10.2a1.4 1.4 0 0 0 1.4 1.4h7.2a1.4 1.4 0 0 0 1.4-1.4V5.5z"/><path d="M9 1.5v4h4"/></svg></div>
+          <div class="me"><b>심사경력확인서_2026.pdf</b><span>480KB · 2026-10-05 21:40</span></div>
+          <button class="dn"><svg viewBox="0 0 16 16"><path d="M8 2v8M5 7.5L8 10.5l3-3"/><path d="M3 13h10"/></svg>내려받기</button>
+        </div>
+        <p class="kv">내려받기 주소는 5분간만 유효합니다.</p>
+      </div>
+      <div class="in" id="evNone" hidden>
+        <div class="warn">
+          <svg viewBox="0 0 16 16"><path d="M8 2.5l6 11H2z"/><path d="M8 6.5v3.2M8 11.6v.1"/></svg>
+          <div><b>증빙이 첨부되지 않았습니다.</b> 보완을 요청하십시오.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" id="cFill">
+      <h3>자격 정보</h3>
+      <div class="in">
+        <div class="d3">
+          <div class="fd"><label>자격등급 <em>*</em></label>
+            <select><option>선택</option><option>심사원보</option><option selected>심사원</option><option>선임심사원</option><option>검증심사원</option></select></div>
+          <div class="fd"><label>자격인증기관 <em>*</em></label>
+            <input value="MCL" placeholder="예: MCL · PCAA · IQCS"></div>
+          <div class="fd"><label>자격증번호</label><input value="SS501"></div>
+          <div class="fd"><label>발행일 <em>*</em></label><input value="2026-10-01" placeholder="0000-00-00"></div>
+          <div class="fd"><label>만료일 <em>*</em></label><input value="2029-09-30" placeholder="0000-00-00"></div>
+          <div class="fd"><label>갱신일 <em>*</em></label><input value="2029-09-30" placeholder="0000-00-00"></div>
+        </div>
+        <p class="kv">발행일 &lt; 만료일 ≤ 갱신일</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>처리</h3>
+      <div class="in">
+        <div class="d3">
+          <div class="fd"><label>접수일 <em>*</em></label><input value="2026-10-05" placeholder="0000-00-00"></div>
+          <div class="fd"><label>검토일</label><input value="" placeholder="0000-00-00"></div>
+          <div class="fd"><label>승인일</label><input value="" placeholder="0000-00-00"></div>
+        </div>
+
+        <h4 style="margin:22px 0 10px; font-size:13.5px">결정
+          <i class="ih">i<span><b>보완요청</b>은 접수번호를 그대로 두고 심사원이 서류를 보완해 다시 냅니다.
+            <b>반려</b>는 그 신청을 끝내며 조건을 갖춘 뒤 새로 신청해야 합니다.
+            서류가 빠진 정도라면 보완요청으로 두십시오. 반려하면 접수번호가 갈려 같은 건으로 이어지지 않습니다.</span></i></h4>
+        <div class="dec3">
+          <label id="decY"><input type="radio" name="dec" value="y"><span><b>승인</b><span class="sm">보유 자격에 등록 · 관리상태 「유지」</span></span></label>
+          <label id="decH" class="hold"><input type="radio" name="dec" value="h"><span><b>보완요청</b><span class="sm">접수번호 유지 · 보완 후 재제출</span></span></label>
+          <label id="decN" class="no"><input type="radio" name="dec" value="n"><span><b>반려</b><span class="sm">신청 종결 · 새로 신청</span></span></label>
+        </div>
+
+        <div id="rjWrap" hidden>
+          <div class="fd"><label id="rjLb">반려 사유 <em>*</em></label>
+            <textarea class="ta2" id="rjTa" maxlength="1000" placeholder="신청자에게 전달될 사유를 적습니다."></textarea>
+            <div class="cz"><span id="rjHint">구체적으로 적을수록 다시 내실 때 빠릅니다</span><span><b id="rjN">0</b> / 1000자</span></div>
+          </div>
+        </div>
+
+        <div class="warn" id="noEvWarn" hidden style="margin-top:14px">
+          <svg viewBox="0 0 16 16"><path d="M8 2.5l6 11H2z"/><path d="M8 6.5v3.2M8 11.6v.1"/></svg>
+          <div>증빙이 없어 <b>승인을 선택할 수 없습니다.</b></div>
+        </div>
+      </div>
+      <div class="actbar">
+        <span class="sp"></span>
+        <button class="btn" data-act="back">목록으로</button>
+        <button class="btn pri" id="goBtn" data-act="submit" disabled>처리</button>
+      </div>
+    </div>
+  </section>
+
+  </div><!-- /body -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<div class="foot">
+  <span class="l">© 2026 삼성표준인증원<i>·</i>
+    <a href="https://ssr1.co.kr" target="_blank" rel="noopener">홈페이지
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg></a>
+  </span>
+  <span class="c">02-6951-2009<i>·</i>팩스 070-4032-2006<i>·</i>ssr@ssr1.co.kr<i>·</i>평일 09:00 – 18:00<i>·</i>점심 12:30 – 13:30<i>·</i>주말 · 공휴일 휴무</span>
+  <span class="r">
+    <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg></a>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 22:00</span>
+</div>
+
+<button class="totop" id="totop" data-act="totop" aria-label="맨 위로">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V4M4 7.5L8 3.5l4 4"/></svg>
+  <span>맨 위로</span>
+</button>
+
+<!-- 처리 확인 -->
+<div class="ov" id="ovGo" hidden>
+  <div class="mo" style="max-width:470px">
+    <header><b id="goTitle">승인하시겠습니까</b><p id="goLead">승인하면 신청 내용이 그대로 보유 자격이 됩니다. 관리자가 다시 입력하지 않습니다.</p></header>
+    <div class="sc">
+      <dl class="dl" style="grid-template-columns:104px 1fr; border:1px solid var(--line); border-radius:4px; overflow:hidden">
+        <dt>신청자</dt><dd>장은수 · test_A</dd>
+        <dt>신청유형</dt><dd id="goKind">자격 신규</dd>
+        <dt>표준</dt><dd id="goStd">ISO 9001:2026</dd>
+        <dt>처리현황</dt><dd><span class="pst" data-p="승인" id="goP">승인</span></dd>
+        <dt>관리상태</dt><dd><span class="mst" data-m="유지" id="goM">유지</span></dd>
+      </dl>
+      <p class="kv" id="goNote">관리상태는 승인된 뒤에 생깁니다. 이후 정지 · 만료 · 해지는 심사원 상세에서 바꿉니다.</p>
+    </div>
+    <footer>
+      <button class="btn" data-act="goClose">취소</button>
+      <button class="btn pri" id="goOk" data-act="goClose">승인 처리</button>
+    </footer>
+  </div>
+</div>
+
+<div class="demo">
+  <span>시안 확인용</span>
+  <button data-v="list" class="on">SC-080 목록</button>
+  <button data-v="new">SC-081 자격 신규</button>
+  <button data-v="ren">SC-081 자격 갱신</button>
+  <button data-v="code">SC-081 코드 신규</button>
+  <button data-v="noev">증빙 없는 건</button>
+</div>
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+
+  /* 신청자 · 신청유형 · 표준 · 신청 내용 · 증빙 · 처리현황 · 신청일 · 처리일 */
+  var ROWS = [
+    ['장은수','test_A','자격 신규','ISO 9001:2026','심사원',2,'접수','2026-10-05',''],
+    ['김선임','test_LA','자격 갱신','ISO 9001:2015','선임심사원',1,'검토','2026-10-04',''],
+    ['박심사','A2025-011','코드 신규','ISO 9001','17A 제1차 금속제조업 · 근무경력',1,'접수','2026-10-02',''],
+    ['박심사','A2025-011','코드 신규','ISO 9001','17B 조립금속제품 제조업 · 근무경력',1,'접수','2026-10-02',''],
+    ['박심사','A2025-011','코드 신규','ISO 9001','28A 건물 건설업 · 근무경력',0,'접수','2026-10-02',''],
+    ['이검증','test_VA','자격 신규','ISO 14001:2015','검증심사원',3,'승인','2026-09-28','2026-10-01'],
+    ['정팀장','LA2022-001','코드 신규','ISO 9001','17A 제1차 금속제조업 · 근무경력',1,'승인','2026-06-12','2026-06-18'],
+    ['정팀장','LA2022-001','코드 신규','ISO 9001','28A 건물 건설업 · 근무경력',1,'반려','2026-06-12',''],
+    ['최보조','test_PA','자격 신규','ISO 45001:2018','심사원보',1,'보완요청','2026-09-25','']
+  ];
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+  function draw(){
+    var q    = ($('fQ').value || '').trim().toLowerCase();
+    var kind = $('fKind').value;
+    var st   = $('fSt').value;
+    var std  = $('fStd').value;
+    var h = '', n = 0, wait = 0;
+
+    for (var i=0;i<ROWS.length;i++){
+      var r = ROWS[i];
+      if (kind && r[2] !== kind) continue;
+      if (st   && r[6] !== st)   continue;
+      if (std  && r[3].indexOf(std) !== 0) continue;
+      if (q && (r[0].toLowerCase().indexOf(q) < 0 && r[1].toLowerCase().indexOf(q) < 0)) continue;
+      n++;
+      h += '<tr data-act="open" data-i="'+i+'">'
+        +  '<td class="no">'+n+'</td>'
+        +  '<td class="id">'+esc(r[1])+'</td>'
+        +  '<td class="nm">'+esc(r[0])+'</td>'
+        +  '<td><span class="kind" data-k="'+esc(r[2])+'">'+esc(r[2])+'</span></td>'
+        +  '<td class="en">'+esc(r[3])+'</td>'
+        +  '<td class="em">'+esc(r[4])+'</td>'
+        +  '<td>'+(r[5] ? r[5]+'건' : '<span class="ev0">0건</span>')+'</td>'
+        +  '<td><span class="pst" data-p="'+esc(r[6])+'">'+esc(r[6])+'</span></td>'
+        +  '<td class="en">'+esc(r[7])+'</td>'
+        +  '<td class="en">'+(r[8] ? esc(r[8]) : '<span class="na">—</span>')+'</td>'
+        +  '<td class="ta go2">\u203A</td>'
+        +  '</tr>';
+    }
+    for (var k=0;k<ROWS.length;k++) if (ROWS[k][6]==='접수') wait++;
+
+    $('tb').innerHTML = h || '<tr><td colspan="11" style="padding:46px; text-align:center; color:var(--muted)">조건에 맞는 신청이 없습니다.</td></tr>';
+    $('cnt').textContent = n;
+    $('waitBadge').textContent = '처리 대기 ' + wait + '건';
+    $('waitBadge').hidden = (wait === 0);
+  }
+
+
+  /* ── 상세 ── */
+  var VIEW = { nm:'', ev:2 };
+
+  function detail(mode){
+    var tt = { 'new':'자격 신규 신청', 'ren':'자격 갱신 신청', 'code':'코드 신규 신청', 'noev':'코드 신규 신청' };
+    $('dTitle').textContent = tt[mode] || '자격 신규 신청';
+    $('cNew').hidden  = (mode !== 'new');
+    $('cRen').hidden  = (mode !== 'ren');
+    var isCode = (mode === 'code' || mode === 'noev');
+    $('cCode').hidden = !isCode;
+    $('cFill').hidden = isCode;
+
+    var ev = (mode === 'noev') ? 0 : (mode === 'ren' ? 1 : 2);
+    VIEW.ev = ev;
+    $('evN').textContent = ev;
+    $('evWrap').hidden = (ev === 0);
+    if ($('ev2')) $('ev2').hidden = (ev < 2);
+    $('evNone').hidden = (ev !== 0);
+    $('noEvWarn').hidden = (ev !== 0);
+    $('decY').classList.toggle('dis', ev === 0);
+    $('decY').querySelector('input').disabled = (ev === 0);
+
+    var acc = { 'new':'QA-20261005-0001','ren':'QA-20261004-0002','code':'QC-20261002-0001','noev':'QC-20261002-0001' };
+    $('dAcc').textContent = acc[mode] || acc['new'];
+    $('dPst').setAttribute('data-p','접수');
+    $('dPst').textContent = '접수';
+
+    if (mode === 'ren'){
+      $('uNm').textContent='김선임'; $('uId').textContent='test_LA';
+      $('uRole').textContent='선임심사원'; $('uWhen').textContent='2026-10-04 10:12';
+    } else if (mode === 'code' || mode === 'noev'){
+      $('uNm').textContent='박심사'; $('uId').textContent='A2025-011';
+      $('uRole').textContent='심사원'; $('uWhen').textContent='2026-10-02 16:05';
+    } else {
+      $('uNm').textContent='장은수'; $('uId').textContent='test_A';
+      $('uRole').textContent='심사원'; $('uWhen').textContent='2026-10-05 21:40';
+    }
+
+    var rs = document.querySelectorAll('input[name=dec]');
+    for (var i=0;i<rs.length;i++) rs[i].checked = false;
+    $('decY').classList.remove('on'); $('decH').classList.remove('on'); $('decN').classList.remove('on');
+    $('rjWrap').hidden = true; $('rjTa').value = ''; $('rjN').textContent = '0';
+    $('goBtn').disabled = true; $('goBtn').textContent = '처리';
+    $('goBtn').classList.remove('no'); $('goBtn').classList.add('pri');
+  }
+
+  function show(v){
+    var list = (v === 'list');
+    $('vList').hidden = !list;
+    $('vDet').hidden  = list;
+    if (!list) detail(v);
+    var bs = document.querySelectorAll('.demo button');
+    for (var i=0;i<bs.length;i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-v') === v);
+    window.scrollTo(0,0);
+  }
+
+  function decide(){
+    var y = $('decY').querySelector('input').checked;
+    var h = $('decH').querySelector('input').checked;
+    var n = $('decN').querySelector('input').checked;
+    $('decY').classList.toggle('on', y);
+    $('decH').classList.toggle('on', h);
+    $('decN').classList.toggle('on', n);
+    $('rjWrap').hidden = !(h || n);
+    if (h){ $('rjLb').innerHTML = '보완 요청 사항 <em>*</em>';
+            $('rjTa').placeholder = '무엇을 보완해야 하는지 적습니다. 예: 자격증 사본이 흐려 자격증번호를 읽을 수 없습니다.';
+            $('rjHint').textContent = '같은 접수번호로 다시 제출됩니다'; }
+    else if (n){ $('rjLb').innerHTML = '반려 사유 <em>*</em>';
+            $('rjTa').placeholder = '신청자에게 전달될 사유를 적습니다. 예: 심사경력 3회 이상이 필요하나 제출된 경력이 2회입니다.';
+            $('rjHint').textContent = '이 신청은 종결되며 새로 신청하셔야 합니다'; }
+    var b=$('goBtn');
+    b.classList.remove('no','hold'); b.classList.add('pri');
+    if (y){ b.disabled=false; b.textContent='승인 처리'; }
+    else if (h){ b.disabled = ($('rjTa').value.trim().length < 2); b.textContent='보완 요청';
+                 b.classList.remove('pri'); b.classList.add('hold'); }
+    else if (n){ b.disabled = ($('rjTa').value.trim().length < 2); b.textContent='반려 처리';
+                 b.classList.remove('pri'); b.classList.add('no'); }
+    else { b.disabled=true; b.textContent='처리'; }
+  }
+
+  document.addEventListener('change', function(e){
+    var t = e.target;
+    if (t.name === 'dec'){ decide(); return; }
+    if (t.id === 'fKind' || t.id === 'fSt' || t.id === 'fStd'){ draw(); return; }
+  });
+  document.addEventListener('input', function(e){
+    if (e.target.id === 'rjTa'){ $('rjN').textContent = e.target.value.length; decide(); return; }
+    if (e.target.id === 'fQ'){ draw(); return; }
+  });
+
+  function up(el, at){
+    while (el && el !== document){ if (el.getAttribute && el.getAttribute(at) !== null) return el; el = el.parentNode; }
+    return null;
+  }
+
+  document.addEventListener('click', function(e){
+    var a = up(e.target, 'data-act');
+    if (a){
+      var k = a.getAttribute('data-act');
+      if (k === 'open'){ show('new'); return; }
+      if (k === 'back'){ show('list'); return; }
+      if (k === 'find'){ draw(); return; }
+      if (k === 'reset'){ $('fQ').value=''; $('fKind').value=''; $('fSt').value=''; $('fStd').value=''; draw(); return; }
+      if (k === 'submit'){
+        var h = $('decH').querySelector('input').checked;
+        var no = $('decN').querySelector('input').checked;
+        var ttl = h ? '보완을 요청하시겠습니까' : (no ? '반려하시겠습니까' : '승인하시겠습니까');
+        var lead = h ? '접수번호는 그대로 두고 신청자에게 보완 요청이 전달됩니다. 보완해 다시 내면 같은 건으로 이어집니다.'
+                 : (no ? '이 신청은 종결됩니다. 심사원이 조건을 갖춘 뒤 새 접수번호로 다시 신청해야 합니다.'
+                       : '승인하면 위 「자격 정보」가 그대로 보유 자격이 됩니다.');
+        $('goTitle').textContent = ttl;
+        $('goLead').textContent  = lead;
+        $('goP').setAttribute('data-p', h ? '보완요청' : (no ? '반려' : '승인'));
+        $('goP').textContent = h ? '보완요청' : (no ? '반려' : '승인');
+        $('goM').setAttribute('data-m', (h||no) ? '—' : '유지');
+        $('goM').textContent = (h||no) ? '—' : '유지';
+        $('goNote').textContent = h ? '보완요청에는 관리상태가 생기지 않습니다. 처리현황만 「보완요청」으로 남습니다.'
+                 : (no ? '반려된 건에는 관리상태가 생기지 않습니다. 처리현황만 「반려」로 남습니다.'
+                       : '관리상태는 승인된 뒤에 생깁니다. 이후 정지 · 만료 · 해지는 심사원 상세에서 바꿉니다.');
+        $('goOk').textContent = h ? '보완 요청' : (no ? '반려 처리' : '승인 처리');
+        $('goOk').classList.remove('no','hold'); $('goOk').classList.add('pri');
+        if (h){ $('goOk').classList.remove('pri'); $('goOk').classList.add('hold'); }
+        if (no){ $('goOk').classList.remove('pri'); $('goOk').classList.add('no'); }
+        $('ovGo').hidden = false;
+        return;
+      }
+      if (k === 'goClose'){ $('ovGo').hidden = true; return; }
+      if (k === 'totop'){ window.scrollTo({top:0, behavior:'smooth'}); return; }
+    }
+    var d = up(e.target, 'data-v');
+    if (d){ show(d.getAttribute('data-v')); return; }
+  });
+
+  /* 공통 프레임 */
+  (function(){
+    var dd = $('userDD'), tt = $('totop');
+    document.addEventListener('click', function(e){
+      var w = e.target.closest ? e.target.closest('[data-act="dd"]') : null;
+      if (w){ e.stopPropagation(); if (dd) dd.hidden = !dd.hidden; return; }
+      if (dd && !(e.target.closest && e.target.closest('.dd'))) dd.hidden = true;
+    });
+    if (tt){
+      window.addEventListener('scroll', function(){ tt.classList.toggle('on', window.scrollY > 240); });
+    }
+  })();
+
+  (function(){
+    var gts = document.querySelectorAll('.nav .gt');
+    for (var i=0;i<gts.length;i++){
+      if (gts[i].classList.contains('nokid')) continue;
+      gts[i].addEventListener('click', function(){ this.parentNode.classList.toggle('on'); });
+    }
+  })();
+
+  draw();
+})();
+</script>
+<script>
+/* ⓘ 도움말 — 모달 스크롤 영역에 잘리지 않도록 화면 최상위에 띄웁니다 */
+(function(){
+  var box = document.createElement('div');
+  box.className = 'tipbox'; box.hidden = true;
+  document.body.appendChild(box);
+  function near(t){ return t && t.closest ? t.closest('.ih') : null; }
+  document.addEventListener('mouseover', function(e){
+    var ih = near(e.target); if(!ih) return;
+    var sp = ih.querySelector('span'); if(!sp) return;
+    box.innerHTML = sp.innerHTML;
+    box.hidden = false;
+    var w = Math.min(360, window.innerWidth - 24);
+    box.style.width = w + 'px';
+    var r = ih.getBoundingClientRect();
+    var left = r.left + r.width/2 - w/2;
+    left = Math.max(12, Math.min(left, window.innerWidth - w - 12));
+    box.style.left = left + 'px';
+    var h = box.offsetHeight;
+    var top = r.top - h - 9;
+    if (top < 10) top = r.bottom + 9;
+    box.style.top = top + 'px';
+  });
+  document.addEventListener('mouseout', function(e){
+    if(near(e.target)) box.hidden = true;
+  });
+  window.addEventListener('scroll', function(){ box.hidden = true; }, true);
+})();
+</script>
+</body>
+</html>

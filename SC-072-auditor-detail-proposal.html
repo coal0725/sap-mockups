@@ -315,6 +315,32 @@ dl.kv dd.wide{grid-column:2 / 5}
 .fchip svg{width:11px; height:11px; flex:none; fill:none; stroke:currentColor;
   stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
 .fchip span{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.t .over{color:#B04A3A; font-weight:700}
+.st[data-state="expired"]{background:#F0F0ED; color:#80837C}
+.t .dt1{white-space:nowrap}
+.ev1{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:230px}
+.fcnt{display:inline-flex; align-items:center; gap:4px; height:26px; padding:0 9px;
+  border:1px solid var(--line); border-radius:13px; background:#fff; cursor:pointer;
+  font:inherit; font-size:12px; color:var(--muted); position:relative}
+.fcnt:hover{border-color:var(--navy); color:var(--navy); background:#F7F8FA}
+.fcnt svg{width:11px; height:11px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.fcnt b{font-weight:700; font-size:12px}
+.fcnt.bad{border-color:#E4BCB3; background:#FDF4F2; color:#B04A3A}
+.fcnt.bad:hover{border-color:#B04A3A}
+.fcnt .ex{font-style:normal; font-weight:700; color:#B04A3A; margin-left:1px}
+.fpop{position:fixed; z-index:9998; min-width:250px; max-width:330px; padding:6px;
+  background:#fff; border:1px solid var(--line); border-radius:7px;
+  box-shadow:0 10px 30px rgba(10,14,22,.22)}
+.fpop[hidden]{display:none}
+.fpop a{display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:5px;
+  font-size:12.5px; color:var(--ink); text-decoration:none; cursor:pointer}
+.fpop a:hover{background:#F4F4F1}
+.fpop a svg{width:12px; height:12px; flex:none; fill:none; stroke:var(--muted);
+  stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.fpop a span{flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.fpop .ms{display:flex; align-items:center; gap:8px; padding:8px 10px; margin-top:2px;
+  border-top:1px solid #F0F0EC; font-size:12.5px; color:#B04A3A; font-weight:600}
 .ev2{display:inline-block; margin-left:11px; vertical-align:middle}
 .ev2 .fchip + .fchip{margin-left:6px}
 .miss{display:inline-flex; align-items:center; margin-left:6px; padding:3px 9px;
@@ -432,6 +458,19 @@ input[type=checkbox]{accent-color:var(--navy)}
 .pwmo footer .btn:hover{background:var(--navy-deep); border-color:var(--navy-deep)}
 
 
+/* ───── ⓘ 도움말 ───── */
+.ih{display:inline-flex; width:15px; height:15px; border-radius:50%;
+  border:1px solid #C3C6C0; color:#8E928B; font-size:9.5px; font-weight:700; font-style:normal;
+  align-items:center; justify-content:center; cursor:help; position:relative;
+  vertical-align:middle; margin-left:5px; letter-spacing:0; flex:none}
+.ih:hover{border-color:#1A2A4F; color:#1A2A4F; background:#EEF1F6}
+.ih > span{display:none}
+.tipbox{position:fixed; z-index:9999; padding:12px 14px; border-radius:7px;
+  background:#1C1F22; color:#E4E7EA; font-size:12.5px; font-weight:400; line-height:1.72;
+  letter-spacing:-.1px; text-align:left; pointer-events:none;
+  box-shadow:0 10px 32px rgba(10,14,22,.38); word-break:keep-all}
+.tipbox b{color:#fff; font-weight:700}
+.tipbox[hidden]{display:none}
 </style>
 </head>
 <body data-role="MS">
@@ -462,7 +501,7 @@ input[type=checkbox]{accent-color:var(--navy)}
     <div class="g on">
       <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11h4M19 9v4"/></svg>
         심사원 관리<span class="pm"></span></div>
-       <div class="sub"><a class="on">심사원 계정</a><a>자격 승인</a><a>코드 승인</a></div>
+       <div class="sub"><a class="on">심사원 계정</a><a>자격 · 코드 신청</a></div>
     </div>
     <div class="g">
       <div class="gt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M3 21h18"/></svg>
@@ -652,7 +691,7 @@ input[type=checkbox]{accent-color:var(--navy)}
               <tr>
                 <td><b>ISO 14001:2015</b></td><td>심사원</td><td>PCAA</td>
                 <td class="mono">PC1699</td>
-                <td>2022-03-04</td><td>2028-02-20</td><td class="tr">865일</td><td>2027-02-20</td>
+                <td>2022-03-04</td><td>2027-03-03</td><td class="tr">514일</td><td>2028-03-03</td>
                 <td><button class="fchip" title="PCAA_14001_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>PCAA_14001_자격증.pdf</span></button></td>
                 <td><span class="st" data-state="valid">승인</span></td>
                 <td><span class="st" data-state="valid">유지</span></td>
@@ -664,6 +703,14 @@ input[type=checkbox]{accent-color:var(--navy)}
                 <td><button class="fchip" title="IQCS_45001_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>IQCS_45001_자격증.pdf</span></button></td>
                 <td><span class="st" data-state="wait">검토</span></td>
                 <td class="na">—</td>
+              </tr>
+              <tr>
+                <td><b>ISO 22716:2007</b></td><td>심사원</td><td>IQCS</td>
+                <td class="mono">KR100412</td>
+                <td>2020-08-18</td><td>2026-08-17</td><td class="tr over">−49일</td><td>2026-08-17</td>
+                <td><button class="fchip" title="IQCS_22716_자격증.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>IQCS_22716_자격증.pdf</span></button></td>
+                <td><span class="st" data-state="valid">승인</span></td>
+                <td><span class="st" data-state="expired">만료</span></td>
               </tr>
             </tbody>
           </table>
@@ -688,6 +735,7 @@ input[type=checkbox]{accent-color:var(--navy)}
                 <th colspan="2" class="tc">신청코드</th>
                 <th rowspan="2" style="width:104px">코드부여근거</th>
                 <th rowspan="2">증빙자료</th>
+                <th rowspan="2" style="width:62px" class="tc">첨부</th>
                 <th rowspan="2" style="width:92px">접수일</th>
                 <th rowspan="2" style="width:92px">검토일</th>
                 <th rowspan="2" style="width:92px">승인일</th>
@@ -699,60 +747,15 @@ input[type=checkbox]{accent-color:var(--navy)}
               </tr>
             </thead>
             <tbody>
-              <tr data-row="1">
-                <td>1</td><td><b>ISO 9001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td><b class="cd">18B</b><span class="cn">자동차 부품 제조업</span></td>
-                <td>근무경력</td>
-                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18B_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18B_근무경력_증빙.pdf</span></button></span></td>
-                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr data-row="2">
-                <td>2</td><td><b>ISO 14001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td class="na">—</td>
-                <td>근무경력</td>
-                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_근무경력_증빙.pdf</span></button><button class="fchip" title="18_환경측면_파악.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_환경측면_파악.pdf</span></button></span></td>
-                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr data-row="3">
-                <td>3</td><td><b>ISO 45001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td class="na">—</td>
-                <td>근무경력</td>
-                <td class="muted">8년 8개월 (세일메탈㈜)<span class="ev2"><button class="fchip" title="18_근무경력_증빙.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_근무경력_증빙.pdf</span></button><button class="fchip" title="18_위험성평가.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18_위험성평가.pdf</span></button></span></td>
-                <td>2022-03-14</td><td>2022-03-14</td><td>2022-03-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr data-row="4">
-                <td>4</td><td><b>ISO 9001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td><b class="cd">17A</b><span class="cn">제1차 금속제조업</span></td>
-                <td>자문경력</td>
-                <td class="muted">2회 30일 이상 (선경인더스트리 외)<span class="ev2"><button class="fchip" title="17A_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17A_자문계약서.pdf</span></button></span></td>
-                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr data-row="5">
-                <td>5</td><td><b>ISO 9001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td><b class="cd">17B</b><span class="cn">조립금속제품 제조업</span></td>
-                <td>자문경력</td>
-                <td class="muted">2회 30일 이상 (에스엠와이 외)<span class="ev2"><button class="fchip" title="17B_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17B_자문계약서.pdf</span></button></span></td>
-                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr class="hid" data-row="6">
-                <td>6</td><td><b>ISO 9001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td><b class="cd">18A</b><span class="cn">기계 제조업</span></td>
-                <td>심사경력</td>
-                <td class="muted">3회 3일 이상 (우성에이스 외)<span class="ev2"><button class="fchip" title="18A_심사경력_총괄표.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>18A_심사경력_총괄표.pdf</span></button></span></td>
-                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr class="hid" data-row="7">
-                <td>7</td><td><b>ISO 9001</b></td><td><b class="cd">07</b><span class="cn">펄프, 종이 및 종이제품제조업</span></td><td><b class="cd">07A</b><span class="cn">펄프, 종이 및 종이제품 제조업</span></td>
-                <td>심사경력</td>
-                <td class="muted">3회 5일 이상 (에스엔팩 외)<span class="ev2"><button class="fchip" title="07A_심사경력_총괄표.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>07A_심사경력_총괄표.pdf</span></button></span></td>
-                <td>2022-10-14</td><td>2022-10-14</td><td>2022-10-14</td><td><span class="st" data-state="valid">승인</span></td>
-              </tr>
-              <tr class="hid" data-row="8">
-                <td>8</td><td><b>ISO 14001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td class="na">—</td>
-                <td>자문경력</td>
-                <td class="muted">2회 30일 이상 (선경인더스트리 외)<span class="ev2"><button class="fchip" title="17_자문계약서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>17_자문계약서.pdf</span></button><span class="miss">환경측면 파악 자료 없음</span></span></td>
-                <td>2025-11-02</td><td>2025-11-05</td><td class="na">—</td><td><span class="st" data-state="wait">검토</span></td>
-              </tr>
-              <tr class="hid" data-row="9">
-                <td>9</td><td><b>ISO 9001</b></td><td><b class="cd">24</b><span class="cn">재생업</span></td><td><b class="cd">24A</b><span class="cn">재생용 가공원료 생산업</span></td>
-                <td>학력</td>
-                <td class="muted">화학공학 학사 (○○대)<span class="ev2"><button class="fchip" title="24A_학위증명서.pdf 내려받기"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><span>24A_학위증명서.pdf</span></button></span></td>
-                <td>2025-11-02</td><td class="na">—</td><td class="na">—</td><td><span class="st" data-state="wait">접수</span></td>
-              </tr>
+              <tr data-row="1"><td>1</td><td><b>ISO 9001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td><b class="cd">18B</b><span class="cn">자동차 부품 제조업</span></td><td>근무경력</td><td class="muted ev1">8년 8개월 (세일메탈㈜)</td><td class="tc"><button class="fcnt" data-files="18B_근무경력_증빙.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="2"><td>2</td><td><b>ISO 14001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td class="dt1"><span class="na">—</span></td><td>근무경력</td><td class="muted ev1">8년 8개월 (세일메탈㈜)</td><td class="tc"><button class="fcnt" data-files="18_근무경력_증빙.pdf|18_환경측면_파악.pdf" title="첨부 2건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>2</b></button></td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="3"><td>3</td><td><b>ISO 45001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td class="dt1"><span class="na">—</span></td><td>근무경력</td><td class="muted ev1">8년 8개월 (세일메탈㈜)</td><td class="tc"><button class="fcnt" data-files="18_근무경력_증빙.pdf|18_위험성평가.pdf" title="첨부 2건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>2</b></button></td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td class="dt1">2022-03-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="4"><td>4</td><td><b>ISO 9001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td><b class="cd">17A</b><span class="cn">제1차 금속제조업</span></td><td>자문경력</td><td class="muted ev1">2회 30일 이상 (선경인더스트리 외)</td><td class="tc"><button class="fcnt" data-files="17A_자문계약서.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="5"><td>5</td><td><b>ISO 9001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td><b class="cd">17B</b><span class="cn">조립금속제품 제조업</span></td><td>자문경력</td><td class="muted ev1">2회 30일 이상 (에스엠와이 외)</td><td class="tc"><button class="fcnt" data-files="17B_자문계약서.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="6" class="hid"><td>6</td><td><b>ISO 9001</b></td><td><b class="cd">18</b><span class="cn">기계 및 장비 제조업</span></td><td><b class="cd">18A</b><span class="cn">기계 제조업</span></td><td>심사경력</td><td class="muted ev1">3회 3일 이상 (우성에이스 외)</td><td class="tc"><button class="fcnt" data-files="18A_심사경력_총괄표.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="7" class="hid"><td>7</td><td><b>ISO 9001</b></td><td><b class="cd">07</b><span class="cn">펄프, 종이 및 종이제품제조업</span></td><td><b class="cd">07A</b><span class="cn">펄프, 종이 및 종이제품 제조업</span></td><td>심사경력</td><td class="muted ev1">3회 5일 이상 (에스엔팩 외)</td><td class="tc"><button class="fcnt" data-files="07A_심사경력_총괄표.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td class="dt1">2022-10-14</td><td><span class="st" data-state="valid">승인</span></td></tr>
+              <tr data-row="8" class="hid"><td>8</td><td><b>ISO 14001</b></td><td><b class="cd">17</b><span class="cn">1차 금속 및 금속가공제품 제조업</span></td><td class="dt1"><span class="na">—</span></td><td>자문경력</td><td class="muted ev1">2회 30일 이상 (선경인더스트리 외)</td><td class="tc"><button class="fcnt bad" data-files="17_자문계약서.pdf#환경측면 파악 자료" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b><i class="ex">!</i></button></td><td class="dt1">2025-11-02</td><td class="dt1">2025-11-05</td><td class="dt1"><span class="na">—</span></td><td><span class="st" data-state="wait">검토</span></td></tr>
+              <tr data-row="9" class="hid"><td>9</td><td><b>ISO 9001</b></td><td><b class="cd">24</b><span class="cn">재생업</span></td><td><b class="cd">24A</b><span class="cn">재생용 가공원료 생산업</span></td><td>학력</td><td class="muted ev1">화학공학 학사 (○○대)</td><td class="tc"><button class="fcnt" data-files="24A_학위증명서.pdf" title="첨부 1건"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg><b>1</b></button></td><td class="dt1">2025-11-02</td><td class="dt1"><span class="na">—</span></td><td class="dt1"><span class="na">—</span></td><td><span class="st" data-state="recv">접수</span></td></tr>
             </tbody>
           </table>
 
@@ -1292,7 +1295,7 @@ input[type=checkbox]{accent-color:var(--navy)}
        iss:'2025-02-13', exp:'2028-02-20', rnw:'2028-02-20',
        pr:'승인', mst:'유지', fn:'MCL_9001_자격증.pdf'},
       {std:'ISO 14001:2015', lv:'심사원', org:'PCAA', no:'PC1699',
-       iss:'2022-03-04', exp:'2028-02-20', rnw:'2027-02-20',
+       iss:'2022-03-04', exp:'2027-03-03', rnw:'2028-03-03',
        pr:'승인', mst:'유지', fn:'PCAA_14001_자격증.pdf'},
       {std:'ISO 45001:2018', lv:'심사원보', org:'IQCS', no:'KR100781',
        iss:'2022-03-04', exp:'2027-02-04', rnw:'',
@@ -1582,6 +1585,67 @@ input[type=checkbox]{accent-color:var(--navy)}
     });
     draw();
   })();
+})();
+</script>
+<script>
+/* ⓘ 도움말 — 모달 스크롤 영역에 잘리지 않도록 화면 최상위에 띄웁니다 */
+(function(){
+  var box = document.createElement('div');
+  box.className = 'tipbox'; box.hidden = true;
+  document.body.appendChild(box);
+  function near(t){ return t && t.closest ? t.closest('.ih') : null; }
+  document.addEventListener('mouseover', function(e){
+    var ih = near(e.target); if(!ih) return;
+    var sp = ih.querySelector('span'); if(!sp) return;
+    box.innerHTML = sp.innerHTML;
+    box.hidden = false;
+    var w = Math.min(360, window.innerWidth - 24);
+    box.style.width = w + 'px';
+    var r = ih.getBoundingClientRect();
+    var left = r.left + r.width/2 - w/2;
+    left = Math.max(12, Math.min(left, window.innerWidth - w - 12));
+    box.style.left = left + 'px';
+    var h = box.offsetHeight;
+    var top = r.top - h - 9;
+    if (top < 10) top = r.bottom + 9;
+    box.style.top = top + 'px';
+  });
+  document.addEventListener('mouseout', function(e){
+    if(near(e.target)) box.hidden = true;
+  });
+  window.addEventListener('scroll', function(){ box.hidden = true; }, true);
+})();
+</script>
+<script>
+/* 첨부 팝오버 — 표 안의 파일 목록 */
+(function(){
+  var pop = document.createElement('div');
+  pop.className = 'fpop'; pop.hidden = true;
+  document.body.appendChild(pop);
+  var CLIP = '<svg viewBox="0 0 16 16"><path d="M10.8 5.2L6 10a1.7 1.7 0 0 0 2.4 2.4l5-5a3 3 0 0 0-4.2-4.2l-5 5a4.3 4.3 0 0 0 6 6L14 10"/></svg>';
+  document.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('.fcnt') : null;
+    if (!b){ if(!(e.target.closest && e.target.closest('.fpop'))) pop.hidden = true; return; }
+    var raw = b.getAttribute('data-files') || '';
+    var parts = raw.split('#');
+    var files = parts[0] ? parts[0].split('|') : [];
+    var miss  = parts[1] || '';
+    var h = '';
+    for (var i=0;i<files.length;i++)
+      h += '<a title="내려받기">' + CLIP + '<span>' + files[i] + '</span></a>';
+    if (miss) h += '<div class="ms">' + miss + ' 없음</div>';
+    pop.innerHTML = h;
+    pop.hidden = false;
+    var r = b.getBoundingClientRect();
+    var w = pop.offsetWidth, hh = pop.offsetHeight;
+    var left = Math.min(r.right - w, window.innerWidth - w - 12);
+    pop.style.left = Math.max(12, left) + 'px';
+    var top = r.bottom + 6;
+    if (top + hh > window.innerHeight - 10) top = r.top - hh - 6;
+    pop.style.top = Math.max(10, top) + 'px';
+    e.stopPropagation();
+  });
+  window.addEventListener('scroll', function(){ pop.hidden = true; }, true);
 })();
 </script>
 </body>

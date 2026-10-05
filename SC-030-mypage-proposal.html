@@ -193,6 +193,7 @@ td.num{text-align:right; font-variant-numeric:tabular-nums}
 .sub{font-size:11.5px; color:#A8ACA6}
 .docn{font-variant-numeric:tabular-nums}
 .docn.bad{color:var(--rej-ink); font-weight:700}
+.docn.over{color:var(--rej-ink); font-weight:700}
 .empty{padding:26px; text-align:center; font-size:13px; color:var(--muted)}
 .blk.apply > header h2{font-size:14.5px; font-weight:700}
 .arow{display:flex; align-items:center; gap:14px; padding:9px 0; border-bottom:1px solid #F0F0EC}
@@ -398,6 +399,99 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
   .nav, .gnb, .foot, .totop{display:none !important}
   .body{overflow:visible; max-width:none; padding:0}
 }
+/* ───── 신청 모달 ───── */
+.f[hidden], .curbox[hidden], .emptyq[hidden]{display:none !important}
+.fup{display:flex; align-items:center; gap:9px; padding:7px 9px 7px 12px;
+  border:1px solid var(--line); border-radius:6px; background:#fff}
+.fup .fname{flex:1; min-width:0; font-size:12.5px; color:var(--muted);
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.fup .fname.has{color:var(--ink); font-weight:600}
+.uhint2{font-size:11.5px; color:#9A9C96; margin-top:1px}
+.f .lk{display:inline-flex; align-items:center; gap:5px; font-size:11.5px; color:#9A9C96; margin-top:2px}
+.f .lk svg{width:11px; height:11px; fill:none; stroke:currentColor; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round}
+
+.curbox{margin-top:14px; border:1px solid var(--line); border-radius:6px; overflow:hidden}
+.curbox > b{display:block; padding:9px 13px; background:#FAFAF8; border-bottom:1px solid var(--line);
+  font-size:12px; color:var(--muted); font-weight:600}
+.curbox .rowz{display:flex; justify-content:space-between; gap:12px; padding:8px 13px;
+  font-size:13px; border-bottom:1px solid #F2F2EE}
+.curbox .rowz:last-child{border-bottom:0}
+.curbox .rowz span{color:var(--muted)}
+.curbox .rowz em{font-style:normal; font-weight:600}
+
+.emptyq{margin-top:14px; padding:22px; border:1px dashed var(--line); border-radius:6px;
+  text-align:center; font-size:13px; color:var(--muted); line-height:1.7}
+
+table.mtb{width:100%; border-collapse:collapse; font-size:13px}
+table.mtb th{background:#FAFAF8; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:9px 10px; text-align:left; font-size:11.5px; color:var(--muted); font-weight:600; white-space:nowrap}
+table.mtb th .req{color:#B04A3A; margin-left:2px}
+table.mtb td{border-bottom:1px solid #F0F0EC; padding:7px 10px; vertical-align:middle}
+table.mtb td.no{color:#9A9C96; font-size:12.5px}
+table.mtb select, table.mtb input{font:inherit; font-size:12.5px; padding:6px 8px; border-radius:5px;
+  border:1px solid var(--line); background:#fff; width:100%; color:var(--ink)}
+table.mtb select:focus, table.mtb input:focus{outline:2px solid var(--navy-soft); border-color:var(--navy)}
+table.mtb select[disabled]{background:#F4F4F1; color:#9A9C96}
+table.mtb .rm{width:24px; height:24px; border:1px solid var(--line); border-radius:5px;
+  background:#fff; color:var(--muted); cursor:pointer; font-size:14px; line-height:1}
+table.mtb .rm:hover{border-color:#B04A3A; color:#B04A3A}
+table.mtb .pill{display:inline-block; padding:2px 8px; border-radius:10px; font-size:11px; font-weight:600}
+table.mtb tr.ahp{cursor:pointer}
+table.mtb tr.ahp:hover{background:#FBFBF9}
+table.mtb tr.ahp .cv3{display:inline-block; width:11px; color:var(--muted); font-size:9px}
+table.mtb tr.ahc > td{background:#FAFAF8; border-bottom:1px solid #F0F0EC}
+table.mtb td.sub3{font-size:12px; color:var(--muted)}
+.fup.sm2{padding:3px 4px 3px 8px; gap:5px; border-radius:5px}
+.fup.sm2 .fname{font-size:11.5px}
+.fup.sm2.xt{margin-top:4px; border-style:dashed}
+table.mtb td.tar{text-align:right}
+.askbox{border:1px solid #E4BCB3; background:#FDF4F2; border-radius:7px; padding:13px 15px}
+.askbox > b{display:block; font-size:12px; color:#B04A3A; font-weight:700; margin-bottom:6px}
+.askbox p{margin:0; font-size:13.5px; color:var(--ink); line-height:1.65}
+.askbox span{display:block; margin-top:7px; font-size:11.5px; color:#9A8A86}
+.ahnote{margin:12px 0 0; font-size:12px; color:var(--muted); line-height:1.7}
+.addrow{display:block; width:100%; margin-top:10px; padding:9px; border:1px dashed var(--line);
+  border-radius:6px; background:#fff; color:var(--muted); font:inherit; font-size:12.5px; cursor:pointer}
+.addrow:hover{border-color:var(--navy); color:var(--navy)}
+
+/* ───── ⓘ 도움말 ───── */
+.ih{display:inline-flex; width:15px; height:15px; border-radius:50%;
+  border:1px solid #C3C6C0; color:#8E928B; font-size:9.5px; font-weight:700; font-style:normal;
+  align-items:center; justify-content:center; cursor:help; position:relative;
+  vertical-align:middle; margin-left:5px; letter-spacing:0; flex:none}
+.ih:hover{border-color:#1A2A4F; color:#1A2A4F; background:#EEF1F6}
+.ih > span{display:none}
+.tipbox{position:fixed; z-index:9999; padding:12px 14px; border-radius:7px;
+  background:#1C1F22; color:#E4E7EA; font-size:12.5px; font-weight:400; line-height:1.72;
+  letter-spacing:-.1px; text-align:left; pointer-events:none;
+  box-shadow:0 10px 32px rgba(10,14,22,.38); word-break:keep-all}
+.tipbox b{color:#fff; font-weight:700}
+.tipbox[hidden]{display:none}
+
+/* 심사원보는 자격 · 코드 블록이 없습니다 */
+body[data-role="PA"] .qc, body[data-role="PA"] .edu, body[data-role="PA"] .rpt{display:none !important}
+/* 관리자 · 마스터관리자는 안내 띠와 바로가기가 없습니다 */
+body[data-role="MN"] .flag, body[data-role="MS"] .flag,
+body[data-role="MN"] .blk.sum, body[data-role="MS"] .blk.sum{display:none !important}
+/* 관리자는 신청이 아니라 직접 입력합니다 */
+.acts .adm{display:none}
+.acts .aud, .acts .adm{display:flex; gap:7px}
+.admonly{display:none}
+body[data-role="MN"] .admonly, body[data-role="MS"] .admonly{display:flex}
+.acts .adm{display:none}
+body[data-role="MN"] .acts .aud, body[data-role="MS"] .acts .aud{display:none}
+body[data-role="MN"] .acts .adm, body[data-role="MS"] .acts .adm{display:flex}
+/* 관리자 화면에서는 처리현황 열을 쓰지 않습니다 */
+body[data-role="MN"] .blk.qc .pcol, body[data-role="MS"] .blk.qc .pcol{display:none}
+
+.rdemo{position:fixed; left:0; right:0; bottom:0; z-index:95; background:#1C1F22;
+  padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:7px; flex-wrap:wrap}
+.rdemo span{color:#8B8F93; font-size:12px; margin-right:6px}
+.rdemo button{padding:7px 14px; border:1px solid #3A3E42; border-radius:4px;
+  background:#2A2E32; color:#D7DADD; font-size:12.5px; cursor:pointer}
+.rdemo button.on{background:#fff; color:#1C1F22; border-color:#fff; font-weight:600}
+body{padding-bottom:58px}
+@media print{ .rdemo{display:none} }
 </style>
 </head>
 <body>
@@ -435,7 +529,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
         </div>
         <ul class="sub">
           <li>심사 일정</li>
-          <li>심사 보고서</li>
+          <li class="rpt">심사 보고서</li>
         </ul>
       </li>
       <li>
@@ -460,22 +554,22 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
         <p>본인 정보와 등록된 자격 · 코드를 한 화면에서 확인합니다. 각 목록은 행을 선택하면 상세가 열립니다.</p>
       </div>
 
-      <div class="flag">
+      <div class="flag qc">
         <span>⚠</span>
-        <div><b>ISO 14001 자격이 27일 후 만료됩니다.</b> 자격 등록에서 갱신을 신청해 주십시오.</div>
+        <div class="qcmsg"><b>보완을 요청받은 신청이 1건 있습니다.</b> 자격 등록의 「신청 내역」에서 보완해 다시 제출해 주십시오.<br><b>ISO 14001 자격이 27일 후 만료됩니다.</b> 자격 등록에서 갱신을 신청해 주십시오.</div>
       </div>
 
       <section class="blk sum">
         <div class="cards">
-          <a class="card" title="→ 자격 신청 현황" onclick="return false">
+          <a class="card qc" title="→ 자격 신청 현황" onclick="return false">
             <span class="c-t">자격 신청</span>
             <span class="c-n">1<i>건</i></span>
           </a>
-          <a class="card" title="→ 코드 신청 현황" onclick="return false">
+          <a class="card qc" title="→ 코드 신청 현황" onclick="return false">
             <span class="c-t">코드 신청</span>
             <span class="c-n">2<i>건</i></span>
           </a>
-          <a class="card on" title="→ 심사보고서 조회 목록" onclick="return false">
+          <a class="card rpt" on" title="→ 심사보고서 조회 목록" onclick="return false">
             <span class="c-t">보고서 작성</span>
             <span class="c-n">1<i>건</i></span>
           </a>
@@ -515,7 +609,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
             <dt>이름 (국문)</dt><dd>장은수</dd>
             <dt>이름 (영문)</dt><dd>JANG EUNSOO</dd>
             <dt>로그인 ID</dt><dd>test_A</dd>
-            <dt>권한등급</dt><dd>심사원</dd>
+            <dt>권한등급</dt><dd id="myRole">심사원</dd>
             <dt>생년월일</dt><dd>1996-00-00 <span class="lun">음력</span></dd>
             <dt>가입일</dt><dd>2026-10-04</dd>
             <dt>휴대전화</dt><dd>010-0000-0000</dd>
@@ -566,7 +660,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
       </section>
 
       <!-- 3 학력 경력 자격증 -->
-      <section class="blk new">
+      <section class="blk edu" new">
         <header>
           <span class="n">3</span><h2>학력 · 경력 · 자격증</h2>
           <div class="acts"><button class="fold" data-act="fold" data-k="b3">학력 2 · 경력 2 · 자격증 1<i class="cv2">▾</i></button></div>
@@ -606,12 +700,17 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
       </section>
 
       <!-- 4 자격 등록 -->
-      <section class="blk">
+      <section class="blk qc">
         <header><span class="n">4</span><h2>자격 등록</h2>
           <div class="acts">
-            <button class="btn">신청 내역</button>
-            <button class="btn">갱신 신청</button>
-            <button class="btn pri">신규 신청</button>
+            <span class="aud">
+              <button class="btn" data-act="ahist" data-k="q">신청 내역</button>
+              <button class="btn" data-act="qren">갱신 신청</button>
+              <button class="btn pri" data-act="qnew">신규 신청</button>
+            </span>
+            <span class="adm">
+              <button class="btn pri" data-act="qnew"><svg class="pen" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.2a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 2.6 13.4l.5-3z"/><path d="M10.4 3.1l2.5 2.5"/></svg>수정</button>
+            </span>
           </div>
         </header>
         <div style="overflow-x:auto">
@@ -642,8 +741,15 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
               <td><b>ISO 14001:2015</b></td><td>심사원보</td><td>PCAA</td>
               <td class="docn">PC1699</td>
               <td>2023-11-02</td><td>2026-11-01</td>
-              <td class="num docn bad">27일</td><td>2026-01-15</td>
-              <td><span class="pill ok">승인</span></td><td><span class="pill warn">갱신 필요</span></td>
+              <td class="num docn bad">27일</td><td>2026-11-02</td>
+              <td><span class="pill ok">승인</span></td><td><span class="pill ok">유지</span></td>
+            </tr>
+            <tr>
+              <td><b>ISO 22716:2007</b></td><td>심사원</td><td>IQCS</td>
+              <td class="docn">KR100412</td>
+              <td>2020-08-18</td><td>2026-08-17</td>
+              <td class="num docn over">−49일</td><td>2026-08-17</td>
+              <td><span class="pill ok">승인</span></td><td><span class="pill">만료</span></td>
             </tr>
           </tbody>
         </table>
@@ -651,11 +757,16 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
       </section>
 
       <!-- 5 코드 등록 -->
-      <section class="blk">
+      <section class="blk qc">
         <header><span class="n">5</span><h2>코드 등록</h2>
           <div class="acts">
-            <button class="btn">신청 내역</button>
-            <button class="btn pri">신규 신청</button>
+            <span class="aud">
+              <button class="btn" data-act="ahist" data-k="c">신청 내역</button>
+              <button class="btn pri" data-act="cnew">신규 신청</button>
+            </span>
+            <span class="adm">
+              <button class="btn pri" data-act="cnew"><svg class="pen" viewBox="0 0 16 16" aria-hidden="true"><path d="M11.3 2.2a1.1 1.1 0 0 1 1.6 0l.9.9a1.1 1.1 0 0 1 0 1.6L5.6 12.9 2.6 13.4l.5-3z"/><path d="M10.4 3.1l2.5 2.5"/></svg>수정</button>
+            </span>
           </div>
         </header>
         <div style="overflow-x:auto">
@@ -727,7 +838,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
               </div>
               <div class="f"><label>이름 (영문)</label><input value="JANG EUNSOO" disabled></div>
               <div class="f"><label>로그인 ID</label><input value="test_A" disabled></div>
-              <div class="f"><label>권한등급</label><input value="심사원" disabled></div>
+              <div class="f"><label>권한등급</label><input id="myRole2" value="심사원" disabled></div>
               <div class="f">
                 <label>생년월일</label>
                 <div class="bd">
@@ -872,10 +983,163 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
 
 
 
+
+<!-- ═══ 자격 신규 신청 ═══ -->
+<div class="ov" id="ovQNew" hidden data-ovbg>
+  <div class="mo" style="max-width:640px !important">
+    <header><span class="std">자격 신규 신청</span></header>
+    <div class="sc" style="padding:18px 22px 20px">
+      <div class="grid" id="qnGrid" style="grid-template-columns:1fr">
+        <div class="f"><label>자격표준<span class="req">*</span></label><select id="qnStd"></select></div>
+        <div class="f admonly"><label>자격등급<span class="req">*</span></label><select id="qnLv"></select></div>
+        <div class="f admonly"><label>자격인증기관<span class="req">*</span></label><input id="qnOrg" placeholder="예: MCL · PCAA · IQCS"></div>
+        <div class="f admonly"><label>자격증번호</label><input id="qnNo" placeholder="자격증의 Qualification No"></div>
+        <div class="f admonly"><label>발행일<span class="req">*</span></label><input class="dt" id="qnIs" placeholder="0000-00-00"></div>
+        <div class="f admonly"><label>만료일<span class="req">*</span></label><input class="dt" id="qnEx" placeholder="0000-00-00"></div>
+        <div class="f admonly"><label>갱신일<span class="req">*</span></label><input class="dt" id="qnRn" placeholder="0000-00-00"></div>
+        <div class="f"><label>자격증<span class="req">*</span>
+          <i class="ih r">i<span><b>자격증에 적힌 등급 · 기관 · 번호 · 날짜는 인증원이 읽어 입력합니다.</b>
+            직접 적지 않으셔도 됩니다. PDF · 30MB 이하.</span></i></label>
+          <div class="fup"><span class="fname" id="qnFn">선택된 파일이 없습니다</span><button class="btn" id="qnPick">파일 선택</button></div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" id="qnGo" data-act="close" disabled>신청</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ═══ 자격 갱신 신청 ═══ -->
+<div class="ov" id="ovQRen" hidden data-ovbg>
+  <div class="mo" style="max-width:560px !important">
+    <header><span class="std">자격 갱신 신청</span></header>
+    <div class="sc" style="padding:18px 22px 20px">
+      <div class="grid" style="grid-template-columns:1fr">
+        <div class="f"><label>갱신 대상<span class="req">*</span>
+          <i class="ih r">i<span><b>갱신은 자격 행을 새로 만들지 않습니다.</b>
+            같은 자격의 만료일과 갱신일을 고쳐 쓰므로 심사팀 배정에서 어느 행을 볼지 헷갈리지 않습니다.</span></i></label>
+          <select id="qrPick"></select></div>
+      </div>
+      <div id="qrCur" class="curbox" hidden>
+        <b>현재 등록된 내용</b>
+        <div class="rowz"><span>자격표준</span><em id="qrS1">—</em></div>
+        <div class="rowz"><span>자격등급</span><em id="qrS2">—</em></div>
+        <div class="rowz"><span>자격인증기관</span><em id="qrS3">—</em></div>
+        <div class="rowz"><span>자격증번호</span><em id="qrS4">—</em></div>
+        <div class="rowz"><span>발행일</span><em id="qrS5">—</em></div>
+        <div class="rowz"><span>만료일</span><em id="qrS6">—</em></div>
+        <div class="rowz"><span>갱신일</span><em id="qrS7">—</em></div>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr; margin-top:15px">
+        <div class="f"><label>갱신된 자격증<span class="req">*</span>
+          <i class="ih r">i<span>새 만료일과 갱신일은 인증원이 자격증을 읽어 입력합니다. PDF · 30MB 이하.</span></i></label>
+          <div class="fup"><span class="fname" id="qrFn">선택된 파일이 없습니다</span><button class="btn" id="qrPickF">파일 선택</button></div>
+        </div>
+      </div>
+      <div class="emptyq" id="qrNone" hidden>승인된 자격이 없어 갱신할 대상이 없습니다.</div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" id="qrGo" data-act="close" disabled>신청</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ═══ 코드 신규 신청 ═══ -->
+<div class="ov" id="ovCNew" hidden data-ovbg>
+  <div class="mo" style="max-width:1000px !important">
+    <header><span class="std">코드 신규 신청</span></header>
+    <div class="sc" style="padding:16px 22px 20px">
+      <div class="reqnote"><b>*</b> 표시는 필수 항목입니다.
+        <i class="ih">i<span><b>신청은 코드마다 따로 접수됩니다.</b> 한 화면에서 함께 제출해도 접수번호는 코드 수만큼 발급됩니다.
+          근거가 둘 이상이면 행을 나눠 각각 신청해 주십시오.</span></i></div>
+      <div style="overflow-x:auto">
+                  <table class="mtb">
+            <thead><tr>
+            <th style="width:38px">No.</th>
+            <th style="width:112px">표준<span class="req">*</span></th>
+            <th>신청코드 대분류<span class="req">*</span></th>
+            <th>신청코드 세분류</th>
+            <th style="width:104px">코드부여근거<span class="req">*</span></th>
+            <th style="width:150px">증빙자료</th>
+            <th style="width:230px">증빙서류<span class="req">*</span>
+              <i class="ih r">i<span><b>증빙은 코드마다 따로 붙입니다.</b>
+                같은 경력증명서로 여러 코드를 신청하려면 코드마다 같은 파일을 붙여 주십시오.
+                같은 서류라도 산업군에 따라 근거가 되기도 하고 되지 않기도 합니다.
+                ISO 14001 은 환경측면 파악 자료가, ISO 45001 은 위험성 평가 자료가 함께 있어야 합니다.</span></i></th>
+            <th style="width:34px"></th>
+          </tr></thead><tbody id="cnBody"></tbody>
+        </table>
+      </div>
+      <button class="addrow" id="cnAdd">＋ 행 추가</button>
+
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" id="cnGo" data-act="close" disabled>신청</button>
+    </footer>
+  </div>
+</div>
+
+
+<!-- ═══ 보완 제출 ═══ -->
+<div class="ov" id="ovFix" hidden data-ovbg>
+  <div class="mo" style="max-width:560px !important">
+    <header><span class="std">보완 제출</span><span class="lv docn" id="fxAcc">QA-20260902-0004</span></header>
+    <div class="sc" style="padding:18px 22px 20px">
+      <div class="askbox">
+        <b>보완 요청 사항</b>
+        <p id="fxMsg">자격증 사본이 흐려 자격증번호를 읽을 수 없습니다</p>
+        <span id="fxWhen">2026-09-05 · 삼성표준인증원</span>
+      </div>
+      <div class="grid" style="grid-template-columns:1fr; margin-top:15px">
+        <div class="f"><label>신청 내용</label><input id="fxWhat" value="" readonly></div>
+        <div class="f"><label>다시 낼 서류<span class="req">*</span>
+          <i class="ih r">i<span>접수번호는 그대로입니다. 새로 올린 서류로 바뀌고 처리현황이 「검토」로 돌아갑니다.</span></i></label>
+          <div class="fup"><span class="fname" id="fxFn">선택된 파일이 없습니다</span><button class="btn" id="fxPick">파일 선택</button></div>
+        </div>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" id="fxGo" data-act="close" disabled>보완 제출</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ═══ 신청 내역 ═══ -->
+<div class="ov" id="ovAppH" hidden data-ovbg>
+  <div class="mo" style="max-width:940px !important">
+    <header><span class="std" id="ahTitle">자격 신청 내역</span></header>
+    <div class="sc" style="padding:14px 22px 20px">
+      <div style="overflow-x:auto">
+        <table class="mtb">
+          <thead><tr>
+            <th style="width:148px">접수번호</th>
+            <th style="width:84px">신청유형</th>
+            <th style="width:124px">표준</th>
+            <th>신청 내용</th>
+            <th style="width:92px">신청일</th>
+            <th style="width:76px">처리현황</th>
+            <th>반려 사유</th>
+            <th style="width:92px"></th>
+          </tr></thead>
+          <tbody id="ahBody"></tbody>
+        </table>
+      </div>
+      <p class="ahnote">신청 내역은 쌓입니다. 승인된 건은 위 표에 그대로 등록됩니다.
+        <i class="ih dn">i<span id="ahTipTx"><b>보완요청</b>은 같은 접수번호로 다시 내시면 되고, <b>반려</b>는 조건을 갖춘 뒤 새로 신청하셔야 합니다.</span></i></p>
+    </div>
+    <footer><button class="btn pri" data-act="close">닫기</button></footer>
+  </div>
+</div>
+
 <script>
 (function(){
   'use strict';
-  var OVS=['ovEdit1','ovOrg','ovHist','ovPw'];
+  var OVS=['ovEdit1','ovOrg','ovHist','ovPw','ovQNew','ovQRen','ovCNew','ovAppH','ovFix'];
   var VIEW=[];
   function $(id){ return document.getElementById(id); }
   function hideAll(list){ for(var i=0;i<list.length;i++){ var el=$(list[i]); if(el) el.hidden=true; } }
@@ -964,6 +1228,11 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     else if(a==='dd'){ e.stopPropagation(); if(dd) dd.hidden=!dd.hidden; }
     else if(a==='addrow'){ addRow(); }
     else if(a==='rmrow'){ var tr=t.parentNode; while(tr && tr.tagName!=='TR') tr=tr.parentNode; if(tr) tr.parentNode.removeChild(tr); sync(); }
+    else if(a==='qnew'){ hideAll(OVS); $('ovQNew').hidden=false; }
+    else if(a==='qren'){ hideAll(OVS); $('ovQRen').hidden=false; }
+    else if(a==='cnew'){ hideAll(OVS); $('ovCNew').hidden=false; }
+    else if(a==='ahist'){ hideAll(OVS); if(window.__ahOpen) window.__ahOpen(k); $('ovAppH').hidden=false; }
+    else if(a==='fix'){ hideAll(OVS); if(window.__fxOpen) window.__fxOpen(k, parseInt(t.getAttribute('data-i'),10)); $('ovFix').hidden=false; }
     else if(a==='totop'){ window.scrollTo({top:0, behavior:'smooth'}); }
   });
 
@@ -1032,8 +1301,334 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     if(v.length>6) o+='-'+v.slice(6,8);
     e.target.value=o;
   });
+
+  /* ═══════ 자격 · 코드 신청 ═══════ */
+  (function(){
+var STDM = [
+      {cd:'ISO 9001',  ver:'2026', nm:'품질경영시스템',     code:true,  sub:true,  acc:'KAB', st:'유효'},
+      {cd:'ISO 9001',  ver:'2015', nm:'품질경영시스템',     code:true,  sub:true,  acc:'KAB', st:'전환기간'},
+      {cd:'ISO 14001', ver:'2015', nm:'환경경영시스템',     code:true,  sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 45001', ver:'2018', nm:'안전보건경영시스템', code:true,  sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 27001', ver:'2022', nm:'정보보호경영시스템', code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 37001', ver:'2016', nm:'부패방지경영시스템', code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 22716', ver:'2007', nm:'화장품 GMP',         code:false, sub:false, acc:'KAB', st:'유효'},
+      {cd:'ISO 22000', ver:'2018', nm:'식품안전경영시스템', code:false, sub:false, acc:'KAB', st:'미운영'}
+    ];
+    function stdLive(){ return STDM.filter(function(m){ return m.st !== '미운영' && m.st !== '폐지'; }); }
+    /* 자격은 판까지 구분합니다 */
+    var QSTD = stdLive().map(function(m){ return m.cd + ':' + m.ver; });
+    /* 코드는 판과 무관하므로 표준 단위로만 봅니다 */
+    var CSTD = stdLive().filter(function(m){ return m.code; })
+                        .map(function(m){ return m.cd; })
+                        .filter(function(v,i,a){ return a.indexOf(v) === i; });
+    function hasSub(cd){
+      for (var i=0;i<STDM.length;i++) if (STDM[i].cd === cd) return STDM[i].sub;
+      return false;
+    }
+    var LV   = ['심사원보','심사원','선임심사원','검증심사원'];
+    var MST  = ['유지','정지','만료','해지'];
+    var BASIS= ['학력','근무경력','심사경력','자문경력','자격증'];
+    /* SSR-P-902 인증수행범위 · 세분류 (대분류 35 · 세분류 74) */
+    var CODES = {
+      '03':{nm:'음식료 및 담배 제조업',sub:[['03A','음식료품 제조업'],['03B','담배 제조업']]},
+      '04':{nm:'섬유 및 섬유제품 제조업',sub:[['04A','섬유제품제조업'],['04B','섬유염색 및 가공업'],['04C','봉제의복 및 모피제품제조업']]},
+      '05':{nm:'가죽 및 가죽제품 제조업',sub:[['05A','가죽제조업'],['05B','가방,핸드백 및기타 가죽제품 제조업'],['05C','신발제조업']]},
+      '06':{nm:'목재 및 목재제품 제조업',sub:[['06A','목재'],['06B','목재제품']]},
+      '07':{nm:'펄프, 종이 및 종이제품제조업',sub:[['07A','펄프, 종이 및 종이제품 제조업'],['07B','(11)1710(펄프제조,원지)']]},
+      '09':{nm:'인쇄업',sub:[['09A','인쇄업 및 기록매체 복제업']]},
+      '10':{nm:'코크스, 연탄 및 석유정제품 제조업',sub:[['10A','코크스제조 및 석유 정제품']]},
+      '12':{nm:'화학물질, 화학제품 및 화학섬유 제조업',sub:[['12A','화학물질 제조업'],['12B','화학제품 제조업']]},
+      '13':{nm:'의료용 물질 및 의약품 제조업',sub:[['13A','의약품 제조업'],['13B','의료용품 제조업']]},
+      '14':{nm:'고무제품 및 플라스틱제품 제조업',sub:[['14A','고무제품 제조업'],['14B','플라스틱제품 제조업']]},
+      '15':{nm:'비금속 광물제품 제조업',sub:[['15A','유리, 요업, 기타 비금속광물 제품 제조업']]},
+      '16':{nm:'콘크리트, 시멘트, 석회및 플라스터 등 제조업',sub:[['16A','시멘트, 석회, 플라스터 제품 제조업']]},
+      '17':{nm:'1차 금속 및 금속가공제품 제조업',sub:[['17A','제1차 금속제조업'],['17B','조립금속제품 제조업']]},
+      '18':{nm:'기계 및 장비 제조업',sub:[['18A','기계 제조업'],['18B','자동차 부품 제조업']]},
+      '19':{nm:'전기기기 및 광학기기 제조업',sub:[['19A','컴퓨터 및 가정용 기기제조업'],['19B','전자부품, 영상, 음향,통신 장비제조업'],['19C','의료용 기기 제조업'],['19D','안경, 및 안경렌즈, 광학요소 제조업'],['19E','수리업(전기,전자,정밀 기기,통신장비)']]},
+      '20':{nm:'조선업',sub:[['20A','선박 및 보트 건조업']]},
+      '21':{nm:'항공기 제조업',sub:[['21A','항공기 제조업']]},
+      '22':{nm:'기타 운송장비 제조업',sub:[['22A','자동차 및 트레일러 제조업'],['22B','철도장비 제조업'],['22C','그외 기타 운송장비']]},
+      '23':{nm:'기타 제조업',sub:[['23A','가구 제조업'],['23B','악기 제조업'],['23C','운동 및 경기용구 제조업'],['23D','기타 제조업']]},
+      '24':{nm:'재생업',sub:[['24A','재생용 가공원료 생산업']]},
+      '25':{nm:'전기공급업',sub:[['25A','전기업']]},
+      '26':{nm:'연료용 가스 공급업',sub:[['26A','연료용 가스 공급업']]},
+      '27':{nm:'수도 및 증기 공급업',sub:[['27A','증기 및 온수 공급업'],['27B','수도사업']]},
+      '28':{nm:'건설업',sub:[['28A','건물 건설업'],['28B','토목건설업, 토목시설물 건설관련 전문공사업'],['28C','건축물 축조, 전기 및 통신, 마무리 공사업'],['28D','건물설치 공사업'],['28E','건설장비 운영,시설물 유지관리업']]},
+      '29':{nm:'도소매업, 자동차, 오토바이 수리, 개인 및가정용품 수리',sub:[['29A','도소매업'],['29B','수리업(가정용품)']]},
+      '30':{nm:'숙박업, 음식점업 및 주점업',sub:[['30A','숙박업'],['30B','음식점업']]},
+      '31':{nm:'운송업, 창고업 및 통신업',sub:[['31A','육상, 수상, 항공운송 및 파이프라인 운송업'],['31B','여행알선,창고 및 운송관련 서비스업'],['31C','통신업']]},
+      '32':{nm:'금융업, 보험업, 부동산업 및 임대업',sub:[['32A','금융 및 보험업'],['32B','부동산'],['32C','임대업']]},
+      '33':{nm:'정보기술업',sub:[['33A','컴퓨터시스템 설계 및운영관련업'],['33B','소프트웨어 개발, 프로그래밍, 자료처리, 온라인 정보제공업']]},
+      '34':{nm:'전문, 과학 및 기술 서비스업',sub:[['34A','자연과학 연구개발, 건축기술 및 엔지니어링 서비스업'],['34B','인문 및 사회과학 연구개발']]},
+      '35':{nm:'기타 서비스업',sub:[['35A','법무 및 경영상담업 관련 서비스업'],['35C','광고업 및 기타 서비스업']]},
+      '36':{nm:'공공행정',sub:[['36A','공공행정']]},
+      '37':{nm:'교육서비스업',sub:[['37A','교육서비스업']]},
+      '38':{nm:'보건업 및 사회복지서비스업',sub:[['38A','병원, 의원, 공중보건의료업'],['38B','수의업'],['38C','사회복지서비스업']]},
+      '39':{nm:'기타 사회 서비스업',sub:[['39A','오락, 문화 및 운동관련서비스업'],['39B','폐기물 처리업'],['39C','개인 서비스업 및 국제외국기관']]}
+    };
+    var LV2 = ['심사원보','심사원','선임심사원','검증심사원'];
+    var BASIS2 = ['학력','근무경력','심사경력','자문경력','자격증'];
+    var REQ2 = {
+      'ISO 14001':['환경측면 파악 자료', '환경 주요공정과 환경측면을 확인할 수 있는 자료'],
+      'ISO 45001':['위험성 평가 자료',   '공정별 위험성 평가 결과를 확인할 수 있는 자료']
+    };
+    function live(){ return STDM.filter(function(m){ return m.st!=='미운영' && m.st!=='폐지'; }); }
+    function qstd(){ return live().map(function(m){ return m.cd+':'+m.ver; }); }
+    function cstd(){ var a=live().filter(function(m){return m.code;}).map(function(m){return m.cd;});
+      return a.filter(function(v,i,r){ return r.indexOf(v)===i; }); }
+    function subOn(cd){ for(var i=0;i<STDM.length;i++) if(STDM[i].cd===cd) return STDM[i].sub; return false; }
+    function opt(list, cur, ph){
+      var h='<option value="">'+(ph||'선택')+'</option>';
+      for(var i=0;i<list.length;i++){
+        var v=list[i], t=v;
+        if (v instanceof Array){ v=list[i][0]; t=list[i][1]; }
+        h+='<option value="'+v+'"'+(v===cur?' selected':'')+'>'+t+'</option>';
+      }
+      return h;
+    }
+
+    /* ── 자격 신규 ── */
+    var qs=$('qnStd');
+    if(qs) qs.innerHTML = opt(qstd(), '', '표준을 고르십시오');
+    var ql=$('qnLv');
+    if(ql) ql.innerHTML = opt(LV2, '', '등급을 고르십시오');
+
+    /* ── 보유 자격 (갱신 대상) ── */
+    var HELD = [
+      ['ISO 9001:2015','심사원','MCL','MCL-QMS-A-2022','2025-02-13','2028-02-20','2028-02-20'],
+      ['ISO 14001:2015','심사원보','PCAA','PC1699','2023-11-02','2026-11-01','2026-11-02']
+    ];
+    var qp=$('qrPick');
+    if(qp){
+      if(!HELD.length){ $('qrNone').hidden=false; }
+      else {
+        var ls=[]; for(var i=0;i<HELD.length;i++) ls.push([String(i), HELD[i][0]+' · '+HELD[i][1]]);
+        qp.innerHTML = opt(ls, '', '갱신할 자격을 고르십시오');
+      }
+    }
+    function qrShow(){
+      var v=$('qrPick').value, box=$('qrCur');
+      if(v===''){ box.hidden=true; return; }
+      var d=HELD[parseInt(v,10)];
+      box.hidden=false;
+      for(var i=1;i<=7;i++) $('qrS'+i).textContent = d[i-1];
+    }
+
+    /* ── 코드 신규 ── */
+    var CN=[{std:'',big:'',sub:'',bs:'',ev:'',f:'',f2:''}];
+    function bigOpt(cur){
+      var h='<option value="">대분류 선택</option>';
+      for(var k in CODES) h+='<option value="'+k+'"'+(k===cur?' selected':'')+'>'+k+' '+CODES[k].nm+'</option>';
+      return h;
+    }
+    function subOpt(big, cur, on){
+      if(!on) return '<option value="">해당없음</option>';
+      var h='<option value="">세분류 선택</option>';
+      if(big && CODES[big]){ var s=CODES[big].sub;
+        for(var i=0;i<s.length;i++) h+='<option value="'+s[i][0]+'"'+(s[i][0]===cur?' selected':'')+'>'+s[i][0]+' '+s[i][1]+'</option>'; }
+      return h;
+    }
+    function cnDraw(){
+      var h='';
+      for(var i=0;i<CN.length;i++){
+        var d=CN[i], on=subOn(d.std), rq=REQ2[d.std];
+        h+='<tr data-ci="'+i+'">'
+          +'<td class="no">'+(i+1)+'</td>'
+          +'<td><select class="cns">'+opt(cstd(), d.std, '표준 선택')+'</select></td>'
+          +'<td><select class="cnb"'+(d.std?'':' disabled')+'>'+bigOpt(d.big)+'</select></td>'
+          +'<td><select class="cnu"'+(on && d.big ?'':' disabled')+'>'+subOpt(d.big, d.sub, on)+'</select></td>'
+          +'<td><select class="cnr">'+opt(BASIS2, d.bs, '근거 선택')+'</select></td>'
+          +'<td><input class="cne" value="'+(d.ev||'')+'" placeholder="예: 8년 8개월"></td>'
+          +'<td><div class="fup sm2"><span class="fname'+(d.f?' has':'')+'">'
+              +(d.f||'선택된 파일이 없습니다')+'</span>'
+              +'<button class="btn sm cnf" data-ci="'+i+'">'+(d.f?'변경':'파일')+'</button></div>'
+          + (rq ? '<div class="fup sm2 xt"><span class="fname'+(d.f2?' has':'')+'">'
+                   +(d.f2||rq[0])+'</span>'
+                   +'<button class="btn sm cnf2" data-ci="'+i+'">'+(d.f2?'변경':'파일')+'</button></div>'
+                   +'<span class="uhint2">'+rq[0]+'가 함께 있어야 합니다</span>' : '')
+          +'</td>'
+          +'<td><button class="rm" data-act="cnrm" data-ci="'+i+'">\u2212</button></td>'
+          +'</tr>';
+      }
+      $('cnBody').innerHTML=h;
+      var ok = CN.length>0;
+      for(var j=0;j<CN.length;j++){
+        var c=CN[j];
+        if(!(c.std && c.big && c.bs && c.f)){ ok=false; break; }
+        if(REQ2[c.std] && !c.f2){ ok=false; break; }
+        if(subOn(c.std) && !c.sub){ ok=false; break; }
+      }
+      $('cnGo').disabled = !ok;
+      $('cnGo').textContent = ok ? ('신청 \u2014 코드 '+CN.length+'건') : '신청';
+    }
+    if($('cnBody')) cnDraw();
+
+    /* ── 신청 내역 ── */
+    var AH = {
+      q:[['QA-20261005-0001','자격 신규','ISO 9001:2026','심사원 · MCL · SS501','2026-10-05','접수',''],
+         ['QA-20260902-0004','자격 갱신','ISO 14001:2015','갱신 신청','2026-09-02','보완요청','자격증 사본이 흐려 자격증번호를 읽을 수 없습니다'],
+         ['QA-20250210-0012','자격 신규','ISO 9001:2015','심사원 · MCL · MCL-QMS-A-2022','2025-02-10','승인','']],
+      c:[['QC-20261002-0001','코드 신규','ISO 9001','17A 제1차 금속제조업 · 근무경력','2026-10-02','접수',''],
+         ['QC-20261002-0002','코드 신규','ISO 9001','17B 조립금속제품 제조업 · 근무경력','2026-10-02','접수',''],
+         ['QC-20261002-0003','코드 신규','ISO 9001','28A 건물 건설업 · 근무경력','2026-10-02','접수',''],
+         ['QC-20260612-0005','코드 신규','ISO 9001','17A 제1차 금속제조업 · 근무경력','2026-06-12','승인',''],
+         ['QC-20260612-0006','코드 신규','ISO 9001','28A 건물 건설업 · 근무경력','2026-06-12','반려','같은 경력증명서를 내셨으나 세일메탈㈜ 의 경력은 금속 제조 분야이며 건설업 코드의 근거로 볼 수 없습니다'],
+         ['QC-20250520-0007','코드 신규','ISO 14001','28 건설업 · 자격증','2025-05-20','승인','']]
+    };
+    function ahCls(v){ return v==='승인'?'ok':(v==='반려'?'bad':(v==='보완요청'?'warn':'wait')); }
+    function ahOpen(k){
+      var code=(k==='c'), rows=AH[code?'c':'q'], h='';
+      $('ahTitle').textContent = (code?'코드':'자격')+' 신청 내역';
+      if($('ahTipTx')) $('ahTipTx').innerHTML = code
+        ? '<b>코드는 한 화면에서 함께 내도 접수는 코드마다 따로 됩니다.</b> 같은 서류를 내도 산업군에 따라 결과가 갈릴 수 있습니다. 보완요청은 같은 접수번호로 다시 내시면 되고, 반려는 조건을 갖춘 뒤 새로 신청하셔야 합니다.'
+        : '<b>보완요청</b>은 같은 접수번호로 다시 내시면 되고, <b>반려</b>는 조건을 갖춘 뒤 새로 신청하셔야 합니다.';
+      for(var i=0;i<rows.length;i++){ var r=rows[i];
+        h+='<tr><td class="docn">'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td>'+r[3]+'</td>'
+         + '<td>'+r[4]+'</td><td><span class="pill '+ahCls(r[5])+'">'+r[5]+'</span></td>'
+         + '<td>'+(r[6]||'<span style="color:#A9ABA5">\u2014</span>')+'</td>'
+         + '<td class="tar">'+(r[5]==='보완요청'
+             ? '<button class="btn sm pri" data-act="fix" data-k="'+(code?'c':'q')+'" data-i="'+i+'">보완 제출</button>'
+             : '')+'</td></tr>';
+      }
+      $('ahBody').innerHTML=h;
+    }
+
+    /* ── 이벤트 ── */
+    document.addEventListener('change', function(e){
+      var t=e.target;
+      if(t.id==='qrPick'){ qrShow(); return; }
+      var tr=t.parentNode; while(tr && tr.tagName!=='TR') tr=tr.parentNode;
+      if(!tr || !tr.getAttribute('data-ci')) return;
+      var i=parseInt(tr.getAttribute('data-ci'),10), d=CN[i];
+      if(t.classList.contains('cns')){ d.std=t.value; d.big=''; d.sub=''; d.f2=''; cnDraw(); }
+      else if(t.classList.contains('cnb')){ d.big=t.value; d.sub=''; cnDraw(); }
+      else if(t.classList.contains('cnu')){ d.sub=t.value; }
+      else if(t.classList.contains('cnr')){ d.bs=t.value; cnDraw(); }
+    });
+    document.addEventListener('input', function(e){
+      var t=e.target;
+      if(/^(qnOrg|qnIs|qnEx|qnRn|qnNo)$/.test(t.id||'')) qnChk();
+      if(t.classList && t.classList.contains('cne')){
+        var tr=t.parentNode; while(tr && tr.tagName!=='TR') tr=tr.parentNode;
+        if(tr) CN[parseInt(tr.getAttribute('data-ci'),10)].ev=t.value;
+        return;
+      }
+    });
+    function qnChk(){
+      var adm = /^(MN|MS)$/.test(document.body.getAttribute('data-role')||'');
+      var ok = $('qnStd').value && $('qnFn').classList.contains('has');
+      if (adm) ok = ok && $('qnLv').value && $('qnOrg').value.trim()
+                 && $('qnIs').value.length===10 && $('qnEx').value.length===10 && $('qnRn').value.length===10;
+      $('qnGo').disabled = !ok;
+    }
+    window.__qnChk = qnChk;
+    function qrChk(){ $('qrGo').disabled = !($('qrPick').value!=='' && $('qrFn').classList.contains('has')); }
+    document.addEventListener('change', function(e){
+      if(/^(qnStd|qnLv)$/.test(e.target.id||'')) qnChk();
+      if(e.target.id==='qrPick') qrChk();
+    });
+
+    document.addEventListener('click', function(e){
+      var b=up(e.target,'id');
+      if(b && b.id==='qnPick'){ $('qnFn').textContent='ISO9001_자격증_장은수.pdf'; $('qnFn').classList.add('has'); qnChk(); return; }
+      if(b && b.id==='fxPick'){ $('fxFn').textContent='자격증_재제출.pdf'; $('fxFn').classList.add('has'); $('fxGo').disabled=false; return; }
+      if(b && b.id==='qrPickF'){ $('qrFn').textContent='ISO14001_갱신_자격증.pdf'; $('qrFn').classList.add('has'); qrChk(); return; }
+      if(b && b.id==='cnAdd'){ CN.push({std:'',big:'',sub:'',bs:'',ev:'',f:'',f2:''}); cnDraw(); return; }
+      var fb = e.target.closest ? e.target.closest('.cnf, .cnf2') : null;
+      if(fb){
+        var ci=parseInt(fb.getAttribute('data-ci'),10);
+        if(fb.classList.contains('cnf2')) CN[ci].f2 = (REQ2[CN[ci].std]?REQ2[CN[ci].std][0]:'추가서류')+'_'+(ci+1)+'.pdf';
+        else CN[ci].f = '경력증명서_장은수.pdf';
+        cnDraw(); return;
+      }
+      var r=up(e.target,'data-act');
+      if(r && r.getAttribute('data-act')==='cnrm'){
+        if(CN.length>1){ CN.splice(parseInt(r.getAttribute('data-ci'),10),1); cnDraw(); }
+        return;
+      }
+    });
+
+    function fxOpen(k, i){
+      var r = AH[k==='c'?'c':'q'][i];
+      $('fxAcc').textContent = r[0];
+      $('fxMsg').textContent = r[6];
+      $('fxWhen').textContent = r[4] + ' · 삼성표준인증원';
+      $('fxWhat').value = r[2] + ' · ' + r[3];
+      $('fxFn').textContent = '선택된 파일이 없습니다';
+      $('fxFn').classList.remove('has');
+      $('fxGo').disabled = true;
+    }
+    window.__ahOpen = ahOpen;
+    window.__fxOpen = fxOpen;
+  })();
+
 })();
 </script>
 
+<script>
+/* ⓘ 도움말 — 모달 스크롤 영역에 잘리지 않도록 화면 최상위에 띄웁니다 */
+(function(){
+  var box = document.createElement('div');
+  box.className = 'tipbox'; box.hidden = true;
+  document.body.appendChild(box);
+  function near(t){ return t && t.closest ? t.closest('.ih') : null; }
+  document.addEventListener('mouseover', function(e){
+    var ih = near(e.target); if(!ih) return;
+    var sp = ih.querySelector('span'); if(!sp) return;
+    box.innerHTML = sp.innerHTML;
+    box.hidden = false;
+    var w = Math.min(360, window.innerWidth - 24);
+    box.style.width = w + 'px';
+    var r = ih.getBoundingClientRect();
+    var left = r.left + r.width/2 - w/2;
+    left = Math.max(12, Math.min(left, window.innerWidth - w - 12));
+    box.style.left = left + 'px';
+    var h = box.offsetHeight;
+    var top = r.top - h - 9;
+    if (top < 10) top = r.bottom + 9;
+    box.style.top = top + 'px';
+  });
+  document.addEventListener('mouseout', function(e){
+    if(near(e.target)) box.hidden = true;
+  });
+  window.addEventListener('scroll', function(){ box.hidden = true; }, true);
+})();
+</script>
+<div class="rdemo">
+  <span>역할 전환</span>
+  <button data-rr="PA">심사원보</button>
+  <button data-rr="A" class="on">심사원</button>
+  <button data-rr="LA">선임심사원</button>
+  <button data-rr="VA">검증심사원</button>
+  <button data-rr="MN">관리자</button>
+  <button data-rr="MS">마스터관리자</button>
+</div>
+<script>
+(function(){
+  var NM={PA:'심사원보',A:'심사원',LA:'선임심사원',VA:'검증심사원',MN:'관리자',MS:'마스터관리자'};
+  var bs=document.querySelectorAll('.rdemo button');
+  function set(r){
+    document.body.setAttribute('data-role', r);
+    var w=document.querySelector('#whoBtn');
+    if(w) w.innerHTML = '안녕하세요, <b>장은수</b> '+NM[r]+'님 <span class="cv">\u25BE</span>';
+    var a=document.getElementById('myRole'); if(a) a.textContent = NM[r];
+    var c=document.getElementById('myRole2'); if(c) c.value = NM[r];
+    var adm = (r==='MN'||r==='MS');
+    var t1=document.querySelector('#ovQNew .std'); if(t1) t1.textContent = adm ? '자격 수정' : '자격 신규 신청';
+    var t2=document.querySelector('#ovCNew .std'); if(t2) t2.textContent = adm ? '코드 수정' : '코드 신규 신청';
+    var g1=document.getElementById('qnGo'); if(g1) g1.textContent = adm ? '저장' : '신청';
+    var g2=document.getElementById('cnGo'); if(g2 && adm) g2.textContent = '저장';
+    var gd=document.getElementById('qnGrid'); if(gd) gd.style.gridTemplateColumns = adm ? '1fr 1fr' : '1fr';
+    if(window.__qnChk) window.__qnChk();
+    var ld=document.querySelector('.ph p');
+    if(ld) ld.textContent = (r==='PA')
+      ? '본인 정보를 확인합니다. 각 목록은 행을 선택하면 상세가 열립니다.'
+      : '본인 정보와 등록된 자격 · 코드를 한 화면에서 확인합니다. 각 목록은 행을 선택하면 상세가 열립니다.';
+    for(var i=0;i<bs.length;i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-rr')===r);
+  }
+  for(var i=0;i<bs.length;i++) bs[i].addEventListener('click', function(){ set(this.getAttribute('data-rr')); });
+  set('A');
+})();
+</script>
 </body>
 </html>
