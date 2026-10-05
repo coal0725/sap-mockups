@@ -275,22 +275,48 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
   color:var(--muted); cursor:pointer}
 .ck input{margin-top:3px}
 
-.pwbox{margin-top:4px; padding:16px 18px 18px; background:#FAFAF8;
-  border:1px solid var(--line); border-radius:4px}
-.pwid{display:flex; align-items:center; gap:14px; padding-bottom:13px;
-  border-bottom:1px solid var(--line)}
-.pwid span{font-size:12.5px; color:var(--muted); width:82px; flex:none}
-.pwid b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; font-weight:600}
-.pwlb{margin:14px 0 8px; font-size:12.5px; color:var(--muted)}
-.pwval{padding:15px 16px; background:#fff; border:1.5px solid var(--navy); border-radius:5px;
-  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:25px; font-weight:700;
-  letter-spacing:2.5px; color:var(--navy); text-align:center; word-break:break-all; line-height:1.35}
-.cpbtn{height:38px; padding:0 18px; border:0; border-radius:4px; background:var(--navy);
-  color:#fff; font-size:13.5px; font-weight:600; cursor:pointer; display:flex;
-  align-items:center; gap:7px}
-.cpbtn:hover{background:var(--navy-deep)}
-.cpbtn svg{width:14px; height:14px}
-.cpbtn.done{background:var(--ok-ink)}
+.pwmo{max-width:430px !important}
+.pwmo header{padding:26px 26px 0; text-align:center}
+.pwkey{width:46px; height:46px; margin:0 auto 14px; border-radius:50%;
+  background:var(--navy-soft); display:grid; place-items:center}
+.pwkey svg{width:21px; height:21px; fill:none; stroke:var(--navy); stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.pwmo header b{display:block; font-size:16.5px; letter-spacing:-.3px}
+.pwmo header p{margin:7px 0 0; font-size:13px; color:var(--muted); line-height:1.6}
+.pwmo .sc{padding:20px 26px 4px}
+
+.pwid{display:flex; align-items:center; justify-content:space-between;
+  padding:0 2px 14px; font-size:13px}
+.pwid span{color:var(--muted)}
+.pwid b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-weight:600;
+  font-size:13.5px; letter-spacing:.3px}
+
+.pwlb{font-size:12px; color:var(--muted); margin-bottom:7px; letter-spacing:.2px}
+.pwrow{display:flex; align-items:stretch; border-radius:6px; overflow:hidden;
+  background:var(--navy); box-shadow:0 2px 10px rgba(26,42,79,.22)}
+.pwval{flex:1; min-width:0; display:flex; align-items:center; justify-content:center;
+  padding:17px 14px; color:#fff;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:22px; font-weight:700;
+  letter-spacing:2px; word-break:break-all; line-height:1.3; user-select:all}
+.cpbtn{flex:none; width:58px; border:0; cursor:pointer; background:rgba(255,255,255,.1);
+  color:#fff; display:grid; place-items:center; border-left:1px solid rgba(255,255,255,.16);
+  transition:background .15s}
+.cpbtn:hover{background:rgba(255,255,255,.2)}
+.cpbtn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8;
+  stroke-linecap:round; stroke-linejoin:round}
+.cpbtn .ok{display:none}
+.cpbtn.done .cp{display:none}
+.cpbtn.done .ok{display:block}
+
+.cpmsg{height:17px; margin-top:9px; text-align:center; font-size:12px;
+  color:var(--ok-ink); opacity:0; transition:opacity .18s}
+.cpmsg.on{opacity:1}
+
+.pwmo footer{justify-content:center; border-top:0; margin-top:4px; padding:14px 26px 24px}
+.pwmo footer .btn{min-width:120px; height:40px; background:var(--navy); border-color:var(--navy);
+  color:#fff; font-weight:600}
+.pwmo footer .btn:hover{background:var(--navy-deep); border-color:var(--navy-deep)}
+
 
 /* ───── 하단 막대 ───── */
 .demo{position:fixed; left:0; right:0; bottom:0; z-index:90; background:#1C1F22;
@@ -525,24 +551,30 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
 
 <!-- ───────── 임시 비밀번호 발급 완료 모달 ───────── -->
 <div class="ov" id="ovPw" hidden>
-  <div class="mo" style="max-width:470px">
+  <div class="mo pwmo">
     <header>
-      <b>임시 비밀번호 발급 완료</b>
+      <div class="pwkey">
+        <svg viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v3.5M15.5 12v2.5"/></svg>
+      </div>
+      <b>임시 비밀번호가 발급되었습니다</b>
       <p>복사하여 안전한 경로로 전달해 주세요.</p>
     </header>
+
     <div class="sc">
-      <div class="pwbox">
-        <div class="pwid"><span>로그인 ID</span><b>A2026-014</b></div>
-        <div class="pwlb">임시 비밀번호</div>
+      <div class="pwid"><span>로그인 ID</span><b>A2026-014</b></div>
+      <div class="pwlb">임시 비밀번호</div>
+      <div class="pwrow">
         <div class="pwval" id="pwv">P%rL_=4a_RQf</div>
+        <button class="cpbtn" id="cpb" data-act="copy" aria-label="비밀번호 복사" title="복사">
+          <svg class="cp" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+          <svg class="ok" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>
+        </button>
       </div>
+      <div class="cpmsg" id="cpm">복사했습니다</div>
     </div>
+
     <footer>
       <button class="btn" data-act="closepw">확인</button>
-      <button class="cpbtn" id="cpb" data-act="copy">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
-        <span id="cpt">비밀번호 복사</span>
-      </button>
     </footer>
   </div>
 </div>
@@ -686,7 +718,7 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
     $('ovPw').hidden  = (v !== 'pw');
     var bs = document.querySelectorAll('.demo button');
     for (var i=0;i<bs.length;i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-v')===v);
-    if (v !== 'pw'){ $('cpb').classList.remove('done'); $('cpt').textContent='비밀번호 복사'; }
+    if (v !== 'pw'){ $('cpb').classList.remove('done'); $('cpm').classList.remove('on'); }
   }
 
   document.addEventListener('click', function(e){
@@ -695,7 +727,7 @@ table.ls .em{font-size:12.5px; color:var(--muted)}
       var a = t.getAttribute('data-act');
       if (a==='new')      { show('new'); }
       else if (a==='issue'){ show('pw'); }
-      else if (a==='copy') { $('cpb').classList.add('done'); $('cpt').textContent='복사됨'; }
+      else if (a==='copy') { $('cpb').classList.add('done'); $('cpm').classList.add('on'); }
       else if (a==='close' || a==='closepw'){ show('list'); }
       else if (a==='detail'){ /* 시안에서는 이동하지 않습니다 */ }
       return;
