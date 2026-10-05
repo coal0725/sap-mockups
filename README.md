@@ -2,7 +2,7 @@
 
 삼성표준인증원 SAP 인증심사 플랫폼의 **화면 개선안 시안**입니다.
 
-> 삼성표준인증원 장은수 · 2026-10-05
+> 삼성표준인증원 장은수 · 2026-10-06
 > 문의 ssr@ssr1.co.kr
 
 ---
@@ -69,8 +69,26 @@
 | SC-020 로그인 | [SC-020](https://coal0725.github.io/sap-mockups/SC-020-login-proposal.html) | `/login` |
 | SC-020B 계정 잠금 안내 | [SC-020](https://coal0725.github.io/sap-mockups/SC-020-login-proposal.html) | **신규 화면** |
 | SC-030 마이페이지 | [SC-030](https://coal0725.github.io/sap-mockups/SC-030-mypage-proposal.html) | `/my` |
+| SC-031 기본정보 수정 | [SC-030](https://coal0725.github.io/sap-mockups/SC-030-mypage-proposal.html) | `/my/edit` · 모달로 전환 |
+| SC-032 자격 · 코드 현황 · 신청 | [SC-030](https://coal0725.github.io/sap-mockups/SC-030-mypage-proposal.html) | 마이페이지로 흡수 |
+| SC-033 비밀번호 변경 | [SC-030](https://coal0725.github.io/sap-mockups/SC-030-mypage-proposal.html) | `/my/password` · 모달로 전환 |
 
 `SC-020` 과 `SC-020B` 는 **한 파일에 함께 담았습니다.** 하단 막대에서 전환해 주십시오.
+
+`SC-031` · `SC-032` · `SC-033` 은 **별도 화면을 두지 않고 마이페이지 안으로 들어갑니다.** SC-030 시안의 각 블록 버튼에서 모달로 열립니다. 시안 하단의 역할 전환 막대로 등급별 구성을 확인하실 수 있습니다.
+
+### 관리자 — 심사원 관리
+
+| 화면 | 시안 | 현재 화면 |
+|---|---|---|
+| SC-070 심사원 목록 | [SC-070](https://coal0725.github.io/sap-mockups/SC-070-auditor-list-proposal.html) | `/admin/auditor` |
+| SC-071 심사원 계정 생성 | [SC-070](https://coal0725.github.io/sap-mockups/SC-070-auditor-list-proposal.html) | 목록 화면의 모달 |
+| SC-072 심사원 상세 · 정보 수정 | [SC-072](https://coal0725.github.io/sap-mockups/SC-072-auditor-detail-proposal.html) | `/admin/auditor/{id}` |
+| SC-073 심사원 정보 수정 | [SC-072](https://coal0725.github.io/sap-mockups/SC-072-auditor-detail-proposal.html) | SC-072 로 흡수 |
+| SC-080 자격 · 코드 신청 목록 | [SC-080](https://coal0725.github.io/sap-mockups/SC-080-qual-approval-proposal.html) | `/admin/qualification` |
+| SC-081 자격 · 코드 신청 상세 | [SC-080](https://coal0725.github.io/sap-mockups/SC-080-qual-approval-proposal.html) | 목록에서 행을 누르면 열립니다 |
+
+`SC-071` 은 SC-070 안의 모달, `SC-081` 은 SC-080 안의 상세 화면입니다. 각 시안 하단 막대에서 전환해 주십시오.
 
 ### 공통
 
@@ -366,3 +384,33 @@ md 는 Claude 로 작업하실 때, 엑셀은 눈으로 보실 때 쓰시면 됩
 | 2026-09-27 | SC-007 · SC-008 시안 · 푸터 주소 정정 · SC-006B 안내 문구 |
 | 2026-09-28 | SC-010 · SC-010B · SC-192 시안 · 모바일 폭 수정 · 푸터 바닥 고정 (전 화면) |
 | 2026-10-05 | SC-020 · SC-020B · SC-030 · CM-nav 시안 · 헤더 · 푸터 · 사이드네비 개선 · SC-031 모달 흡수 |
+
+---
+
+## 이번 회차에 더해진 것
+
+### 화면
+
+- `SC-070` 심사원 목록 · `SC-071` 계정 생성 · `SC-072` 심사원 상세 — 관리자가 심사원을 관리하는 세 화면
+- `SC-080` · `SC-081` 자격 · 코드 신청 관리 — 심사원이 낸 신청을 관리자가 처리하는 화면
+- `SC-030` 마이페이지에 자격 · 코드 신청 창 네 가지 추가 — 자격 신규 · 자격 갱신 · 코드 신규 · 신청 내역
+
+### 사이드네비
+
+`심사원 관리` 아래를 **「심사원 계정」과 「자격 · 코드 신청」 두 개**로 정리했습니다. 이전의 「자격 승인」 · 「코드 승인」 두 메뉴는 같은 화면(SC-080)을 가리키므로 하나로 합쳤습니다. CM-nav 와 전 화면 시안에 모두 반영되어 있습니다.
+
+### 등급에 따른 차이
+
+마이페이지는 등급에 따라 보이는 범위가 다릅니다. SC-030 시안 하단의 역할 전환 막대로 확인하실 수 있습니다.
+
+| 등급 | 블록 | 안내 띠 | 바로가기 | 자격 · 코드 |
+|---|---|---|---|---|
+| 심사원보 | ① ② | — | 3칸 | 없음 |
+| 심사원 · 선임심사원 · 검증심사원 | ① ~ ⑤ | 있음 | 5칸 | 신청 |
+| 관리자 · 마스터관리자 | ① ~ ⑤ | — | — | 직접 수정 |
+
+관리자는 신청이 아니라 직접 수정합니다. 승인 절차를 거치지 않으며 수정 창에서 자격의 여덟 항목을 모두 받습니다. 자세한 내용은 기준정의서 6.5 를 보십시오.
+
+### 처리 결과
+
+자격 · 코드 신청의 처리 결과를 **승인 · 보완요청 · 반려 세 가지**로 두었습니다. 보완요청은 접수번호를 그대로 두고 서류를 다시 받는 처리이며, 반려는 신청을 끝내는 처리입니다. 서류가 빠지거나 읽을 수 없는 정도는 보완요청으로 두십시오.
