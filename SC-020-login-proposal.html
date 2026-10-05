@@ -22,9 +22,9 @@
     바로 아래 잠금 안내와 중복됩니다. 연락처는 잠금 안내 화면에 모았습니다.
 
   형식 검증 문구를 제거했습니다
-    「아이디는 3자 이상」 「비밀번호는 8자 이상」을 앞단에서 검사하지 않습니다.
+    「아이디는 3자 이상」 「비밀번호는 7자 이상」을 앞단에서 검사하지 않습니다.
     로그인은 기존 계정으로 진입하는 화면이라 형식을 볼 이유가 없고,
-    「8자 이상」은 비밀번호 정책을 외부에 알려 주는 셈이 됩니다.
+    「7자 이상」은 비밀번호 정책을 외부에 알려 주는 셈이 됩니다.
     빈 칸일 때 「아이디를 입력해 주십시오」만 표시합니다.
 
   로그인 실패 메시지를 하나로 통일했습니다
@@ -135,6 +135,49 @@
           text-underline-offset:3px; cursor:pointer}
 
   /* ───────────── 잠금 안내 ───────────── */
+  /* ── 초기 비밀번호 강제 변경 ── */
+  .pwinit{position:relative; width:min(1100px,94vw); height:min(640px,78vh);
+    border-radius:4px; overflow:hidden; box-shadow:0 2px 24px rgba(20,33,57,.22)}
+  .bgapp{position:absolute; inset:0; background:var(--bg); display:flex; flex-direction:column}
+  .bgtop{height:52px; background:var(--card); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; padding:0 20px}
+  .bglogo{font-size:14px; font-weight:700; color:var(--navy)}
+  .bgtag{font-size:12px; color:var(--muted)}
+  .bgbody{flex:1; display:flex; min-height:0}
+  .bgnav{width:190px; background:var(--navy-deep); padding:18px 16px; flex:none}
+  .bgnav b{display:block; font-size:12px; color:#C7CEDC; margin-bottom:16px; letter-spacing:.2px}
+  .bgnav i{display:block; height:9px; margin-bottom:14px; border-radius:2px;
+    background:rgba(255,255,255,.13)}
+  .bgnav i:nth-child(2n){width:72%}
+  .bgmain{flex:1; padding:26px 28px}
+  .bgmain i{display:block; height:11px; margin-bottom:16px; border-radius:2px; background:#E6E7E2}
+  .bgmain .w6{width:62%} .bgmain .w4{width:40%} .bgmain .w5{width:52%} .bgmain .w3{width:30%}
+
+  .pwdim{position:absolute; inset:0; background:rgba(16,22,34,.56);
+    display:flex; align-items:center; justify-content:center; padding:20px}
+  .pwmo{width:min(452px,100%); background:var(--card); border-radius:5px;
+    box-shadow:0 10px 40px rgba(10,14,22,.3); overflow:hidden}
+  .pwmo header{padding:20px 24px 0}
+  .pwmo header span{font-size:17px; font-weight:700; letter-spacing:-.3px}
+  .pwsc{padding:14px 24px 4px}
+  .pwlead{margin:0 0 18px; padding:11px 13px; background:var(--warn); color:var(--warn-ink);
+    border-radius:4px; font-size:13px; line-height:1.6}
+  .pwf{margin-bottom:15px}
+  .pwf label{display:block; font-size:13px; font-weight:600; margin-bottom:7px}
+  .pwf label em{color:#C0392B; font-style:normal}
+  .pwf input{width:100%; height:42px; padding:0 13px; border:1px solid #C9CCC6;
+    border-radius:4px; font-size:14px; font-family:inherit; background:var(--card)}
+  .pwf input:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+  .pwhint{margin:7px 0 0; font-size:12px; color:var(--muted)}
+  .pwmo footer{display:flex; align-items:center; justify-content:space-between;
+    padding:16px 24px 20px; border-top:1px solid var(--line); margin-top:10px}
+  .pwout{font-size:13px; color:var(--muted); text-decoration:underline;
+    text-underline-offset:3px; cursor:pointer}
+  .pwout:hover{color:var(--ink)}
+  .pwbtn{height:40px; padding:0 24px; border:0; border-radius:4px; cursor:pointer;
+    background:var(--navy); color:#fff; font-size:14px; font-weight:600; font-family:inherit}
+  .pwbtn:hover{background:var(--navy-deep)}
+
   .lock{background:var(--card); border-radius:4px; padding:48px 52px;
         box-shadow:0 8px 40px rgba(0,0,0,.28); max-width:620px; margin:0 auto}
   .lock-ico{width:52px; height:52px; border-radius:10px; background:var(--warn);
@@ -232,6 +275,47 @@
     </div>
   </div>
 
+  <!-- ───────── 초기 비밀번호 강제 변경 ───────── -->
+  <div class="pwinit" id="v-pwinit" hidden>
+    <div class="bgapp" aria-hidden="true">
+      <div class="bgtop"><span class="bglogo">SAP 심사원 플랫폼</span><span class="bgtag">장은수 · 심사원</span></div>
+      <div class="bgbody">
+        <div class="bgnav">
+          <b>사용자 메인</b>
+          <i></i><i></i><i></i><i></i><i></i><i></i>
+        </div>
+        <div class="bgmain"><i class="w6"></i><i class="w4"></i><i class="w5"></i><i class="w3"></i></div>
+      </div>
+    </div>
+
+    <div class="pwdim">
+      <div class="pwmo" role="dialog" aria-modal="true" aria-labelledby="pw-h">
+        <header><span id="pw-h">비밀번호 변경</span></header>
+        <div class="pwsc">
+          <p class="pwlead">관리자가 발급한 비밀번호입니다.<br>본인 비밀번호로 변경해 주세요.</p>
+
+          <div class="pwf">
+            <label>현재 비밀번호 <em>*</em></label>
+            <input type="password" placeholder="발급받은 비밀번호">
+          </div>
+          <div class="pwf">
+            <label>새 비밀번호 <em>*</em></label>
+            <input type="password" placeholder="새 비밀번호">
+            <p class="pwhint">영문 · 숫자 · 특수문자 포함 7자 이상</p>
+          </div>
+          <div class="pwf">
+            <label>새 비밀번호 확인 <em>*</em></label>
+            <input type="password" placeholder="한 번 더 입력">
+          </div>
+        </div>
+        <footer>
+          <a class="pwout" id="go-login2">로그아웃</a>
+          <button type="button" class="pwbtn">변경</button>
+        </footer>
+      </div>
+    </div>
+  </div>
+
   <!-- ───────── SC-020B 계정 잠금 안내 ───────── -->
   <div class="lock" id="v-lock" hidden>
     <div class="lock-ico">!</div>
@@ -275,12 +359,14 @@
   <button type="button" data-v="empty">빈 칸 안내</button>
   <button type="button" data-v="fail">로그인 실패</button>
   <button type="button" data-v="lock">SC-020B 잠금 안내</button>
+  <button type="button" data-v="pwinit">초기 비밀번호 변경</button>
 </div>
 
 <script>
 (function(){
   var vLogin = document.getElementById('v-login'),
       vLock  = document.getElementById('v-lock'),
+      vPwinit= document.getElementById('v-pwinit'),
       fId    = document.getElementById('f-id'),
       fPw    = document.getElementById('f-pw'),
       fErr   = document.getElementById('f-err');
@@ -293,8 +379,9 @@
 
   function show(v){
     reset();
-    vLogin.hidden = (v === 'lock');
-    vLock.hidden  = (v !== 'lock');
+    vLogin.hidden  = (v === 'lock' || v === 'pwinit');
+    vLock.hidden   = (v !== 'lock');
+    vPwinit.hidden = (v !== 'pwinit');
     if (v === 'empty'){ fId.classList.add('err'); fPw.classList.add('err'); }
     if (v === 'fail'){ fErr.classList.add('on'); }
     document.querySelectorAll('.demo button').forEach(function(b){
@@ -308,6 +395,7 @@
 
   document.getElementById('go-lock').addEventListener('click', function(){ show('lock'); });
   document.getElementById('go-login').addEventListener('click', function(){ show('login'); });
+  document.getElementById('go-login2').addEventListener('click', function(){ show('login'); });
 
   /* 실제로는 서버가 판정합니다. 시안에서는 빈 칸만 확인합니다 */
   document.getElementById('btn-login').addEventListener('click', function(){

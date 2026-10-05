@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>심사원 계정 | 삼성표준인증원</title>
+<link rel="icon" href="https://ssr1.co.kr/assets/site/img/common/favicon.ico">
+<style>
+:root{
+  --navy:#1A2A4F; --navy-deep:#142139; --navy-soft:#E9ECF3;
+  --ink:#1A1D1B; --muted:#6B706C; --line:#E2E3DE; --bg:#F7F7F4;
+  --warn:#FFF4E5; --warn-ink:#9C4221; --ok:#E8F3EC; --ok-ink:#2F6B45;
+  --wait:#EEF1F6; --wait-ink:#4A5A78; --rej:#FBE9E6; --rej-ink:#B04A3A;
+}
+*{box-sizing:border-box}
+html,body{margin:0; padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Malgun Gothic","맑은 고딕",sans-serif;
+  background:var(--bg); color:var(--ink); font-size:14px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; padding-bottom:58px;
+}
+[hidden]{display:none !important}
+button{font-family:inherit}
+
+/* ───── ㄷ자 공통 프레임 · CM-001 — SC-030과 동일 ───── */
+/* 헤더 — 전체 폭 고정 */
+.gnb{
+  height:52px;
+  display:flex; align-items:center; gap:12px; padding:0 18px;
+  background:#fff; border-bottom:1px solid var(--line);
+}
+.gnb .logo{height:22px; width:auto; display:block; flex:none}
+.gnb .nm{font-size:14.5px; font-weight:700; letter-spacing:-.3px}
+.gnb .rt{margin-left:auto; display:flex; align-items:center; gap:10px}
+.gnb .sw{
+  font:inherit; font-size:12px; padding:5px 11px; border-radius:5px; cursor:pointer;
+  border:1px solid var(--line); background:#fff; color:var(--muted);
+}
+.gnb .sw:hover{background:#FAFAF8; color:var(--ink)}
+.gnb .bell{position:relative; width:30px; height:30px; border:0; background:transparent; cursor:pointer; border-radius:6px}
+.gnb .bell:hover{background:#F4F4F1}
+.gnb .bell svg{width:16px; height:16px; fill:none; stroke:var(--muted); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round}
+.gnb .bell b{
+  position:absolute; top:3px; right:3px; min-width:15px; height:15px; padding:0 4px;
+  border-radius:8px; background:#B04A3A; color:#fff;
+  font-size:9.5px; font-weight:700; display:grid; place-items:center;
+}
+.gnb .who{display:flex; align-items:center; gap:5px; padding:5px 9px; border-radius:6px; cursor:pointer; font-size:13px; color:var(--muted)}
+.gnb .who:hover{background:#F4F4F1}
+.gnb .who b{color:var(--ink); font-weight:700}
+.gnb .who .cv{font-size:9px; color:#B4B8B2; margin-left:2px}
+.udd{position:relative}
+.dd{
+  position:absolute; top:calc(100% + 7px); right:0; min-width:168px; z-index:40;
+  background:#fff; border:1px solid var(--line); border-radius:8px; padding:5px;
+  box-shadow:0 6px 20px rgba(20,33,57,.14);
+}
+.dd[hidden]{display:none}
+.dd a{
+  display:flex; align-items:center; gap:9px;
+  padding:9px 11px; border-radius:5px; font-size:13px; color:var(--ink); cursor:pointer;
+}
+.dd a svg{
+  width:14px; height:14px; flex:none; fill:none; stroke:currentColor;
+  stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; opacity:.65;
+}
+.dd a.out svg{opacity:.8}
+.dd a:hover{background:#F4F4F1}
+.dd a.out{color:#B04A3A}
+.dd hr{border:0; border-top:1px solid #F0F0EC; margin:5px 3px}
+.foot{
+  min-height:28px;
+  display:flex; align-items:center; gap:14px; padding:7px 18px;
+  background:#fff; border-top:1px solid var(--line);
+  font-size:11px; color:#A8ACA6; flex-wrap:wrap;
+}
+.foot .l{display:flex; align-items:center}
+.foot .l i{font-style:normal; opacity:.35; margin:0 7px}
+.foot .l a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .l a:hover{color:var(--navy); text-decoration:underline}
+.foot .l a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .c{margin:0 auto; text-align:center}
+.foot .c i{font-style:normal; opacity:.4; margin:0 7px}
+.foot .r{margin-left:auto; display:flex; align-items:center; gap:0; font-variant-numeric:tabular-nums}
+.foot .r a{display:inline-flex; align-items:center; gap:4px; color:var(--muted); text-decoration:none}
+.foot .r a:hover{color:var(--navy); text-decoration:underline}
+.foot .r a svg{width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round}
+.foot .r i{font-style:normal; opacity:.3; margin:0 8px}
+@media (max-width:760px){ .foot .c{display:none} }
+
+.totop{
+  position:fixed; right:24px; bottom:24px; z-index:35;
+  display:inline-flex; align-items:center; gap:6px;
+  font:inherit; font-size:12px; padding:9px 14px; border-radius:20px;
+  border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer;
+  box-shadow:0 3px 12px rgba(20,33,57,.12);
+  opacity:0; pointer-events:none; transform:translateY(6px);
+  transition:opacity .18s, transform .18s;
+}
+.totop.on{opacity:1; pointer-events:auto; transform:none}
+.totop:hover{background:#FAFAF8}
+.totop svg{width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+
+.totop{bottom:70px}
+@media print{
+  .app{display:block}
+  .nav, .gnb, .foot, .totop, .demo{display:none !important}
+  .body{max-width:none; padding:0}
+}
+
+/* ───── 레이아웃 ───── */
+.app{display:grid; grid-template-columns:232px 1fr; align-items:stretch; min-height:calc(100vh - 52px - 86px)}
+.nav{background:var(--navy-deep); color:#CFD6E4; padding:18px 0 40px}
+.nav h2{margin:0 0 14px; padding:0 18px; font-size:12px; font-weight:700;
+  color:#8F9CB5; letter-spacing:.4px}
+.nav .g{margin-bottom:4px}
+.nav .gt{display:flex; align-items:center; gap:9px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; color:#E8EDF5}
+.nav .gt svg{width:15px; height:15px; flex:none; opacity:.8}
+.nav a{display:block; padding:7px 18px 7px 42px; font-size:13px; color:#A9B4C8;
+  text-decoration:none; cursor:default}
+.nav a.on{background:rgba(255,255,255,.1); color:#fff; font-weight:600;
+  box-shadow:inset 3px 0 0 #C8A24A}
+.nav .ms{margin-top:14px; padding-top:14px; border-top:1px solid rgba(255,255,255,.1)}
+
+.main{flex:1; min-width:0; display:flex; flex-direction:column; align-items:stretch}
+.top{display:none}
+.top .lg{display:flex; align-items:baseline; gap:10px}
+.top .lg b{font-size:15px; color:var(--navy); letter-spacing:-.3px}
+.top .lg span{font-size:12px; color:var(--muted)}
+.who{display:flex; align-items:center; gap:8px; font-size:13px}
+.who .rb{padding:2px 8px; border-radius:3px; background:var(--navy-soft);
+  color:var(--navy); font-size:11.5px; font-weight:600}
+.who .cv{color:var(--muted); font-size:11px}
+
+.body{padding:26px 32px 48px; max-width:1320px; margin:0 auto; width:100%}
+.bc{font-size:12.5px; color:var(--muted); margin:4px 0 0}
+h1{margin:0; font-size:22px; letter-spacing:-.5px}
+.lead{margin:0 0 20px; font-size:13.5px; color:var(--muted)}
+
+.card{background:#fff; border:1px solid var(--line); border-radius:5px; margin-bottom:16px}
+.card > h3{margin:0; padding:14px 18px; font-size:14px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px}
+.card .in{padding:16px 18px}
+
+/* ───── 검색 바 · 공용 컴포넌트 ───── */
+.sbox{background:#EDF0F5; border:1px solid #DBE0E9; border-radius:6px;
+  padding:15px 16px; margin:18px 0 16px}
+.sbar{display:flex; align-items:center; gap:10px}
+.seg{flex:1; min-width:0; display:flex; align-items:stretch; height:44px;
+  border:1px solid #CBD2DE; border-radius:5px; background:#fff; overflow:hidden;
+  transition:border-color .12s, box-shadow .12s}
+.seg:focus-within{border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.seg .sel{border:0; background:transparent; font-family:inherit; font-size:13.5px;
+  padding:0 30px 0 14px; color:var(--ink); cursor:pointer; flex:none;
+  appearance:none; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%236B706C' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 12px center}
+.seg .sel:focus{outline:none}
+.seg .dv{width:1px; background:#E3E7EE; flex:none; margin:8px 0}
+.seg .ip{flex:1; min-width:0; display:flex; align-items:center; gap:9px; padding:0 14px}
+.seg .ip svg{width:15px; height:15px; flex:none; color:#9A9C96}
+.seg .ip input{flex:1; min-width:0; border:0; outline:none; font-family:inherit;
+  font-size:13.5px; background:transparent; color:var(--ink)}
+.seg .ip input::placeholder{color:#A3A69F}
+.go{height:44px; padding:0 28px; border:0; border-radius:5px; background:var(--navy);
+  color:#fff; font-size:14px; font-weight:600; cursor:pointer; flex:none;
+  display:flex; align-items:center; gap:7px}
+.go:hover{background:var(--navy-deep)}
+.go svg{width:15px; height:15px}
+
+.sbar2{display:flex; align-items:center; justify-content:space-between;
+  margin-top:12px; padding-top:12px; border-top:1px solid #DDE2EA}
+.tgl{display:flex; align-items:center; gap:9px; cursor:pointer; user-select:none}
+.tgl .sw{width:38px; height:21px; border-radius:11px; background:var(--navy);
+  position:relative; transition:background .15s; flex:none}
+.tgl .sw::after{content:''; position:absolute; top:2px; left:19px; width:17px; height:17px;
+  border-radius:50%; background:#fff; transition:left .15s}
+.tgl.off .sw{background:#B7BECB}
+.tgl.off .sw::after{left:2px}
+.tgl span{font-size:13px; white-space:nowrap}
+.rt{display:flex; align-items:center; gap:14px}
+.per{height:32px; padding:0 28px 0 11px; border:1px solid #CBD2DE; border-radius:4px;
+  background:#fff; font-family:inherit; font-size:12.5px; color:var(--ink); cursor:pointer;
+  appearance:none;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%236B706C' stroke-width='1.5' stroke-linecap='round'/></svg>");
+  background-repeat:no-repeat; background-position:right 10px center}
+.per:focus{outline:none; border-color:var(--navy); box-shadow:0 0 0 3px var(--navy-soft)}
+.rst{font-size:12.5px; color:#5D6472; text-decoration:underline;
+  text-underline-offset:3px; cursor:pointer}
+.rst:hover{color:var(--navy)}
+
+/* ───── 표 ───── */
+table.ls{width:100%; border-collapse:collapse; font-size:13.5px}
+table.ls th{background:#FAFAF8; border-bottom:1px solid var(--line); padding:11px 12px;
+  text-align:left; font-size:12.5px; color:var(--muted); font-weight:600; white-space:nowrap}
+table.ls td{border-bottom:1px solid #EFEFEC; padding:12px; vertical-align:middle}
+table.ls tbody tr{cursor:pointer}
+table.ls tbody tr:hover{background:#FBFBF9}
+table.ls .id{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px}
+table.ls .nm{font-weight:600}
+table.ls .en{white-space:nowrap; letter-spacing:.2px}
+table.ls .ta{text-align:right; white-space:nowrap}
+.chip{display:inline-block; padding:2px 8px; border-radius:3px; font-size:11.5px;
+  background:var(--navy-soft); color:var(--navy); font-weight:600; white-space:nowrap}
+.st{display:inline-block; padding:2px 9px; border-radius:11px; font-size:11.5px; font-weight:600; white-space:nowrap}
+.st[data-state="active"]{background:var(--ok); color:var(--ok-ink)}
+.st[data-state="inactive"]{background:#F0F0ED; color:#80837C}
+.qc{color:var(--muted); font-size:12.5px}
+.qc b{color:var(--ink); font-weight:600}
+.na{color:#A9ABA5}
+.ql{display:inline-grid; grid-template-columns:max-content max-content; gap:3px 14px;
+  font-size:12.5px; line-height:1.5; justify-items:start}
+.ql .s{color:var(--ink); font-weight:600; white-space:nowrap}
+.ql .v{color:var(--muted); white-space:nowrap}
+.xls{height:34px; padding:0 13px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font-size:13px; cursor:pointer; display:flex; align-items:center; gap:6px}
+.xls:hover{border-color:var(--navy); color:var(--navy)}
+.xls svg{width:14px; height:14px}
+table.ls .no{color:#9A9C96; font-size:12.5px}
+table.ls .em{font-size:12.5px; color:var(--muted)}
+.cnt{font-size:13px; color:var(--muted); font-weight:400}
+.cnt b{color:var(--ink); font-weight:700}
+.new{height:34px; padding:0 15px; border:0; border-radius:4px; background:var(--navy);
+  color:#fff; font-size:13px; font-weight:600; cursor:pointer; display:flex;
+  align-items:center; gap:6px}
+.new:hover{background:var(--navy-deep)}
+.new svg{width:14px; height:14px}
+
+.pgbar{display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:16px 18px 14px; gap:12px}
+.pgbar .xls{justify-self:end}
+.pg{display:flex; align-items:center; justify-content:center; gap:5px}
+.pg button{min-width:34px; height:34px; padding:0 11px; border:1px solid var(--line);
+  border-radius:4px; background:#fff; font-size:13px; cursor:pointer; color:var(--ink)}
+.pg button:hover:not([disabled]){border-color:#A8ABA4}
+.pg button.on{background:var(--navy); border-color:var(--navy); color:#fff; font-weight:700}
+.pg .nav2{color:var(--muted)}
+.pg button[disabled]{opacity:.35; cursor:default}
+.pg .gap{margin:0 3px}
+
+.note{margin:14px 0 0; padding:11px 13px; background:#FAFAF8; border:1px solid var(--line);
+  border-radius:4px; font-size:12.5px; color:var(--muted); line-height:1.75}
+.note b{color:var(--ink)}
+
+/* ───── 모달 ───── */
+.ov{position:fixed; inset:0; background:rgba(16,22,34,.5); z-index:50;
+  display:flex; align-items:center; justify-content:center; padding:24px}
+.mo{width:100%; max-width:560px; max-height:88vh; background:#fff; border-radius:5px;
+  box-shadow:0 12px 44px rgba(10,14,22,.3); display:flex; flex-direction:column}
+.mo header{padding:20px 24px 2px}
+.mo header b{font-size:17px; letter-spacing:-.3px}
+.mo header p{margin:6px 0 0; font-size:13px; color:var(--muted); line-height:1.65}
+.mo .sc{padding:16px 24px 6px; overflow:auto}
+.mo footer{display:flex; align-items:center; justify-content:flex-end; gap:8px;
+  padding:16px 24px 20px; border-top:1px solid var(--line); margin-top:12px}
+.btn{height:38px; padding:0 18px; border:1px solid #C9CCC6; border-radius:4px;
+  background:#fff; font-size:13.5px; cursor:pointer}
+.btn:hover{border-color:#A8ABA4}
+.btn.pri{background:var(--navy); border-color:var(--navy); color:#fff; font-weight:600}
+.btn.pri:hover{background:var(--navy-deep)}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px 16px}
+.fd{display:flex; flex-direction:column; gap:6px}
+.fd.full{grid-column:1 / -1}
+.fd label{font-size:13px; font-weight:600}
+.fd label em{color:#C0392B; font-style:normal}
+.fd input, .fd select{height:40px; padding:0 12px; border:1px solid #C9CCC6;
+  border-radius:4px; font-size:13.5px; font-family:inherit; background:#fff}
+.fd input:focus, .fd select:focus{outline:none; border-color:var(--navy);
+  box-shadow:0 0 0 3px var(--navy-soft)}
+.fd input[readonly]{background:#F7F7F4; color:var(--muted)}
+.fd .h{font-size:12px; color:var(--muted)}
+.ck{display:flex; align-items:flex-start; gap:9px; margin-top:16px; font-size:13.5px}
+.fd .sub{display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:400;
+  color:var(--muted); cursor:pointer}
+.ck input{margin-top:3px}
+
+.pwbox{margin-top:4px; padding:16px 18px 18px; background:#FAFAF8;
+  border:1px solid var(--line); border-radius:4px}
+.pwid{display:flex; align-items:center; gap:14px; padding-bottom:13px;
+  border-bottom:1px solid var(--line)}
+.pwid span{font-size:12.5px; color:var(--muted); width:82px; flex:none}
+.pwid b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; font-weight:600}
+.pwlb{margin:14px 0 8px; font-size:12.5px; color:var(--muted)}
+.pwval{padding:15px 16px; background:#fff; border:1.5px solid var(--navy); border-radius:5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:25px; font-weight:700;
+  letter-spacing:2.5px; color:var(--navy); text-align:center; word-break:break-all; line-height:1.35}
+.cpbtn{height:38px; padding:0 18px; border:0; border-radius:4px; background:var(--navy);
+  color:#fff; font-size:13.5px; font-weight:600; cursor:pointer; display:flex;
+  align-items:center; gap:7px}
+.cpbtn:hover{background:var(--navy-deep)}
+.cpbtn svg{width:14px; height:14px}
+.cpbtn.done{background:var(--ok-ink)}
+
+/* ───── 하단 막대 ───── */
+.demo{position:fixed; left:0; right:0; bottom:0; z-index:90; background:#1C1F22;
+  padding:11px 16px; display:flex; align-items:center; justify-content:center; gap:7px;
+  flex-wrap:wrap}
+.demo span{color:#8B8F93; font-size:12px; margin-right:6px}
+.demo button{padding:7px 14px; border:1px solid #3A3E42; border-radius:4px;
+  background:#2A2E32; color:#D7DADD; font-size:12.5px; cursor:pointer}
+.demo button.on{background:#fff; color:#1C1F22; border-color:#fff; font-weight:600}
+
+@media print{ .demo{display:none} }
+</style>
+</head>
+<body>
+
+<header class="gnb">
+  <img class="logo" src="assets/ssr-logo.svg" alt="삼성표준인증원">
+  <span class="nm">SAP 심사원 플랫폼</span>
+  <div class="rt">
+    <div class="udd">
+      <div class="who" id="whoBtn" data-act="dd">안녕하세요, <b>장은수</b> 마스터관리자님 <span class="cv">▾</span></div>
+      <div class="dd" id="userDD" hidden>
+        <a><svg viewBox="0 0 16 16"><circle cx="8" cy="5.6" r="2.6"/><path d="M3 13.4c0-2.3 2.2-3.6 5-3.6s5 1.3 5 3.6"/></svg>마이페이지</a>
+        <a data-act="pw"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="6.2" rx="1.2"/><path d="M5.8 7V5.2a2.2 2.2 0 0 1 4.4 0V7"/></svg>비밀번호 변경</a>
+        <hr>
+        <a class="out"><svg viewBox="0 0 16 16"><path d="M6.4 3H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.4"/><path d="M10 5.6L12.6 8 10 10.4M12.6 8H6.6"/></svg>로그아웃</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="app">
+  <!-- ───── 사이드네비 · CM-33 반영 ───── -->
+  <nav class="nav">
+    <h2>관리자 업무</h2>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+        마이페이지
+      </div>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M17 11h4M19 9v4"/></svg>
+        심사원 관리
+      </div>
+      <a class="on">심사원 계정</a>
+      <a>자격 승인</a>
+      <a>코드 승인</a>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V5l8-2v18"/><path d="M12 9h8v12"/><path d="M3 21h18"/></svg>
+        인증 관리
+      </div>
+      <a>기업 정보</a>
+      <a>인증 신청</a>
+      <a>계약 · 비용</a>
+      <a>인증서 · 현황</a>
+      <a>인증 변경</a>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        심사 관리
+      </div>
+      <a>심사 일정</a>
+      <a>심사팀 배정</a>
+      <a>보고서 검증</a>
+    </div>
+
+    <div class="g">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l15-6v14L3 13z"/><path d="M7 12v6"/></svg>
+        게시판 관리
+      </div>
+      <a>공지사항</a>
+      <a>절차 및 서식</a>
+    </div>
+
+    <div class="g ms">
+      <div class="gt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        시스템
+      </div>
+      <a>시스템 설정</a>
+      <a>문서번호 · 버전 관리</a>
+      <a>인장 · 로고</a>
+      
+      <a>감사 모드</a>
+      <a>이메일 발송 로그</a>
+    </div>
+  </nav>
+
+  <div class="main">
+
+    <div class="body">
+      <h1>심사원 계정</h1>
+      <p class="bc">심사원 관리 › 심사원 계정</p>
+
+      <!-- 검색 바 · 공용 컴포넌트 -->
+      <div class="sbox">
+        <div class="sbar">
+          <div class="seg">
+            <select class="sel">
+              <option>권한 전체</option>
+              <option>심사원보</option><option>심사원</option><option>선임심사원</option>
+              <option>검증심사원</option><option>관리자</option><option>마스터관리자</option>
+            </select>
+            <span class="dv"></span>
+            <div class="ip">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+              <input placeholder="이름 · 로그인 ID · 휴대전화 뒷 4자리 · 이메일">
+            </div>
+          </div>
+          <button class="go">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            검색
+          </button>
+        </div>
+        <div class="sbar2">
+          <div class="tgl" id="tg"><div class="sw"></div><span>활성 심사원만</span></div>
+          <div class="rt">
+            <select class="per" id="per">
+              <option selected>10개씩</option><option>25개씩</option>
+              <option>50개씩</option><option>100개씩</option>
+            </select>
+            <a class="rst">조건 초기화</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 목록 -->
+      <div class="card">
+        <h3>
+          <span class="cnt">총 <b id="tot">118</b>건이 조회되었습니다</span>
+          <button class="new" data-act="new">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            신규
+          </button>
+        </h3>
+        <div style="overflow-x:auto">
+          <table class="ls">
+            <thead>
+              <tr>
+                <th style="width:46px">No</th>
+                <th style="width:112px">로그인 ID</th>
+                <th style="width:86px">이름</th>
+                <th style="width:150px">영문명</th>
+                <th style="width:104px">권한</th>
+                <th>보유 자격</th>
+                <th style="width:128px">휴대전화</th>
+                <th style="width:180px">이메일</th>
+                <th style="width:76px">상태</th>
+              </tr>
+            </thead>
+            <tbody id="tb"></tbody>
+          </table>
+        </div>
+        <div class="pgbar">
+          <span></span>
+          <div class="pg" id="pg"></div>
+          <button class="xls">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12M8 11l4 4 4-4"/><path d="M4 19h16"/></svg>
+            엑셀 내려받기
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ───────── SC-071 계정 생성 모달 ───────── -->
+<div class="ov" id="ovNew" hidden>
+  <div class="mo">
+    <header>
+      <b>심사원 신규 등록</b>
+    </header>
+    <div class="sc">
+      <div class="grid2">
+        <div class="fd">
+          <label>로그인 ID <em>*</em></label>
+          <input id="lid" value="A2026-014" readonly>
+          <label class="sub"><input type="checkbox" checked id="ckId"> 자동 채번</label>
+        </div>
+        <div class="fd">
+          <label>이름 <em>*</em></label>
+          <input placeholder="이름">
+        </div>
+        <div class="fd">
+          <label>권한 <em>*</em></label>
+          <select id="selRole">
+            <option>심사원보</option>
+            <option selected>심사원</option>
+            <option>선임심사원</option>
+            <option>검증심사원</option>
+            <option>관리자</option>
+            <option>마스터관리자</option>
+          </select>
+        </div>
+        <div class="fd">
+          <label>휴대전화</label>
+          <input placeholder="010-0000-0000">
+        </div>
+        <div class="fd full">
+          <label>이메일 <em>*</em></label>
+          <input placeholder="auditor@example.com">
+        </div>
+      </div>
+
+      <label class="ck">
+        <input type="checkbox" checked id="ckAuto">
+        <span>비밀번호 자동 생성 <span class="h">(12자 · 영문 · 숫자 · 특수문자 포함)</span></span>
+      </label>
+
+      <div class="fd" id="pwManual" hidden style="margin-top:12px">
+        <label>초기 비밀번호 <em>*</em></label>
+        <input type="text" placeholder="영문 · 숫자 · 특수문자 포함 7자 이상">
+        <span class="h">전화로 전달해야 하는 경우에만 사용하시고, 그 외에는 자동 생성을 쓰십시오.</span>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-act="close">취소</button>
+      <button class="btn pri" data-act="issue">계정 생성</button>
+    </footer>
+  </div>
+</div>
+
+<!-- ───────── 임시 비밀번호 발급 완료 모달 ───────── -->
+<div class="ov" id="ovPw" hidden>
+  <div class="mo" style="max-width:470px">
+    <header>
+      <b>임시 비밀번호 발급 완료</b>
+      <p>복사하여 안전한 경로로 전달해 주세요.</p>
+    </header>
+    <div class="sc">
+      <div class="pwbox">
+        <div class="pwid"><span>로그인 ID</span><b>A2026-014</b></div>
+        <div class="pwlb">임시 비밀번호</div>
+        <div class="pwval" id="pwv">P%rL_=4a_RQf</div>
+      </div>
+    </div>
+    <footer>
+      <button class="btn" data-act="closepw">확인</button>
+      <button class="cpbtn" id="cpb" data-act="copy">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>
+        <span id="cpt">비밀번호 복사</span>
+      </button>
+    </footer>
+  </div>
+</div>
+
+<div class="foot">
+  <span class="l">© 2026 삼성표준인증원<i>·</i>
+    <a href="https://ssr1.co.kr" target="_blank" rel="noopener">홈페이지
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
+    </a>
+  </span>
+  <span class="c">02-6951-2009<i>·</i>팩스 070-4032-2006<i>·</i>ssr@ssr1.co.kr<i>·</i>평일 09:00 – 18:00<i>·</i>점심 12:30 – 13:30<i>·</i>주말 · 공휴일 휴무</span>
+  <span class="r">
+    <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
+      <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
+    </a>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 18:30</span>
+</div>
+
+<button class="totop" id="totop" data-act="totop" aria-label="맨 위로">
+  <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 13V4M4 7.5L8 3.5l4 4"/></svg>
+  <span>맨 위로</span>
+</button>
+
+
+<div class="demo">
+  <span>시안 확인용</span>
+  <button data-v="list" class="on">SC-070 심사원 목록</button>
+  <button data-v="new">SC-071 계정 생성</button>
+  <button data-v="pw">임시 비밀번호 발급</button>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  function $(id){ return document.getElementById(id); }
+
+  var ROWS = [
+    ['LA2024-003','김선임|KIM SEONIM','선임심사원',
+      [['ISO 9001:2015','선임심사원'],['ISO 14001:2015','심사원']],
+      [['ISO 9001','24A · 28B'],['ISO 14001','28']],
+      '010-1234-5678','kim.si@example.com','active'],
+    ['A2025-011','박심사|PARK SIMSA','심사원',
+      [['ISO 9001:2015','심사원'],['ISO 45001:2018','심사원']],
+      [['ISO 9001','17 · 24A'],['ISO 45001','17']],
+      '010-2345-6789','park.sa@example.com','active'],
+    ['VA2023-002','이검증|LEE GEOMJEUNG','검증심사원',
+      [['ISO 9001:2015','검증심사원'],['ISO 14001:2015','선임심사원']],
+      [['ISO 9001','24A · 28B · 35C'],['ISO 14001','24 · 28']],
+      '010-3456-7890','lee.gj@example.com','active'],
+    ['PA2026-008','최보조|CHOI BOJO','심사원보', [], [], '010-4567-8901','choi.bj@example.com','active'],
+    ['LA2022-001','정팀장|JUNG TEAMJANG','선임심사원',
+      [['ISO 9001:2015','선임심사원'],['ISO 45001:2018','선임심사원']],
+      [['ISO 9001','12B · 17 · 24A'],['ISO 45001','12 · 17']],
+      '010-5678-9012','jung.tj@example.com','active'],
+    ['A2024-007','한심사|HAN SIMSA','심사원',
+      [['ISO 14001:2015','심사원']], [['ISO 14001','28']],
+      '010-6789-0123','han.sa@example.com','active'],
+    ['MN2021-002','오관리|OH GWANRI','관리자', [], [], '010-7890-1234','oh.gr@example.com','active'],
+    ['A2023-004','윤퇴직|YOON TOEJIK','심사원',
+      [['ISO 9001:2015','심사원']], [['ISO 9001','24A']],
+      '010-8901-2345','yoon.tj@example.com','inactive']
+  ];
+
+  function pairs(list){
+    if (!list.length) return '<span class="na">—</span>';
+    var h = '<div class="ql">';
+    for (var i=0;i<list.length;i++)
+      h += '<span class="s">'+list[i][0]+'</span><span class="v">'+list[i][1]+'</span>';
+    return h + '</div>';
+  }
+
+  function draw(onlyActive){
+    var tb=$('tb'), h='', n=0;
+    for (var i=0;i<ROWS.length;i++){
+      var r=ROWS[i];
+      if (onlyActive && r[7]!=='active') continue;
+      n++;
+      h += '<tr data-act="detail">'
+        + '<td class="no">'+n+'</td>'
+        + '<td class="id">'+r[0]+'</td>'
+        + '<td class="nm">'+r[1].split('|')[0]+'</td>'
+        + '<td class="en">'+r[1].split('|')[1]+'</td>'
+        + '<td><span class="chip">'+r[2]+'</span></td>'
+        + '<td>'+pairs(r[3])+'</td>'
+        + '<td class="qc">'+r[5]+'</td>'
+        + '<td class="em">'+r[6]+'</td>'
+        + '<td><span class="st" data-state="'+r[7]+'">'+(r[7]==='active'?'활성':'비활성')+'</span></td>'
+        + '</tr>';
+    }
+    tb.innerHTML=h;
+    $('tot').textContent = onlyActive ? 118 : 134;
+  }
+
+  var only = true;
+  draw(only);
+
+  // ── 페이지네이션 · 5개 블록
+  var PAGE = 1, TOTAL = 12, BLOCK = 5;
+
+  function pager(){
+    var start = Math.floor((PAGE-1)/BLOCK)*BLOCK + 1;
+    var end   = Math.min(start + BLOCK - 1, TOTAL);
+    var h = '';
+    h += '<button class="nav2 gap" data-pg="first"'+(PAGE===1?' disabled':'')+'>« 처음</button>';
+    h += '<button class="nav2" data-pg="prev"'+(start===1?' disabled':'')+'>‹ 이전</button>';
+    for (var i=start; i<=end; i++)
+      h += '<button'+(i===PAGE?' class="on"':'')+' data-pg="'+i+'">'+i+'</button>';
+    h += '<button class="nav2" data-pg="next"'+(end===TOTAL?' disabled':'')+'>다음 ›</button>';
+    h += '<button class="nav2 gap" data-pg="last"'+(PAGE===TOTAL?' disabled':'')+'>끝 »</button>';
+    $('pg').innerHTML = h;
+  }
+  pager();
+
+  $('tg').addEventListener('click', function(){
+    only = !only;
+    this.classList.toggle('off', !only);
+    draw(only);
+  });
+
+  $('ckAuto').addEventListener('change', function(){
+    $('pwManual').hidden = this.checked;
+  });
+
+  $('ckId').addEventListener('change', function(){
+    var f=$('lid');
+    f.readOnly = this.checked;
+    if (this.checked){ f.value='A2026-014'; f.placeholder=''; }
+    else { f.value=''; f.placeholder='직접 입력'; f.focus(); }
+  });
+
+  function up(el, attr){
+    while (el && el !== document){
+      if (el.getAttribute && el.getAttribute(attr) !== null) return el;
+      el = el.parentNode;
+    }
+    return null;
+  }
+
+  function show(v){
+    $('ovNew').hidden = (v !== 'new');
+    $('ovPw').hidden  = (v !== 'pw');
+    var bs = document.querySelectorAll('.demo button');
+    for (var i=0;i<bs.length;i++) bs[i].classList.toggle('on', bs[i].getAttribute('data-v')===v);
+    if (v !== 'pw'){ $('cpb').classList.remove('done'); $('cpt').textContent='비밀번호 복사'; }
+  }
+
+  document.addEventListener('click', function(e){
+    var t = up(e.target, 'data-act');
+    if (t){
+      var a = t.getAttribute('data-act');
+      if (a==='new')      { show('new'); }
+      else if (a==='issue'){ show('pw'); }
+      else if (a==='copy') { $('cpb').classList.add('done'); $('cpt').textContent='복사됨'; }
+      else if (a==='close' || a==='closepw'){ show('list'); }
+      else if (a==='detail'){ /* 시안에서는 이동하지 않습니다 */ }
+      return;
+    }
+    var g = up(e.target, 'data-pg');
+    if (g && !g.disabled){
+      var v = g.getAttribute('data-pg');
+      var start = Math.floor((PAGE-1)/BLOCK)*BLOCK + 1;
+      if (v==='first')      PAGE = 1;
+      else if (v==='last')  PAGE = TOTAL;
+      else if (v==='prev')  PAGE = Math.max(1, start - BLOCK);
+      else if (v==='next')  PAGE = Math.min(TOTAL, start + BLOCK);
+      else                  PAGE = parseInt(v,10);
+      pager();
+      return;
+    }
+    var d = up(e.target, 'data-v');
+    if (d) show(d.getAttribute('data-v'));
+  });
+
+  /* ── 공통 프레임 · 사용자 드롭다운 · 맨 위로 ── */
+  (function(){
+    var dd = $('userDD'), tt = $('totop');
+    document.addEventListener('click', function(e){
+      var w = e.target.closest ? e.target.closest('[data-act="dd"]') : null;
+      if (w){ e.stopPropagation(); if (dd) dd.hidden = !dd.hidden; return; }
+      if (dd && !(e.target.closest && e.target.closest('.dd'))) dd.hidden = true;
+    });
+    if (tt){
+      tt.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+      window.addEventListener('scroll', function(){
+        tt.classList.toggle('on', window.scrollY > 240);
+      });
+    }
+  })();
+})();
+</script>
+</body>
+</html>

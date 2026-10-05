@@ -268,6 +268,10 @@ tr.row td:last-child{text-align:right; color:#C4C8C2; font-size:11px}
 .ohead b{font-size:13.5px}
 .ohead .del{margin-left:auto; color:#B04A3A; border-color:#F2D4CE}
 .ohead .del:hover{background:#FBE9E6}
+.lun{display:inline-block; margin-left:6px; padding:1px 6px; border-radius:3px;
+  background:#F0F1EE; color:#6C6E68; font-size:11px; letter-spacing:-.2px; vertical-align:1px}
+.rowcap{margin-top:8px; text-align:center; font-size:12px; color:#8A8C86}
+.addrow[disabled]{opacity:.4; cursor:not-allowed}
 .addrow{
   width:100%; font:inherit; font-size:12.5px; padding:11px; cursor:pointer;
   border:1px dashed var(--line); border-radius:8px; background:transparent; color:var(--muted);
@@ -504,7 +508,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
             <dt>이름 (영문)</dt><dd>JANG EUNSOO</dd>
             <dt>로그인 ID</dt><dd>test_A</dd>
             <dt>권한등급</dt><dd>심사원</dd>
-            <dt>생년월일</dt><dd>1996-00-00</dd>
+            <dt>생년월일</dt><dd>1996-00-00 <span class="lun">음력</span></dd>
             <dt>가입일</dt><dd>2026-10-04</dd>
             <dt>휴대전화</dt><dd>010-0000-0000</dd>
             <dt>자택전화</dt><dd class="na">미등록</dd>
@@ -776,7 +780,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
         <div class="f">
           <label>새 비밀번호<span class="req">*</span></label>
           <input type="password" placeholder="새 비밀번호">
-          <span class="lk">영문 · 숫자 · 특수문자를 모두 포함한 8자 이상</span>
+          <span class="lk">영문 · 숫자 · 특수문자를 모두 포함한 7자 이상</span>
         </div>
         <div class="f"><label>새 비밀번호 확인<span class="req">*</span></label><input type="password" placeholder="한 번 더 입력"></div>
       </div>
@@ -835,7 +839,8 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     <div class="sc" style="padding:16px 22px 20px">
       <div class="reqnote" id="hNote">증빙 파일은 <b>PDF · JPG · PNG</b> 10MB 이하로 올려 주십시오. 올린 파일은 인증원에서만 열람할 수 있습니다.</div>
       <table class="edit" id="hTable"></table>
-      <button class="addrow" data-act="addrow">＋ 행 추가</button>
+      <button class="addrow" data-act="addrow" id="hAdd">＋ 행 추가</button>
+      <div class="rowcap" id="hCap" hidden>최대 20건까지 등록할 수 있습니다.</div>
     </div>
     <footer>
       <button class="btn" data-act="close">취소</button>
@@ -855,7 +860,7 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     <a href="https://www.kab.or.kr" target="_blank" rel="noopener">한국인정평가원
       <svg viewBox="0 0 12 12"><path d="M4.6 2.2h5.2v5.2M9.8 2.2L5.4 6.6M8 7.6v2.2H2.2V4h2.2"/></svg>
     </a>
-    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 06:07</span>
+    <i>|</i>SAP v0.1.0<i>|</i>시안 10-05 18:30</span>
 </div>
 
 
@@ -894,11 +899,21 @@ table.edit .rm:disabled{color:#D6D7D2; cursor:not-allowed; background:#FAFAF8}
     h+='<td><button class="rm" data-act="rmrow">−</button></td>';
     tr.innerHTML=h; return tr;
   }
+  var MAXROW=20;
+
   function sync(){
     var rows=$('hTable').querySelectorAll('tbody tr');
     for(var i=0;i<rows.length;i++) rows[i].querySelector('.rm').disabled=(rows.length===1);
+    var full=(rows.length>=MAXROW);
+    var ad=$('hAdd'), cp=$('hCap');
+    if(ad) ad.disabled=full;
+    if(cp) cp.hidden=!full;
   }
-  function addRow(){ $('hTable').querySelector('tbody').appendChild(mkRow(HIST[HK])); sync(); }
+  function addRow(){
+    var tb=$('hTable').querySelector('tbody');
+    if(tb.children.length>=MAXROW) return;
+    tb.appendChild(mkRow(HIST[HK])); sync();
+  }
 
   function openHist(k){
     hideAll(OVS); HK=k;
