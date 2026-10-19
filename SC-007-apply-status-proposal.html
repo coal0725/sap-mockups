@@ -12,10 +12,8 @@
 
   한 오버레이 안에서 상태를 전환합니다. 화면 ID 를 새로 부여하지 않습니다.
   ---------------------------------------------------------------------
-    조회 입력             사업자등록번호 + 접수번호
+    조회 입력             담당자명 + 사업자등록번호
     조회 실패             어느 값이 틀렸는지 구분하지 않습니다
-    접수번호 찾기          사업자등록번호 + 담당자 E-mail
-    발송 완료
     조회 결과             아래 상태 표를 보십시오
 
   기업에게 보여줄 상태 — 이번 요청 범위
@@ -51,24 +49,25 @@
        <style id="as-style">     ...  오버레이 스타일
        <div class="as-veil">     ...  오버레이 마크업
        var ApplyStatus = ...      ...  열기 / 닫기 / 상태 전환
-  3. 상태 전환은 ApplyStatus.show('form' | 'result' | 'fail' | 'find' | 'sent') 입니다.
+  3. 상태 전환은 ApplyStatus.show('form' | 'result' | 'fail') 입니다.
   4. 진행 단계는 li 에 data-step="done | now | todo" 를 주십시오.
   5. 「시안 확인용」으로 표시된 블록과 스크립트 하단을 삭제하십시오.
   6. 데이터는 전부 가상입니다. 시드 데이터의 기업명을 썼습니다.
 
   판단이 들어간 곳 — 근거
   ---------------------------------------------------------------------
+  · 조회 키는 담당자명 + 사업자등록번호입니다.  인증원 요청 사항입니다.  두 값 모두
+    외부에서 확인할 수 있는 정보여서 타사 신청 건이 조회될 수 있다는 점은
+    2026-10-19 보고하였습니다.
   · 조회 실패 문구를 하나로 합쳤습니다.  「사업자등록번호가 틀렸습니다」처럼 어느 쪽이
-    틀렸는지 알려주면, 공개 정보인 사업자등록번호를 고정하고 접수번호만 돌려 맞출 수
-    있습니다. 둘을 합쳐 「일치하는 신청이 없습니다」로 둡니다.
-  · 접수번호는 화면에 표시하지 않고 E-mail 로만 보냅니다.  사업자등록번호는 공개
-    정보이고 담당자 E-mail 은 명함에 있으므로, 화면에 띄우면 제3자가 번호를 얻어
-    남의 신청을 취소할 수 있습니다.  기준 정의서 7.6 을 보십시오.
-  · 발송 완료 문구는 일치 여부와 무관하게 같습니다.  일치하지 않을 때 「그런 신청이
-    없습니다」라고 하면 E-mail 의 존재 여부를 알려주는 셈이 됩니다. 실제 발송은
-    일치할 때만 하고 화면은 항상 같은 문구를 보여 주십시오.
-  · 진행 단계 4개는 SC-006B 접수 완료 화면의 「앞으로의 진행」과 같은 구성입니다.
-    기업이 접수 직후에 본 그림과 같아야 다시 익힐 것이 없습니다.
+    틀렸는지 알려주면 어느 값을 고쳐야 하는지가 드러납니다.
+    둘을 합쳐 「일치하는 신청이 없습니다」로 둡니다.
+  · 접수번호는 이 화면에 표시하지 않습니다.  사무국 내부 식별자이며 기업 대면 화면에는
+    노출하지 않습니다.  기업이 문의할 때는 담당자명과 조직명으로 특정합니다.
+  · 조회 결과에 신청 내용 · 첨부 서류 · 설문 응답을 두지 않습니다.  담당자명과
+    사업자등록번호를 아는 사람이면 조회할 수 있으므로 진행 상태까지만 보여 줍니다.
+  · 진행 단계 4개는 SC-006B 제출 완료 화면의 「앞으로의 진행」과 같은 구성입니다.
+    기업이 제출 직후에 본 그림과 같아야 다시 익힐 것이 없습니다.
   · 계약 확정 이후에는 화면에 취소 경로를 두지 않습니다.  상태 전이 시트의
     「계약확정 → 취소 · 변경 요청 → 인증원 문의」에 따릅니다.
 
@@ -87,11 +86,9 @@
 
   서버에서 정해 주실 것
   ---------------------------------------------------------------------
-  · 조회 시도 횟수 제한.  사업자등록번호가 공개 정보이므로 접수번호 뒤 4자리만
-    돌리면 되고, 제한이 없으면 열쇠 역할을 하지 못합니다.
-  · 접수번호 재발송도 같은 제한이 필요합니다.
-  · 재발송 메일 본문 · 발신 주소.  FN-CM-003 에 「접수번호 재발송」 이벤트를 추가합니다.
-  · 임시저장 건은 조회되지 않아야 합니다.  접수번호는 최종 제출 시점에만 발급합니다(CM-09).
+  · 조회 실패 로그.  횟수 제한은 두지 않되 실패를 기록하여 이상 패턴을 사후에
+    확인할 수 있게 합니다 — NFR-4 감사 로그에 함께 담습니다.
+  · 임시저장 건은 조회되지 않아야 합니다.  조회 대상은 최종 제출이 완료된 건입니다.
 ===========================================================================
 -->
 
@@ -296,7 +293,7 @@
     display:flex; align-items:flex-start; justify-content:space-between; gap:14px; flex-wrap:wrap;
   }
   .as-no{font-size:20px; font-weight:800; font-variant-numeric:tabular-nums; letter-spacing:.01em}
-  .as-org{margin-top:5px; font-size:14.5px; font-weight:700}
+  .as-org{font-size:17px; font-weight:800; letter-spacing:-.01em}
   .as-badge{
     flex:none; font-size:12.5px; font-weight:700; padding:6px 12px; border-radius:999px;
     background:var(--as-navy-soft); color:var(--as-navy); white-space:nowrap;
@@ -400,7 +397,7 @@
 
   <section>
     <h1>ISO 인증심사 신청</h1>
-    <p class="lead">제출하시면 접수번호가 발급되며, 이 번호로 진행 상황을 확인하실 수 있습니다.</p>
+    <p class="lead">제출하시면 담당자명과 사업자등록번호로 진행 상황을 확인하실 수 있습니다.</p>
   </section>
 
   <section>
@@ -467,7 +464,7 @@
         <div class="look-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg></div>
         <div style="flex:1">
           <div class="look-t">신청현황 조회</div>
-          <div class="look-s">접수번호로 확인</div>
+          <div class="look-s">담당자명 · 사업자등록번호로 확인</div>
         </div>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9AA09B" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
       </a>
@@ -522,7 +519,7 @@
     <div class="as-hd">
       <div>
         <h2 id="as-title">신청현황 조회</h2>
-        <p id="as-lead">신청 시 발급된 접수번호와 사업자등록번호로<br>진행 상태를 확인하실 수 있습니다.</p>
+        <p id="as-lead">신청 시 입력하신 담당자명과 사업자등록번호로<br>진행 상태를 확인하실 수 있습니다.</p>
       </div>
       <button class="as-x" id="as-close" type="button" aria-label="닫기">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
@@ -535,26 +532,25 @@
       <div id="as-form">
         <div class="as-grid">
           <div class="as-fld">
+            <label for="as-name">담당자명</label>
+            <input class="as-input" type="text" id="as-name" placeholder="신청서에 기재하신 담당자명">
+            <p class="as-err" id="as-name-err">담당자명을 입력해 주십시오.</p>
+          </div>
+          <div class="as-fld">
             <label for="as-biz">사업자등록번호</label>
             <input class="as-input" type="text" id="as-biz" placeholder="000-00-00000">
             <p class="as-err" id="as-biz-err">사업자등록번호를 입력해 주십시오.</p>
-          </div>
-          <div class="as-fld">
-            <label for="as-rcpt">접수번호</label>
-            <input class="as-input" type="text" id="as-rcpt" placeholder="AP-YYYYMMDD-XXXX">
-            <p class="as-err" id="as-rcpt-err">접수번호를 입력해 주십시오.</p>
           </div>
         </div>
 
         <!-- 조회 실패 — 어느 값이 틀렸는지 구분하지 않습니다 -->
         <div class="as-fail" id="as-fail">
           <b>입력하신 정보와 일치하는 신청이 없습니다.</b><br>
-          사업자등록번호와 접수번호를 다시 확인해 주십시오.
+          담당자명과 사업자등록번호를 다시 확인해 주십시오.
         </div>
 
         <div class="as-act">
           <button class="as-btn" id="as-go" type="button">조회</button>
-          <button class="as-link" id="as-tofind" type="button">접수번호를 분실하셨나요?</button>
         </div>
       </div>
 
@@ -562,7 +558,6 @@
       <div id="as-result" class="as-hide">
         <div class="as-rcpt">
           <div>
-            <div class="as-no" id="as-r-no">AP-20260926-7C2A</div>
             <div class="as-org">청림산약초영농조합법인</div>
           </div>
           <div class="as-badge" id="as-r-badge" data-state="review">계약 검토 중</div>
@@ -611,43 +606,6 @@
         </div>
       </div>
 
-      <!-- ---- 5 · 접수번호 찾기 ---- -->
-      <div id="as-find" class="as-hide">
-        <div class="as-grid">
-          <div class="as-fld">
-            <label for="as-biz2">사업자등록번호</label>
-            <input class="as-input" type="text" id="as-biz2" placeholder="000-00-00000">
-          </div>
-          <div class="as-fld">
-            <label for="as-mail">담당자 이메일</label>
-            <input class="as-input" type="text" id="as-mail" placeholder="name@company.co.kr">
-          </div>
-        </div>
-        <div class="as-act">
-          <button class="as-btn" id="as-send" type="button">접수번호 받기</button>
-          <button class="as-link as-back" id="as-toform" type="button">조회로 돌아가기</button>
-        </div>
-        <div class="as-note">
-          접수번호는 화면에 표시하지 않습니다.<br>
-          신청 시 입력하신 <b>담당자 이메일로만</b> 보내 드립니다.
-        </div>
-      </div>
-
-      <!-- ---- 6 · 발송 완료 ---- -->
-      <div id="as-sent" class="as-hide">
-        <div class="as-sent">
-          <img src="assets/bester-default.svg" alt="" width="96" height="96">
-          <h3>입력하신 이메일로 접수번호를 보내드렸습니다</h3>
-          <p>
-            메일이 도착하지 않으면 스팸함을 확인해 주십시오.<br>
-            그래도 받지 못하셨다면 ssr@ssr1.co.kr 로 문의해 주십시오.
-          </p>
-        </div>
-        <div class="as-act">
-          <button class="as-btn as-ghost" id="as-toform2" type="button">조회로 돌아가기</button>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>
@@ -664,13 +622,11 @@
   <button id="d10" type="button">인증 결정 완료 · 2차</button>
   <button id="d11" type="button">인증 거부 · 2차</button>
   <button id="d7" type="button">조회 실패</button>
-  <button id="d8" type="button">접수번호 찾기</button>
-  <button id="d9" type="button">발송 완료</button>
 </div>
 
 <script>
 /* =========== SC-007 오버레이 동작 ===========
-   ApplyStatus.open() / .close() / .show('form'|'result'|'fail'|'find'|'sent')
+   ApplyStatus.open() / .close() / .show('form'|'result'|'fail')
    닫히는 경로 세 개 — X 버튼 · 배경 클릭 · ESC
    ------------------------------------------------- */
 var ApplyStatus = (function(){
@@ -683,21 +639,7 @@ var ApplyStatus = (function(){
     var isForm = (mode === 'form' || mode === 'fail');
     panes.form.classList.toggle('as-hide', !isForm);
     panes.result.classList.toggle('as-hide', mode !== 'result');
-    panes.find.classList.toggle('as-hide', mode !== 'find');
-    panes.sent.classList.toggle('as-hide', mode !== 'sent');
     panes.fail.classList.toggle('is-show', mode === 'fail');
-
-    /* 머리 문구도 함께 바뀝니다 */
-    if(mode === 'find'){
-      panes.title.textContent = '접수번호 찾기';
-      lead.innerHTML = '사업자등록번호와 담당자 이메일을 입력하시면<br>접수번호를 이메일로 보내 드립니다.';
-    } else if(mode === 'sent'){
-      panes.title.textContent = '접수번호 찾기';
-      lead.innerHTML = '';
-    } else {
-      panes.title.textContent = '신청현황 조회';
-      lead.innerHTML = '신청 시 발급된 접수번호와 사업자등록번호로<br>진행 상태를 확인하실 수 있습니다.';
-    }
   }
 
   function init(){
@@ -706,8 +648,6 @@ var ApplyStatus = (function(){
     panes = {
       form:   document.getElementById('as-form'),
       result: document.getElementById('as-result'),
-      find:   document.getElementById('as-find'),
-      sent:   document.getElementById('as-sent'),
       fail:   document.getElementById('as-fail'),
       title:  document.getElementById('as-title')
     };
@@ -721,30 +661,24 @@ var ApplyStatus = (function(){
       if(e.key === 'Escape' && veil.classList.contains('is-open')) close();
     });
 
-    document.getElementById('as-tofind').addEventListener('click', function(){ show('find'); });
-    document.getElementById('as-toform').addEventListener('click', function(){ show('form'); });
-    document.getElementById('as-toform2').addEventListener('click', function(){ show('form'); });
-
     /* 빈 칸이면 「입력해 주십시오」, 값이 있고 형식이 틀리면 형식 안내 */
-    var biz = document.getElementById('as-biz'), rc = document.getElementById('as-rcpt');
-    var bizErr = document.getElementById('as-biz-err'), rcErr = document.getElementById('as-rcpt-err');
+    var nm = document.getElementById('as-name'), biz = document.getElementById('as-biz');
+    var nmErr = document.getElementById('as-name-err'), bizErr = document.getElementById('as-biz-err');
     document.getElementById('as-go').addEventListener('click', function(){
       var ok = true;
-      [[biz, bizErr, /^\d{3}-\d{2}-\d{5}$/, '사업자등록번호를 입력해 주십시오.', '###-##-##### 형식으로 입력해 주십시오.'],
-       [rc,  rcErr,  /^AP-\d{8}-[0-9A-Za-z]{4}$/, '접수번호를 입력해 주십시오.', 'AP-YYYYMMDD-XXXX 형식으로 입력해 주십시오.']
+      [[nm,  nmErr,  null, '담당자명을 입력해 주십시오.', ''],
+       [biz, bizErr, /^\d{3}-\d{2}-\d{5}$/, '사업자등록번호를 입력해 주십시오.', '###-##-##### 형식으로 입력해 주십시오.']
       ].forEach(function(f){
         var el=f[0], err=f[1], re=f[2], empty=f[3], bad=f[4], v=el.value.trim();
         if(!v){ err.textContent=empty; err.classList.add('is-show'); el.classList.add('is-bad'); ok=false; }
-        else if(!re.test(v)){ err.textContent=bad; err.classList.add('is-show'); el.classList.add('is-bad'); ok=false; }
+        else if(re && !re.test(v)){ err.textContent=bad; err.classList.add('is-show'); el.classList.add('is-bad'); ok=false; }
         else { err.classList.remove('is-show'); el.classList.remove('is-bad'); }
       });
       if(ok){ /* 여기서 조회 요청. 일치하지 않으면 show('fail') */ }
     });
-    [[biz,bizErr],[rc,rcErr]].forEach(function(p){
-      p[0].addEventListener('input', function(){ p[1].classList.remove('is-show'); p[0].classList.remove('is-bad'); });
+    [[nm,nmErr],[biz,bizErr]].forEach(function(pr){
+      pr[0].addEventListener('input', function(){ pr[1].classList.remove('is-show'); pr[0].classList.remove('is-bad'); });
     });
-
-    document.getElementById('as-send').addEventListener('click', function(){ show('sent'); });
   }
 
   document.addEventListener('DOMContentLoaded', init);
@@ -753,9 +687,9 @@ var ApplyStatus = (function(){
 
 /* =========== 시안 확인용 — 실제 적용 시 삭제 =========== */
 document.addEventListener('DOMContentLoaded', function(){
-  var b=[1,2,3,4,5,6,10,11,7,8,9].map(function(n){ return document.getElementById('d'+n); });
+  var b=[1,2,3,4,5,6,10,11,7].map(function(n){ return document.getElementById('d'+n); });
   var before=document.getElementById('as-r-before'), after=document.getElementById('as-r-after');
-  var badge=document.getElementById('as-r-badge'), no=document.getElementById('as-r-no'), dt=document.getElementById('as-r-date');
+  var badge=document.getElementById('as-r-badge'), dt=document.getElementById('as-r-date');
   var track=document.getElementById('as-track').children;
   var curH=document.getElementById('as-cur-h'), curD=document.getElementById('as-cur-d');
   var cur=document.querySelector('.as-cur');
@@ -786,10 +720,9 @@ document.addEventListener('DOMContentLoaded', function(){
               '심사 결과에 따라 인증이 거부되었습니다.<br>거부 사유는 담당자 이메일로 보내 드렸습니다.',
               '이의제기 및 불만처리 절차에 따라 이의를 제기하실 수 있으며, 인증등록을 다시 신청하실 수 있습니다.', false, false, true]
   };
-  var NOS = { review:['AP-20260926-7C2A','2026-09-26'], rejected:['AP-20260924-9D51','2026-09-24'],
-              confirmed:['AP-20260918-4B19','2026-09-18'], audit:['AP-20260901-2E80','2026-09-01'],
-              action:['AP-20260812-6A37','2026-08-12'],
-              certified:['AP-20260703-1F45','2026-07-03'], denied:['AP-20260620-8B02','2026-06-20'] };
+  var DATES = { review:'2026-09-26', rejected:'2026-09-24', confirmed:'2026-09-18',
+                audit:'2026-09-01', action:'2026-08-12',
+                certified:'2026-07-03', denied:'2026-06-20' };
 
   function pick(i){ b.forEach(function(x,j){ x.classList.toggle('is-on', i===j); }); }
 
@@ -797,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function(){
     var c=CASES[key], n=c[0], stop=c[8];
     ApplyStatus.show('result');
     badge.textContent=c[1]; badge.setAttribute('data-state',c[2]);
-    no.textContent=NOS[key][0]; dt.textContent=NOS[key][1];
+    dt.textContent=DATES[key];
     for(var i=0;i<track.length;i++){
       var st = i<n ? 'done' : (i===n ? (stop?'stop':'now') : 'todo');
       if(key==='certified') st='done';   /* 인증 결정 완료 — 네 칸 모두 완료 */
@@ -820,8 +753,6 @@ document.addEventListener('DOMContentLoaded', function(){
   b[6].addEventListener('click', function(){ pick(6); result('certified'); ApplyStatus.open(); });
   b[7].addEventListener('click', function(){ pick(7); result('denied');    ApplyStatus.open(); });
   b[8].addEventListener('click', function(){ pick(8); ApplyStatus.show('fail'); ApplyStatus.open(); });
-  b[9].addEventListener('click', function(){ pick(9); ApplyStatus.show('find'); ApplyStatus.open(); });
-  b[10].addEventListener('click', function(){ pick(10); ApplyStatus.show('sent'); ApplyStatus.open(); });
   /* 파일을 열면 조회 입력이 보이게 */
   pick(0); ApplyStatus.show('form'); ApplyStatus.open();
 });
